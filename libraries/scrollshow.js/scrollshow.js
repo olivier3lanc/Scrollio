@@ -83,7 +83,7 @@
             //Amount of scroll for the current item
             var cur_relativeScroll = g_scrollTopRaw - g_unitRange * g_index;
             //CSS transform property
-            var g_transform = 'translateY(calc(-50% - '+cur_relativeScroll / 100+'px))';
+            // var g_transform = 'translateY(calc(-50% - '+cur_relativeScroll / 100+'px))';
             //CSS text shadow property
             // var g_textShadow = '0px '+cur_relativeScroll/50+'px 30px rgba(0,0,0,'+cur_relativeScroll/1900+')';
             //jQuery object of the active item
@@ -105,12 +105,7 @@
             }
 
             //Transformations on the active item
-            jQ_activeItem
-                .css({
-                    'transform': 'translateY(-50%) translateY('+cur_relativeScroll/30+'px)',
-                    'perspective': 500 + (cur_relativeScroll /2)+'px'
-                })
-                .addClass('active');
+            jQ_activeItem.addClass('active');
 
             //Letters management of the active item
             //Make only the current letter index as active

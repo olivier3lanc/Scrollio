@@ -31,7 +31,6 @@ body {
             transform: translateY(-50%) scale(0.3); //Default: Transform when inactive
             z-index: 10;
             pointer-events: none;
-            color: white; //Default: Text color of the item
             &.active {
                 transform: translateY(-50%) scale(1); //Default: Transform when active
                 z-index: 100;
