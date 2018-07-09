@@ -6,9 +6,12 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Scrollshow jQuery plugin</title>
-
-    <!-- Framework + template -->
-    <link href="css/scrollshow.css" rel="stylesheet">
+    <!-- Scrollshow required stylesheet -->
+    <link href="css/scrollshow-core.css" rel="stylesheet">
+    <!-- Scrollshow optional theme stylesheet -->
+    <link href="css/scrollshow-theme-blank.css" rel="stylesheet">
+    <!-- Demo stylesheet -->
+    <link href="css/demo.css" rel="stylesheet">
 </head>
 
 <body>
@@ -40,7 +43,11 @@
     <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="dist/scrollshow.min.js"></script>
     <script type="text/javascript">
-        jQuery.fn.scrollshow({onItemChange: function(e){console.log(e)}});
+        jQuery.fn.scrollshow({
+            onItemChange: function(e){
+                console.log(e);
+            }
+        });
     </script>
 </body>
 

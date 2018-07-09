@@ -4,29 +4,35 @@
 body {
     #scrollshow {
         &>.overlay {
-            background-color: qtr-color(2);
+            background-color: black;
+            opacity: 0.5;
         }
         &>.item {
-            color: qtr-color(6);
             &.active {
             }
             //Letters
             &>*:first-child {
                 &>.word {
-                    &:first-child {
-                        .letter {
-                            &:first-child {
-                                //Properties of the very first letter of the item text to scroll
-                                color: white;
-                            }
-                        }
-                    }
                     .letter {
                         //Unread / Inactive letter properties
                         color: lightgrey;
                         &.active {
                             //Read / Active letter properties
-                            color: white;
+                            color: black;
+                        }
+                    }
+                }
+            }
+            &.first-letter-active {
+                &>*:first-child {
+                    &>.word {
+                        &:first-child {
+                            .letter {
+                                &:first-child {
+                                    //Properties of the very first letter of the item text to scroll
+                                    color: red;
+                                }
+                            }
                         }
                     }
                 }
@@ -36,22 +42,21 @@ body {
         &>.navigation {
             //Progress bar
             &>.progress {
-                background-color: qtr-color(6);
+                background-color: black;
                 border-radius: 4px;
             }
             //Item
             &>a {
-                border-radius: 100%;
                 background-color: transparent;
-                border: 2px solid qtr-color(6);
+                border: 2px solid black;
                 //Fill effect
                 &:after {
-                    background-color: qtr-color(6);
+                    background-color: black;
                 }
                 &:last-child {
                 }
                 &:first-child {
-                    background-color: qtr-color(6);
+                    background-color: black;
                 }
 
                 //Read item
