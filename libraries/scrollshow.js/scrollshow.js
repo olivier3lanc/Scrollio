@@ -4,6 +4,8 @@
         var jQ_body = jQuery('body');
         var jQ_windowHeight = jQuery(window).height();
         var jQ_scrollshow = jQuery('#scrollshow');
+        //Include overlay
+        jQ_scrollshow.append('<div class="overlay"></div>');
         //Current item index
         var g_index = 0;
         //Amount of scroll
