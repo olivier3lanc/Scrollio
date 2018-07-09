@@ -44,7 +44,17 @@ body {
                     &:first-child {
                         .letter {
                             &:first-child {
+                                //Properties of the very first letter of the item text to scroll
+                                color: black;
                             }
+                        }
+                    }
+                    .letter {
+                        //Unread / Inactive letter properties
+                        color: lightgrey;
+                        &.active {
+                            //Read / Active letter properties
+                            color: black;
                         }
                     }
                 }
@@ -64,7 +74,7 @@ body {
                 left: 4px;
                 width: 4px;
                 pointer-events: none;
-                background-color: white; //Default: Color of the progress bar
+                background-color: black; //Default: Color of the progress bar
             }
             //Item
             &>a {
@@ -87,7 +97,7 @@ body {
                     height: 0%;
                     transition: all 0ms; //Default: Transition duration for the fill effect when leave
                     pointer-events: none;
-                    background-color: white; //Default: Bullet link background color fill when active
+                    background-color: black; //Default: Bullet link background color fill when active
                 }
                 &:last-child {
                     margin-right: 0;
