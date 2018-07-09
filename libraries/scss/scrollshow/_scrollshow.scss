@@ -41,20 +41,26 @@ body {
             //Letters
             &>*:first-child {
                 &>.word {
-                    &:first-child {
-                        .letter {
-                            &:first-child {
-                                //Properties of the very first letter of the item text to scroll
-                                color: black;
-                            }
-                        }
-                    }
                     .letter {
                         //Unread / Inactive letter properties
                         color: lightgrey;
                         &.active {
                             //Read / Active letter properties
                             color: black;
+                        }
+                    }
+                }
+            }
+            &.first-letter-active {
+                &>*:first-child {
+                    &>.word {
+                        &:first-child {
+                            .letter {
+                                &:first-child {
+                                    //Properties of the very first letter of the item text to scroll
+                                    color: red;
+                                }
+                            }
                         }
                     }
                 }
