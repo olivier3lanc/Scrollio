@@ -24,15 +24,14 @@ body {
             top: 100%;
             width: 100%;
             top: 50%;
-            transition: all 800ms; //Default: Transition duration on item leave
+            transition: all 300ms; //Default: Transition duration on item leave
             will-change: transform, opacity, letter-spacing, text-shadow;
             transition-timing-function: linear;
             perspective: 500px;
-            transform: translateY(-50%) scale(0.3); //Default: Transform when inactive
+            transform: translateY(-50%); //Default: Transform when inactive
             z-index: 10;
             pointer-events: none;
             &.active {
-                transform: translateY(-50%) scale(1); //Default: Transform when active
                 z-index: 100;
                 opacity: 1;
                 transition: all 200ms; //Default Transition duration on item enter
@@ -58,7 +57,7 @@ body {
                             .letter {
                                 &:first-child {
                                     //Properties of the very first letter of the item text to scroll
-                                    color: red;
+                                    // color: red;
                                 }
                             }
                         }
