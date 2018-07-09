@@ -1,0 +1,65 @@
+/*
+* Scrollshow Theme - Optional
+*/
+body {
+    #scrollshow {
+        &>.overlay {
+            background-color: qtr-color(2);
+        }
+        &>.item {
+            color: qtr-color(6);
+            &.active {
+            }
+            //Letters
+            &>*:first-child {
+                &>.word {
+                    &:first-child {
+                        .letter {
+                            &:first-child {
+                                //Properties of the very first letter of the item text to scroll
+                                color: white;
+                            }
+                        }
+                    }
+                    .letter {
+                        //Unread / Inactive letter properties
+                        color: lightgrey;
+                        &.active {
+                            //Read / Active letter properties
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+
+        &>.navigation {
+            //Progress bar
+            &>.progress {
+                background-color: qtr-color(6);
+                border-radius: 4px;
+            }
+            //Item
+            &>a {
+                border-radius: 100%;
+                background-color: transparent;
+                border: 2px solid qtr-color(6);
+                //Fill effect
+                &:after {
+                    background-color: qtr-color(6);
+                }
+                &:last-child {
+                }
+                &:first-child {
+                    background-color: qtr-color(6);
+                }
+
+                //Read item
+                &.active {
+                    &:after {
+                    }
+                }
+            }
+        }
+    }
+}

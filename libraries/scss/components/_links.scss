@@ -1,0 +1,14 @@
+body {
+    a {
+        &.link-button {
+            color: qtr-color();
+            background-color: qtr-color(6);
+            padding: 1.5em 3em;
+            border-radius: 2px;
+            text-decoration: none;
+            font-size: qtr-font-size(-4);
+            text-transform: uppercase;
+            font-family: qtr-font-family(1);
+        }
+    }
+}

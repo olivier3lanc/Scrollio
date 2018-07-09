@@ -1,0 +1,109 @@
+/*
+* Scrollshow core SCSS - Required
+*/
+body {
+    #scrollshow {
+        overflow: auto;
+        &>.overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 1;
+            opacity: 0.6; //Default: Opacity of the overlay
+            background-color: black; //Default: Color of the overlay
+            transition: all 2000ms; //Default: Transition duration of the overlay
+        }
+        &>.item {
+            opacity: 0;
+            box-sizing: border-box;
+            text-align: center;
+            position: fixed;
+            top: 100%;
+            width: 100%;
+            top: 50%;
+            transition: all 800ms; //Default: Transition duration on item leave
+            will-change: transform, opacity, letter-spacing, text-shadow;
+            transition-timing-function: linear;
+            perspective: 500px;
+            transform: translateY(-50%) scale(0.3); //Default: Transform when inactive
+            z-index: 10;
+            pointer-events: none;
+            color: white; //Default: Text color of the item
+            &.active {
+                transform: translateY(-50%) scale(1); //Default: Transform when active
+                z-index: 100;
+                opacity: 1;
+                transition: all 200ms; //Default Transition duration on item enter
+                pointer-events: auto;
+            }
+            //Letters
+            &>*:first-child {
+                &>.word {
+                    &:first-child {
+                        .letter {
+                            &:first-child {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &>.navigation {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            //Progress bar
+            &>.progress {
+                display: block;
+                position: absolute;
+                top: 0px;
+                left: 4px;
+                width: 4px;
+                pointer-events: none;
+                background-color: white; //Default: Color of the progress bar
+            }
+            //Item
+            &>a {
+                display: block;
+                width: 12px;
+                height: 12px;
+                box-sizing: border-box;
+                margin-bottom: 40px;
+                position: relative;
+                overflow: hidden;
+                background-color: grey; //Default: Bullet link background color fill when unread
+                //Fill effect
+                &:after {
+                    content: '';
+                    position: absolute;
+                    display: block;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 0%;
+                    transition: all 0ms; //Default: Transition duration for the fill effect when leave
+                    pointer-events: none;
+                    background-color: white; //Default: Bullet link background color fill when active
+                }
+                &:last-child {
+                    margin-right: 0;
+                }
+                &:first-child {
+
+                }
+                //Read item
+                &.active {
+                    &:after {
+                        height: 100%;
+                        transition: all 800ms; //Default: Transition duration for the fill effect when active
+                    }
+                }
+            }
+        }
+    }
+}

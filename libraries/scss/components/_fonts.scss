@@ -1,0 +1,20 @@
+body {
+    font-family: qtr-font-family(2);
+    font-size: qtr-font-size();
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th {
+    font-family: qtr-font-family(1);
+}
+h1 { font-size: qtr-font-size(6); }
+h2 { font-size: qtr-font-size(5); }
+h3 { font-size: qtr-font-size(4); }
+h4 { font-size: qtr-font-size(3); }
+h5 { font-size: qtr-font-size(2); }
+h6 { font-size: qtr-font-size(1); }
