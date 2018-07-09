@@ -23,20 +23,6 @@ body {
                     }
                 }
             }
-            &.first-letter-active {
-                &>*:first-child {
-                    &>.word {
-                        &:first-child {
-                            .letter {
-                                &:first-child {
-                                    //Properties of the very first letter of the item text to scroll
-                                    color: red;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         &>.navigation {

@@ -5,9 +5,14 @@
             id:                 'scrollshow',               //ID if the main Scrollshow wrapper
             scrollRange:        2000,                       //Amount of pixels per item
             keepActive:         true,                       //Once scrolled, letters keep active
-            firstLetterActive:  false,                      //First letter of the sentence always active
             textEllipsis:       '...',                      //String displayed at the end of each text to scroll
             onItemChange:       function(e){                //Callback on item change
+
+            },
+            onFirstItem:        function(e){                //Callback on first item
+
+            },
+            onLastItem:         function(e){                //Callback on last item
 
             }
         }
@@ -92,10 +97,6 @@
                 zIndex--;
             }
             jQ_text.html('<span class="word">'+result+'</span>');
-            //First letter options management
-            if(g_parameters.firstLetterActive){
-                jQuery(this).addClass('first-letter-active');
-            }
         });
 
         //Update management
@@ -130,17 +131,29 @@
             //Create event active item changed for the target item
             if(!jQ_activeItem.hasClass('active')){
                 var e_itemChange = jQuery.Event('itemChange');
+                var e_lastItem = jQuery.Event('lastItem');
+                var e_firstItem = jQuery.Event('firstItem');
                 jQ_scrollshow.trigger({
                     type: 'itemChange',
                     targetIndex: g_index
                 });
+                if(g_index == 0){
+                    jQ_scrollshow.trigger({
+                        type: 'firstItem'
+                    });
+                }
+                if(g_index == (g_amountOfItems - 1)){
+                    jQ_scrollshow.trigger({
+                        type: 'lastItem'
+                    });
+                }
             }
 
             //Transformations on the active item
             jQ_activeItem.addClass('active');
 
             if(g_parameters.keepActive){
-                //Make all the previous letters indexes active
+                //Keep all the previous letters indexes active
                 for (var z = 0; z < cur_amountOfLetters; z++) {
                     if(z <= cur_letterIndex){
                         jQ_activeItem
@@ -188,11 +201,12 @@
         }
 
         //Apply routines on page start
-        update();
+        // update();
 
         //On page scroll
         jQuery(document).on('scroll',function(e){
             update();
+            console.log('scrolled')
         });
 
         //On window change
@@ -208,6 +222,12 @@
         jQ_scrollshow.on('itemChange',function(e){
             var targetIndex = e.targetIndex;
             g_parameters.onItemChange(targetIndex);
+        });
+        jQ_scrollshow.on('firstItem',function(){
+            g_parameters.onFirstItem(console.log('first'));
+        });
+        jQ_scrollshow.on('lastItem',function(){
+            g_parameters.onLastItem(console.log('last'));
         });
     };
 }(jQuery));
