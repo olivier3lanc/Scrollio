@@ -65,17 +65,7 @@ body {
                             //Read / Active letter properties
                             color: black;
                         }
-                        @keyframes anim {
-                            0% { border-right-color: rgba(0,0,0,0) }
-                            100% { border-right-color: rgba(0,0,0,1) }
-                        }
                         &.current {
-                            border-right-style: solid;
-                            border-right-width: 2px;
-                            animation-name: anim;
-                            animation-duration: 600ms;
-                            animation-iteration-count: infinite;
-                            animation-direction: alternate;
                         }
                     }
                 }
