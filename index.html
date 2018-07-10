@@ -44,8 +44,14 @@
     <script type="text/javascript" src="dist/scrollshow.min.js"></script>
     <script type="text/javascript">
         jQuery.fn.scrollshow({
-            onItemChange: function(e){
-                console.log(e);
+            onItemChange: function(targetIndex){
+                console.log(targetIndex);
+            },
+            onFirstItem: function(){
+                console.log('first item');
+            },
+            onLastItem: function(){
+                console.log('last item');
             }
         });
     </script>
