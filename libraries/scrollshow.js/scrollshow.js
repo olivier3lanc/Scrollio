@@ -2,18 +2,20 @@
     jQuery.fn.scrollshow = function(options) {
         //Defaults parameters
         var g_parameters = {
-            id:                 'scrollshow',               //ID if the main Scrollshow wrapper
-            scrollRange:        1000,                       //Amount of pixels per item
-            keepActive:         true,                      //Once scrolled, letters keep active
-            textEllipsis:       '...',                      //String displayed at the end of each text to scroll
-            intro:              true,                       //Enable or not intro (document title + description)
-            onItemChange:       function(e){                //Callback on item change
+            id:                 'scrollshow',       //ID if the main Scrollshow wrapper
+            scrollRange:        1000,               //Amount of pixels per item
+            keepActive:         true,               //Once scrolled, letters keep active
+            textEllipsis:       '...',              //String displayed at the end of each text to scroll
+            intro:              true,               //Enable/disable intro (document title + description)
+            navigation:         true,               //Enable/diable navigation progress and bullets
+            overlay:            false,               //Enable/diable overlay between items and body background
+            onItemChange:       function(e){        //Callback on item change
 
             },
-            onFirstItem:        function(e){                //Callback on first item
+            onFirstItem:        function(e){        //Callback on first item
 
             },
-            onLastItem:         function(e){                //Callback on last item
+            onLastItem:         function(e){        //Callback on last item
 
             }
         }
@@ -32,19 +34,9 @@
         var jQ_body = jQuery('body');
         var jQ_windowHeight = jQuery(window).height();
         var jQ_scrollshow = jQuery('#'+g_parameters.id);
-        //Include overlay
-        jQ_scrollshow.append('<div class="overlay"></div>');
-        //If intro, include intro DOM
-        if(g_parameters.intro){
-            jQ_scrollshow.append(
-                '<div class="intro active">'+
-                    '<header>'+
-                        '<h1>'+document.title+'</h1>'+
-                        '<p class="description">'+jQuery('head meta[name="description"]').attr('content')+'</p>'+
-                        '<p>Scroll down</p>'+
-                    '</header>'+
-                '</div>'
-            );
+        //If overlay, include it into DOM
+        if(g_parameters.overlay){
+            jQ_scrollshow.append('<div class="overlay"></div>');
         }
         //Current item index
         var g_index = 0;
@@ -57,41 +49,44 @@
         //Apply body height
         jQ_body.height(g_amountOfItems * g_itemScrollRange + jQ_windowHeight);
 
-        //Navigation and progress
-        //Include navigation
-        jQ_scrollshow.append('<nav class="navigation"></nav>');
-        //jQuery object of the navigation
-        var jQ_stdNavigation = jQ_scrollshow.children('.navigation');
-        //Include a bullet link for each item
-        for (var i = 0; i < g_amountOfItems; i++) {
-            jQ_stdNavigation.append('<a href="#'+i.toString()+'"></a>');
-            //Include progress bar on the first item
-            if(i == 0){
-                // jQ_stdNavigation.children('a:first-child').append('<span class="progress"></span>');
-                jQ_stdNavigation.append('<span class="progress"></span>');
+        //If navigation enabled, include it into DOM
+        if(g_parameters.navigation){
+            //Navigation and progress
+            //Include navigation
+            jQ_scrollshow.append('<nav class="navigation"></nav>');
+            //jQuery object of the navigation
+            var jQ_stdNavigation = jQ_scrollshow.children('.navigation');
+            //Include a bullet link for each item
+            for (var i = 0; i < g_amountOfItems; i++) {
+                jQ_stdNavigation.append('<a href="#'+i.toString()+'"></a>');
+                //Include progress bar on the first item
+                if(i == 0){
+                    // jQ_stdNavigation.children('a:first-child').append('<span class="progress"></span>');
+                    jQ_stdNavigation.append('<span class="progress"></span>');
+                }
             }
+            //First bullet link jQuery object
+            var jQ_stdNavigationFirstChild = jQ_stdNavigation.children('a:first-child');
+            //Link bullet width
+            var g_navigationBulletWidth = jQ_stdNavigationFirstChild.outerWidth();
+            //Link bullet height
+            var g_navigationBulletHeight = jQ_stdNavigationFirstChild.outerHeight();
+            //Link bullet margin
+            var g_navigationBulletMargin = parseFloat(jQ_stdNavigationFirstChild.css('margin-bottom'));
+            //Computed 100% progress height
+            var g_progressHeight = g_amountOfItems * (g_navigationBulletHeight + g_navigationBulletMargin);
+
+
+            //Manage click on bullet link: Go to the target item
+            jQ_stdNavigation.find('a').on('click',function(e){
+                e.preventDefault();
+                var currentHash = jQuery(this).attr('href');
+                var currentIndex = currentHash.replace('#','');
+                currentIndex = parseInt(currentIndex);
+                var scrollAmount = currentIndex * g_itemScrollRange;
+                jQuery(document).scrollTop(scrollAmount);
+            });
         }
-        //First bullet link jQuery object
-        var jQ_stdNavigationFirstChild = jQ_stdNavigation.children('a:first-child');
-        //Link bullet width
-        var g_navigationBulletWidth = jQ_stdNavigationFirstChild.outerWidth();
-        //Link bullet height
-        var g_navigationBulletHeight = jQ_stdNavigationFirstChild.outerHeight();
-        //Link bullet margin
-        var g_navigationBulletMargin = parseFloat(jQ_stdNavigationFirstChild.css('margin-bottom'));
-        //Computed 100% progress height
-        var g_progressHeight = g_amountOfItems * (g_navigationBulletHeight + g_navigationBulletMargin);
-
-
-        //Manage click on bullet link: Go to the target item
-        jQ_stdNavigation.find('a').on('click',function(e){
-            e.preventDefault();
-            var currentHash = jQuery(this).attr('href');
-            var currentIndex = currentHash.replace('#','');
-            currentIndex = parseInt(currentIndex);
-            var scrollAmount = currentIndex * g_itemScrollRange;
-            jQuery(document).scrollTop(scrollAmount);
-        });
 
         //Wrap every letter of each item title
         jQ_scrollshow.children('.item').each(function(){
@@ -165,7 +160,6 @@
             //Transformations on the active item
             jQ_activeItem.addClass('active');
 
-
             //Letters management
             //Common task
             jQ_activeItem
@@ -194,25 +188,43 @@
             //Transformations on non current item
             jQ_inactiveItems.removeClass('active');
 
-            //Navigation and progress
-            for (var i = 0; i < g_amountOfItems; i++) {
-                if(i <= g_index){
-                    //Add class active to all read items
-                    jQ_stdNavigation.find('a[href="#'+i.toString()+'"]').addClass('active');
-                }else{
-                    //Remove class active for all unread items
-                    jQ_stdNavigation.find('a[href="#'+i.toString()+'"]').removeClass('active');
+            //If navigation is enabled, then process
+            if(g_parameters.navigation){
+                //Navigation and progress
+                for (var i = 0; i < g_amountOfItems; i++) {
+                    if(i <= g_index){
+                        //Add class active to all read items
+                        jQ_stdNavigation.find('a[href="#'+i.toString()+'"]').addClass('active');
+                    }else{
+                        //Remove class active for all unread items
+                        jQ_stdNavigation.find('a[href="#'+i.toString()+'"]').removeClass('active');
+                    }
                 }
+                //Calculates progress ratio between 0 and 1
+                var cur_progressCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
+                var cur_currentProgressHeight = cur_progressCoef * g_progressHeight;
+                if(g_index + 1 == g_amountOfItems){
+                    cur_currentProgressHeight = g_progressHeight - g_navigationBulletMargin - g_navigationBulletHeight;
+                }
+                //Assign ratio width to the progress bar
+                // jQ_stdNavigationFirstChild.children('.progress').height(cur_currentProgressHeight);
+                jQ_stdNavigation.children('.progress').height(cur_currentProgressHeight);
             }
-            //Calculates progress ratio between 0 and 1
-            var cur_progressCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
-            var cur_currentProgressHeight = cur_progressCoef * g_progressHeight;
-            if(g_index + 1 == g_amountOfItems){
-                cur_currentProgressHeight = g_progressHeight - g_navigationBulletMargin - g_navigationBulletHeight;
-            }
-            //Assign ratio width to the progress bar
-            // jQ_stdNavigationFirstChild.children('.progress').height(cur_currentProgressHeight);
-            jQ_stdNavigation.children('.progress').height(cur_currentProgressHeight);
+        }
+
+        //If intro, include intro DOM
+        if(g_parameters.intro){
+            jQ_scrollshow.append(
+                '<div class="intro active">'+
+                    '<header>'+
+                        '<h1>'+document.title+'</h1>'+
+                        '<p class="description">'+jQuery('head meta[name="description"]').attr('content')+'</p>'+
+                        '<p>Scroll down</p>'+
+                    '</header>'+
+                '</div>'
+            );
+        }else{
+            update();
         }
 
         //On page scroll
@@ -234,17 +246,19 @@
             jQ_body.height(g_amountOfItems * g_itemScrollRange + jQ_windowHeight);
         });
 
-        //Manage itemChange callback
+        //Callback item change
         //Returns the target index
         jQ_scrollshow.on('itemChange',function(e){
             var targetIndex = e.targetIndex;
             g_parameters.onItemChange(targetIndex);
         });
-        jQ_scrollshow.on('firstItem',function(){
-            g_parameters.onFirstItem(console.log('first'));
+        //Callback current item is the first
+        jQ_scrollshow.on('firstItem',function(e){
+            g_parameters.onFirstItem(e);
         });
-        jQ_scrollshow.on('lastItem',function(){
-            g_parameters.onLastItem(console.log('last'));
+        //Callback current item is the last
+        jQ_scrollshow.on('lastItem',function(e){
+            g_parameters.onLastItem(e);
         });
     };
 }(jQuery));
