@@ -3,8 +3,8 @@
         //Defaults parameters
         var g_parameters = {
             id:                 'scrollshow',               //ID if the main Scrollshow wrapper
-            scrollRange:        2000,                       //Amount of pixels per item
-            keepActive:         false,                      //Once scrolled, letters keep active
+            scrollRange:        1000,                       //Amount of pixels per item
+            keepActive:         true,                      //Once scrolled, letters keep active
             textEllipsis:       '...',                      //String displayed at the end of each text to scroll
             intro:              true,                       //Enable or not intro (document title + description)
             onItemChange:       function(e){                //Callback on item change
@@ -38,8 +38,11 @@
         if(g_parameters.intro){
             jQ_scrollshow.append(
                 '<div class="intro active">'+
-                    '<h1>'+document.title+'</h1>'+
-                    '<p class="description">'+jQuery('head meta[name="description"]').attr('content')+'</p>'+
+                    '<header>'+
+                        '<h1>'+document.title+'</h1>'+
+                        '<p class="description">'+jQuery('head meta[name="description"]').attr('content')+'</p>'+
+                        '<p>Scroll down</p>'+
+                    '</header>'+
                 '</div>'
             );
         }
@@ -162,29 +165,30 @@
             //Transformations on the active item
             jQ_activeItem.addClass('active');
 
+
             //Letters management
             //Common task
             jQ_activeItem
                 .find('.letter:eq('+cur_letterIndex+')')
-                .addClass('active last');
+                .addClass('active current');
             //If keepActive enabled
             if(g_parameters.keepActive) {
                 for (var z = 0; z < cur_letterIndex; z++) {
                     jQ_activeItem
                         .find('.letter:eq('+z+')')
                         .addClass('active')
-                        .removeClass('last');
+                        .removeClass('current');
                 }
                 for (var z = cur_letterIndex + 1; z < cur_amountOfLetters; z++) {
                     jQ_activeItem
                         .find('.letter:eq('+z+')')
-                        .removeClass('active last');
+                        .removeClass('active current');
                 }
             //If keepActive disabled
             }else{
                 jQ_activeItem
                     .find('.letter:not(:eq('+cur_letterIndex+'))')
-                    .removeClass('active last');
+                    .removeClass('active current');
             }
 
             //Transformations on non current item
@@ -211,19 +215,15 @@
             jQ_stdNavigation.children('.progress').height(cur_currentProgressHeight);
         }
 
-        //Apply routines on page start
-        //update();
-
-        //Safari sucks
-        setTimeout(function(){
-            if(jQuery(window).scrollTop() > 0){
-
-            }
-        },100);
-
         //On page scroll
         jQuery(document).on('scroll',function(e){
             update();
+            //If intro enabled, disable it at first mouse scroll
+            if(g_parameters.intro){
+                if(g_scrollTopRaw > 0){
+                    jQ_scrollshow.children('.intro').removeClass('active');
+                }
+            }
         });
 
         //On window change
