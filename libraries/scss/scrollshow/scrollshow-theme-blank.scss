@@ -3,6 +3,14 @@
 */
 body {
     #scrollshow {
+        &>.intro {
+            transition: all 300ms;
+            text-align: center;
+            &>header {
+            }
+            &.active {
+            }
+        }
         &>.overlay {
             background-color: black;
             opacity: 0.5;
@@ -19,6 +27,8 @@ body {
                         &.active {
                             //Read / Active letter properties
                             color: black;
+                        }
+                        &.current {
                         }
                     }
                 }
