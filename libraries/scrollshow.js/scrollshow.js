@@ -3,12 +3,12 @@
         //Defaults parameters
         var g_parameters = {
             id:                 'scrollshow',       //ID if the main Scrollshow wrapper
-            scrollRange:        1000,               //Amount of pixels per item
+            scrollRange:        2000,               //Amount of pixels per item
             keepActive:         true,               //Once scrolled, letters keep active
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
             intro:              true,               //Enable/disable intro (document title + description)
             navigation:         true,               //Enable/diable navigation progress and bullets
-            overlay:            false,               //Enable/diable overlay between items and body background
+            overlay:            true,               //Enable/diable overlay between items and body background
             onItemChange:       function(e){        //Callback on item change
 
             },
