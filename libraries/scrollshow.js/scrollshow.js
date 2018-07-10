@@ -4,8 +4,9 @@
         var g_parameters = {
             id:                 'scrollshow',               //ID if the main Scrollshow wrapper
             scrollRange:        2000,                       //Amount of pixels per item
-            keepActive:         true,                       //Once scrolled, letters keep active
+            keepActive:         false,                      //Once scrolled, letters keep active
             textEllipsis:       '...',                      //String displayed at the end of each text to scroll
+            intro:              true,                       //Enable or not intro (document title + description)
             onItemChange:       function(e){                //Callback on item change
 
             },
@@ -33,6 +34,15 @@
         var jQ_scrollshow = jQuery('#'+g_parameters.id);
         //Include overlay
         jQ_scrollshow.append('<div class="overlay"></div>');
+        //If intro, include intro DOM
+        if(g_parameters.intro){
+            jQ_scrollshow.append(
+                '<div class="intro active">'+
+                    '<h1>'+document.title+'</h1>'+
+                    '<p class="description">'+jQuery('head meta[name="description"]').attr('content')+'</p>'+
+                '</div>'
+            );
+        }
         //Current item index
         var g_index = 0;
         //Amount of scroll
@@ -102,7 +112,7 @@
         //Update management
         var update = function(){
             //Update value of the scroll top amount
-            g_scrollTopRaw = jQuery(document).scrollTop();
+            g_scrollTopRaw = jQuery(window).scrollTop();
             //If end of scroll, decrease g_scrollTopRaw to avoid jump
             if(g_scrollTopRaw >= (g_amountOfItems * g_itemScrollRange)){
                 g_scrollTopRaw = g_amountOfItems * g_itemScrollRange - 1;
@@ -152,28 +162,29 @@
             //Transformations on the active item
             jQ_activeItem.addClass('active');
 
-            if(g_parameters.keepActive){
-                //Keep all the previous letters indexes active
-                for (var z = 0; z < cur_amountOfLetters; z++) {
-                    if(z <= cur_letterIndex){
-                        jQ_activeItem
-                            .find('.letter:eq('+z.toString()+')')
-                            .addClass('active');
-                    }else{
-                        jQ_activeItem
-                            .find('.letter:eq('+z.toString()+')')
-                            .removeClass('active');
-                    }
+            //Letters management
+            //Common task
+            jQ_activeItem
+                .find('.letter:eq('+cur_letterIndex+')')
+                .addClass('active last');
+            //If keepActive enabled
+            if(g_parameters.keepActive) {
+                for (var z = 0; z < cur_letterIndex; z++) {
+                    jQ_activeItem
+                        .find('.letter:eq('+z+')')
+                        .addClass('active')
+                        .removeClass('last');
                 }
+                for (var z = cur_letterIndex + 1; z < cur_amountOfLetters; z++) {
+                    jQ_activeItem
+                        .find('.letter:eq('+z+')')
+                        .removeClass('active last');
+                }
+            //If keepActive disabled
             }else{
-                // Letters management of the active item
-                //Make only the current letter index as active
-                jQ_activeItem
-                    .find('.letter:eq('+cur_letterIndex+')')
-                    .addClass('active');
                 jQ_activeItem
                     .find('.letter:not(:eq('+cur_letterIndex+'))')
-                    .removeClass('active');
+                    .removeClass('active last');
             }
 
             //Transformations on non current item
@@ -201,12 +212,18 @@
         }
 
         //Apply routines on page start
-        // update();
+        //update();
+
+        //Safari sucks
+        setTimeout(function(){
+            if(jQuery(window).scrollTop() > 0){
+
+            }
+        },100);
 
         //On page scroll
         jQuery(document).on('scroll',function(e){
             update();
-            console.log('scrolled')
         });
 
         //On window change
