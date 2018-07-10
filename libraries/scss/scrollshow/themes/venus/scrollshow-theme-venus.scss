@@ -1,4 +1,4 @@
-@import '../../../components/quikster';
+@import 'components/quikster';
 @import 'components/fonts';
 @import 'components/links';
 /*
@@ -41,7 +41,7 @@ body {
                 &>.word {
                     .letter {
                         //Unread / Inactive letter properties
-                        opacity: 0;
+                        opacity: 0.02;
                         color: qtr-color(6);
                         margin-left: -0.10em;
                         transition: all 200ms;
