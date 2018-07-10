@@ -27,8 +27,9 @@ body {
             }
             p {
                 line-height: 1.6em;
-                max-width: 45ch;
+                max-width: 50ch;
                 margin: auto;
+                padding: 0em 2em;
                 &+p {
                     margin-top: 2em;
                 }
@@ -42,27 +43,35 @@ body {
                         //Unread / Inactive letter properties
                         opacity: 0;
                         color: qtr-color(6);
-                        margin-left: -0.05em;
+                        margin-left: -0.10em;
                         transition: all 200ms;
                         position: relative;
+                        text-shadow: 5px 1px 8px rgba(qtr-color(-6),.5);
                         &.active {
                             //Read / Active letter properties
                             color: qtr-color(6);
-                            margin-left: -0.10em;
                             opacity: 1;
-                            text-shadow: 5px 1px 8px rgba(qtr-color(-6),.5);
                         }
                         &.current {
                             @keyframes cursor {
-                                0% { border-color: rgba(qtr-color(5),0) }
-                                100% { border-color: rgba(qtr-color(5),1) }
+                                0% { opacity: 0; }
+                                100% { opacity: 1; }
                             }
-                            border-right-style: solid;
-                            border-width: 2px;
-                            animation-name: cursor;
-                            animation-duration: 600ms;
-                            animation-iteration-count: infinite;
-                            animation-direction: alternate;
+                            &:after {
+                                content: '';
+                                display: block;
+                                position: absolute;
+                                top: 0px;
+                                right: 0px;
+                                width: 2px;
+                                height: 100%;
+                                background-color: qtr-color(6);
+                                animation-name: cursor;
+                                animation-duration: 600ms;
+                                animation-iteration-count: infinite;
+                                animation-direction: alternate;
+                            }
+
                         }
                     }
                 }
@@ -72,21 +81,22 @@ body {
         &>.navigation {
             //Progress bar
             &>.progress {
-                background-color: black;
+                background-color: qtr-color(6);
                 border-radius: 4px;
             }
             //Item
             &>a {
                 background-color: transparent;
-                border: 2px solid black;
+                border: 2px solid qtr-color(6);
+                border-radius: 100%;
                 //Fill effect
                 &:after {
-                    background-color: black;
+                    background-color: qtr-color(6);
                 }
                 &:last-child {
                 }
                 &:first-child {
-                    background-color: black;
+                    background-color: qtr-color(6);
                 }
 
                 //Read item

@@ -18,3 +18,16 @@ h3 { font-size: qtr-font-size(4); }
 h4 { font-size: qtr-font-size(3); }
 h5 { font-size: qtr-font-size(2); }
 h6 { font-size: qtr-font-size(1); }
+
+@include qtr-screen(xs,sm){
+    h1 { font-size: qtr-font-size(3); }
+    h2 { font-size: qtr-font-size(2); }
+    h3 { font-size: qtr-font-size(1); }
+    h4 { font-size: qtr-font-size(); }
+    h5 { font-size: qtr-font-size(); }
+    h6 { font-size: qtr-font-size(); }
+    body {
+        font-size: qtr-font-size(-3);
+    }
+
+}
