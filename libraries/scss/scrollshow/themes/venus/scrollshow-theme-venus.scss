@@ -10,9 +10,15 @@ body {
     -webkit-font-smoothing: antialiased;
     #scrollshow {
         &>.intro {
-            transition: all 300ms;
-            text-align: center;
             &>header {
+                h1 {
+                    font-size: qtr-font-size(4);
+                    letter-spacing: -0.05em;
+                    max-width: 800px;
+                    margin: auto;
+                    padding: 0em 1em;
+                    text-shadow: 1px 1px 5px rgba(qtr-color(-6),.5);
+                }
             }
             &.active {
             }
@@ -22,6 +28,7 @@ body {
             background: radial-gradient(ellipse at top, transparent, qtr-color(-5));
         }
         &>.item {
+            transform: translateY(-75%);
             h2 {
                 padding: 0em 1em;
             }
@@ -35,6 +42,7 @@ body {
                 }
             }
             &.active {
+                transform: translateY(-50%);
             }
             //Letters
             &>*:first-child {
