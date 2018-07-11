@@ -1,7 +1,7 @@
 body {
     a {
         &.link-button {
-            color: qtr-color();
+            color: qtr-color(-2);
             background-color: qtr-color(6);
             padding: 1.5em 3em;
             border-radius: 2px;
@@ -24,6 +24,24 @@ body {
                 animation-duration: 2s;
                 animation-iteration-count: 2;
                 animation-direction: alternate;
+            }
+        }
+    }
+}
+@include qtr-screen(xs){
+    body {
+        a {
+            &.link-button {
+                font-size: qtr-font-size(-6);
+            }
+        }
+    }
+}
+@include qtr-screen(sm){
+    body {
+        a {
+            &.link-button {
+                font-size: qtr-font-size(-5);
             }
         }
     }
