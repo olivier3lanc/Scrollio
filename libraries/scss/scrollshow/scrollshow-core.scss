@@ -72,6 +72,7 @@ body {
             }
         }
 
+        //Progress bar
         &>.progress-bar {
             position: fixed;
             top: 0px;
@@ -82,6 +83,7 @@ body {
             z-index: 10;
         }
 
+        //Navigation: Includes bullets links + progress 
         &>.navigation {
             position: fixed;
             top: 30px;
