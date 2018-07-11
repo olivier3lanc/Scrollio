@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Venus theme</title>
+    <meta name="description" content="Demonstration of Venus theme for Scrollshow">
+    <!-- Reset CSS -->
+    <link href="libraries/normalize/normalize.min.css" rel="stylesheet">
+    <!-- Scrollshow required stylesheet -->
+    <link href="dist/scrollshow-core.css" rel="stylesheet">
+    <!-- Scrollshow optional theme stylesheet -->
+    <link href="dist/scrollshow-theme-venus.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="scrollshow">
+        <div class="item">
+            <h2>My First item</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="item">
+            <h2>My second punchline</h2>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+        <div class="item">
+            <h2>A fancy story telling plugin</h2>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <div class="item">
+            <h2>Liked it?</h2>
+            <p><a href="#" class="link-button">Restart now</a></p>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="dist/scrollshow.min.js"></script>
+    <script type="text/javascript">
+        jQuery.fn.scrollshow({
+            onItemChange: function(targetIndex){
+                console.log(targetIndex);
+            },
+            onFirstItem: function(){
+                console.log('first item');
+            },
+            onLastItem: function(){
+                console.log('last item');
+            },
+            onScrollEnd: function(){
+                jQuery('.link-button').addClass('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
