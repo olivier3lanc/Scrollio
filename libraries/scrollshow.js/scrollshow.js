@@ -7,7 +7,7 @@
             keepActive:         true,               //Once scrolled, letters keep active
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
             intro:              true,               //Enable/disable intro (document title + description)
-            navigation:         false,               //Enable/disable navigation progress and bullets
+            navigation:         true,               //Enable/disable navigation progress and bullets
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
             onItemChange:       function(e){        //Callback on item change
@@ -17,6 +17,9 @@
 
             },
             onLastItem:         function(e){        //Callback on last item
+
+            },
+            onScrollEnd:        function(e){        //Callback on scroll end
 
             }
         }
@@ -116,6 +119,11 @@
             //If end of scroll, decrease g_scrollTopRaw to avoid jump
             if(g_scrollTopRaw >= (g_amountOfItems * g_itemScrollRange)){
                 g_scrollTopRaw = g_amountOfItems * g_itemScrollRange - 1;
+                //Trigger event end of scroll
+                var e_scrollEnd = jQuery.Event('scrollEnd');
+                jQ_scrollshow.trigger({
+                    type: 'scrollEnd'
+                });
             }
             //Calculates the displayed item in relation with scroll amount
             g_index = parseInt(g_scrollTopRaw / g_itemScrollRange);
@@ -277,6 +285,10 @@
         //Callback current item is the last
         jQ_scrollshow.on('lastItem',function(e){
             g_parameters.onLastItem(e);
+        });
+        //Callback scroll end
+        jQ_scrollshow.on('scrollEnd',function(e){
+            g_parameters.onScrollEnd(e);
         });
     };
 }(jQuery));
