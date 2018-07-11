@@ -239,13 +239,18 @@
         //If intro, include into DOM
         if(g_parameters.intro){
             jQ_scrollshow.append(
-                '<div class="intro active">'+
+                '<div class="intro">'+
                     '<header>'+
                         '<h1>'+document.title+'</h1>'+
                         '<p class="description">'+jQuery('head meta[name="description"]').attr('content')+'</p>'+
                     '</header>'+
                 '</div>'
             );
+            //Allow transition to be done
+            setTimeout(function(){
+                jQ_scrollshow.children('.intro').addClass('active');
+            },1);
+
         //Otherwise, update to display the first item
         }else{
             update();
