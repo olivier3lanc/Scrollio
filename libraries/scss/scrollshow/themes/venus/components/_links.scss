@@ -9,6 +9,22 @@ body {
             font-size: qtr-font-size(-4);
             text-transform: uppercase;
             font-family: qtr-font-family(1);
+            opacity: 0;
+            &.active {
+                @keyframes light {
+                    0% {
+                        box-shadow: 0px 0px 0px rgba(qtr-color(6),0);
+                    }
+                    100% {
+                        box-shadow: 0px 0px 50px rgba(qtr-color(6),0.8);
+                    }
+                }
+                opacity: 1;
+                animation-name: light;
+                animation-duration: 2s;
+                animation-iteration-count: 2;
+                animation-direction: alternate;
+            }
         }
     }
 }
