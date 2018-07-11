@@ -36,8 +36,8 @@
         }
         //jQuery objects
         var jQ_body = jQuery('body');
-        var jQ_windowWidth = jQuery(window).width();
-        var jQ_windowHeight = jQuery(window).height();
+        var jQ_windowWidth = window.innerWidth;
+        var jQ_windowHeight = window.innerHeight;
         var jQ_scrollshow = jQuery('#'+g_parameters.id);
         //If overlay, include it into DOM
         if(g_parameters.overlay){
@@ -243,7 +243,6 @@
                     '<header>'+
                         '<h1>'+document.title+'</h1>'+
                         '<p class="description">'+jQuery('head meta[name="description"]').attr('content')+'</p>'+
-                        '<p>Scroll down</p>'+
                     '</header>'+
                 '</div>'
             );
@@ -265,11 +264,11 @@
         //On window change
         jQuery(window).on('resize',function(e){
             //Update window width value
-            jQ_windowWidth = jQuery(window).width();
+            jQ_windowWidth = window.innerWidth;
             //Update window height value
-            jQ_windowHeight = jQuery(window).height();
+            jQ_windowHeight = window.innerHeight;
             //Update body height
-            jQ_body.height(g_amountOfItems * g_itemScrollRange + jQ_windowHeight);
+            jQ_body.height(g_amountOfItems * g_itemScrollRange + window.innerHeight);
         });
 
         //Callback item change
