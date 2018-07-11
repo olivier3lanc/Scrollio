@@ -7,7 +7,7 @@
             keepActive:         true,               //Once scrolled, letters keep active
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
             intro:              true,               //Enable/disable intro (document title + description)
-            navigation:         true,               //Enable/disable navigation progress and bullets
+            navigation:         false,               //Enable/disable navigation progress and bullets
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
             onItemChange:       function(e){        //Callback on item change
@@ -93,24 +93,37 @@
             });
         }
 
-        //Wrap every letter of each item title
-        jQ_scrollshow.children('.item').each(function(){
-            //First child of the .item is the scroller
-            var jQ_text = jQuery(this).children().eq(0);
-            //Text content of the element to scroll
-            var text = jQ_text.text()+' '+g_parameters.textEllipsis;
-            var result = '';
-            var zIndex = 1000;
-            for(var i = 0; i < text.length; i++){
-                if(text[i] == ' '){
-                   result += '</span><span class="separator">'+text[i]+'</span><span class="word">';
-                }else{
-                   result += '<span class="letter" style="z-index:'+zIndex+';">'+text[i]+'</span>';
-                }
-                zIndex--;
+        //Wrap letters
+        var wrapLetters = function(selector){
+            if(typeof(selector) == 'string'){
+                //Wrap every letter of each item title
+                jQ_scrollshow.find(selector).each(function(){
+                    //First child of the .item is the scroller
+                    var jQ_text = jQuery(this).children().eq(0);
+                    //Text content of the element to scroll
+                    var text = jQ_text.text()+' '+g_parameters.textEllipsis;
+                    var result = '';
+                    var zIndex = 1000;
+                    result += '<span class="word">'; //Very first word
+                    for(var i = 0; i < text.length; i++){
+                        if(text[i] == ' '){
+                           result += '</span>'; //end of a word
+                           result += '<span class="separator">'+text[i]+'</span>'; //add separator
+                           result += '<span class="word">'; //restart another word
+                        }else{
+                           result += '<span class="letter" style="z-index:'+zIndex+';">'+text[i]+'</span>';
+                        }
+                        //Decrease z-index;
+                        zIndex--;
+                    }
+                    result += '</span>';//End of last word
+                    //Replace html
+                    jQ_text.html(result);
+                });
             }
-            jQ_text.html('<span class="word">'+result+'</span>');
-        });
+        }
+
+        wrapLetters('.item');
 
         //Update management
         var update = function(){
@@ -246,6 +259,7 @@
                     '</header>'+
                 '</div>'
             );
+            wrapLetters('.intro header');
             //Allow transition to be done
             setTimeout(function(){
                 jQ_scrollshow.children('.intro').addClass('active');
