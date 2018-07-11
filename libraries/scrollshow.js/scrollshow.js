@@ -7,8 +7,9 @@
             keepActive:         true,               //Once scrolled, letters keep active
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
             intro:              true,               //Enable/disable intro (document title + description)
-            navigation:         true,               //Enable/diable navigation progress and bullets
-            overlay:            true,               //Enable/diable overlay between items and body background
+            navigation:         false,               //Enable/disable navigation progress and bullets
+            progressBar:        true,               //Enable/disable progress bar
+            overlay:            true,               //Enable/disable overlay between items and body background
             onItemChange:       function(e){        //Callback on item change
 
             },
@@ -32,6 +33,7 @@
         }
         //jQuery objects
         var jQ_body = jQuery('body');
+        var jQ_windowWidth = jQuery(window).width();
         var jQ_windowHeight = jQuery(window).height();
         var jQ_scrollshow = jQuery('#'+g_parameters.id);
         //If overlay, include it into DOM
@@ -190,7 +192,7 @@
 
             //If navigation is enabled, then process
             if(g_parameters.navigation){
-                //Navigation and progress
+                //Navigation and its progress
                 for (var i = 0; i < g_amountOfItems; i++) {
                     if(i <= g_index){
                         //Add class active to all read items
@@ -210,9 +212,23 @@
                 // jQ_stdNavigationFirstChild.children('.progress').height(cur_currentProgressHeight);
                 jQ_stdNavigation.children('.progress').height(cur_currentProgressHeight);
             }
+
+            //If intro enabled, disable it at first mouse scroll
+            if(g_parameters.intro){
+                if(g_scrollTopRaw > 0){
+                    jQ_scrollshow.children('.intro').removeClass('active');
+                }
+            }
+
+            //If progress bar is enabled
+            if(g_parameters.progressBar){
+                var cur_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
+                var cur_progressBarValue = cur_progressBarCoef * jQ_windowWidth;
+                jQ_scrollshow.children('.progress-bar').css('width',cur_progressBarValue);
+            }
         }
 
-        //If intro, include intro DOM
+        //If intro, include into DOM
         if(g_parameters.intro){
             jQ_scrollshow.append(
                 '<div class="intro active">'+
@@ -223,23 +239,25 @@
                     '</header>'+
                 '</div>'
             );
+        //Otherwise, update to display the first item
         }else{
             update();
+        }
+
+        //If progress bar, include into DOM
+        if(g_parameters.progressBar){
+            jQ_scrollshow.append('<div class="progress-bar"></div>');
         }
 
         //On page scroll
         jQuery(document).on('scroll',function(e){
             update();
-            //If intro enabled, disable it at first mouse scroll
-            if(g_parameters.intro){
-                if(g_scrollTopRaw > 0){
-                    jQ_scrollshow.children('.intro').removeClass('active');
-                }
-            }
         });
 
         //On window change
         jQuery(window).on('resize',function(e){
+            //Update window width value
+            jQ_windowWidth = jQuery(window).width();
             //Update window height value
             jQ_windowHeight = jQuery(window).height();
             //Update body height
