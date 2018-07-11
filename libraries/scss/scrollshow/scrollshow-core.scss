@@ -83,12 +83,13 @@ body {
             z-index: 10;
         }
 
-        //Navigation: Includes bullets links + progress 
+        //Navigation: Includes bullets links + progress
         &>.navigation {
             position: fixed;
-            top: 30px;
+            top: 50%;
             left: 30px;
             z-index: 100;
+            transform: translateY(-50%);
             //Progress bar
             &>.progress {
                 display: block;
