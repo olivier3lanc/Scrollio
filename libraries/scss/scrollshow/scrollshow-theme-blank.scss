@@ -4,11 +4,19 @@
 body {
     #scrollshow {
         &>.intro {
-            transition: all 300ms;
-            text-align: center;
             &>header {
+                h1 {
+                    .letter {
+                    }
+                }
             }
             &.active {
+                &>header {
+                    h1 {
+                        .letter {
+                        }
+                    }
+                }
             }
         }
         &>.overlay {
