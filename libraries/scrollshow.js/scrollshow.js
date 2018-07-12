@@ -279,14 +279,15 @@
                 '</div>'
             );
             wrapLetters('.intro header');
-            //Allow transition to be done
-            setTimeout(function(){
-                jQ_scrollshow.children('.intro').addClass('active');
-            },1);
 
-        //Otherwise, update to display the first item
-        }else{
-            update();
+            //Wait a little to allow transition to be done
+            setTimeout(function(){
+                //if page is not scrolled at start or refreshed, then display
+                //Avoids displaying intro if page is refreshed
+                if(g_previousLetterIndex == -1){
+                    jQ_scrollshow.children('.intro').addClass('active');
+                }
+            },16);
         }
 
         //If progress bar, include into DOM
