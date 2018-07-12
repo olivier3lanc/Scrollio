@@ -53,6 +53,8 @@
         var g_itemScrollRange = g_parameters.scrollRange;
         //Apply body height
         jQ_body.height(g_amountOfItems * g_itemScrollRange + jQ_windowHeight);
+        //Initialize previous letter index to optimize performance and avoid no use computing
+        var g_previousLetterIndex = -1;
 
         //If navigation enabled, include it into DOM
         if(g_parameters.navigation){
@@ -142,6 +144,8 @@
             g_index = parseInt(g_scrollTopRaw / g_itemScrollRange);
             //Amount of scroll for the current item
             var cur_relativeScroll = g_scrollTopRaw - g_itemScrollRange * g_index;
+            // var cur_relativeScrollCoef = cur_relativeScroll / g_itemScrollRange;
+            // console.log(cur_relativeScrollCoef);
             //CSS transform property
             // var g_transform = 'translateY(calc(-50% - '+cur_relativeScroll / 100+'px))';
             //CSS text shadow property
@@ -159,93 +163,108 @@
             //Index of the letter
             var cur_letterIndex = parseInt(cur_relativeScroll / cur_scrollSteps);
 
-            //Create event active item changed for the target item
-            if(!jQ_activeItem.hasClass('active')){
-                var e_itemChange = jQuery.Event('itemChange');
-                var e_lastItem = jQuery.Event('lastItem');
-                var e_firstItem = jQuery.Event('firstItem');
-                jQ_scrollshow.trigger({
-                    type: 'itemChange',
-                    targetIndex: g_index
-                });
-                if(g_index == 0){
+            //Work only if needed: Compare previous letter index, if different, then work
+            if(cur_letterIndex != g_previousLetterIndex){
+                g_previousLetterIndex = cur_letterIndex;
+                //Create event active item changed for the target item
+                if(!jQ_activeItem.hasClass('active')){
+                    var e_itemChange = jQuery.Event('itemChange');
+                    var e_lastItem = jQuery.Event('lastItem');
+                    var e_firstItem = jQuery.Event('firstItem');
                     jQ_scrollshow.trigger({
-                        type: 'firstItem'
+                        type: 'itemChange',
+                        targetIndex: g_index
                     });
-                }
-                if(g_index == (g_amountOfItems - 1)){
-                    jQ_scrollshow.trigger({
-                        type: 'lastItem'
-                    });
-                }
-            }
-
-            //Transformations on the active item
-            jQ_activeItem.addClass('active');
-
-            //Letters management
-            //Common task
-            jQ_activeItem
-                .find('.letter:eq('+cur_letterIndex+')')
-                .addClass('active current');
-            //If keepActive enabled
-            if(g_parameters.keepActive) {
-                for (var z = 0; z < cur_letterIndex; z++) {
-                    jQ_activeItem
-                        .find('.letter:eq('+z+')')
-                        .addClass('active')
-                        .removeClass('current');
-                }
-                for (var z = cur_letterIndex + 1; z < cur_amountOfLetters; z++) {
-                    jQ_activeItem
-                        .find('.letter:eq('+z+')')
-                        .removeClass('active current');
-                }
-            //If keepActive disabled
-            }else{
-                jQ_activeItem
-                    .find('.letter:not(:eq('+cur_letterIndex+'))')
-                    .removeClass('active current');
-            }
-
-            //Transformations on non current item
-            jQ_inactiveItems.removeClass('active');
-
-            //If navigation is enabled, then process
-            if(g_parameters.navigation){
-                //Navigation and its progress
-                for (var i = 0; i < g_amountOfItems; i++) {
-                    if(i <= g_index){
-                        //Add class active to all read items
-                        jQ_stdNavigation.find('a[href="#'+i.toString()+'"]').addClass('active');
-                    }else{
-                        //Remove class active for all unread items
-                        jQ_stdNavigation.find('a[href="#'+i.toString()+'"]').removeClass('active');
+                    if(g_index == 0){
+                        jQ_scrollshow.trigger({
+                            type: 'firstItem'
+                        });
+                    }
+                    if(g_index == (g_amountOfItems - 1)){
+                        jQ_scrollshow.trigger({
+                            type: 'lastItem'
+                        });
                     }
                 }
-                //Calculates progress ratio between 0 and 1
-                var cur_progressCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
-                var cur_currentProgressHeight = cur_progressCoef * g_progressHeight;
-                if(g_index + 1 == g_amountOfItems){
-                    cur_currentProgressHeight = g_progressHeight - g_navigationBulletMargin - g_navigationBulletHeight;
-                }
-                //Assign ratio width to the progress bar
-                // jQ_stdNavigationFirstChild.children('.progress').height(cur_currentProgressHeight);
-                jQ_stdNavigation.children('.progress').height(cur_currentProgressHeight);
-            }
 
-            //If intro enabled, disable it at first mouse scroll
-            if(g_parameters.intro){
-                if(g_scrollTopRaw > 0){
-                    jQ_scrollshow.children('.intro').removeClass('active');
-                }
-            }
+                //Transformations on the active item
+                jQ_activeItem.addClass('active');
 
-            //If progress bar is enabled
-            if(g_parameters.progressBar){
-                var cur_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
-                var cur_progressBarValue = cur_progressBarCoef * jQ_windowWidth;
-                jQ_scrollshow.children('.progress-bar').css('width',cur_progressBarValue);
+                //Letters management
+                //Common task
+                jQ_activeItem
+                    .find('.letter:eq('+cur_letterIndex+')')
+                    .addClass('active current');
+                //If keepActive enabled
+                if(g_parameters.keepActive) {
+                    for (var z = 0; z < cur_letterIndex; z++) {
+                        jQ_activeItem
+                            .find('.letter:eq('+z+')')
+                            .addClass('active')
+                            .removeClass('current');
+                    }
+                    for (var z = cur_letterIndex + 1; z < cur_amountOfLetters; z++) {
+                        jQ_activeItem
+                            .find('.letter:eq('+z+')')
+                            .removeClass('active current');
+                    }
+                //If keepActive disabled
+                }else{
+                    jQ_activeItem
+                        .find('.letter:not(:eq('+cur_letterIndex+'))')
+                        .removeClass('active current');
+                }
+
+                //
+                if(cur_letterIndex == (cur_amountOfLetters - 1)){
+                    var e_itemEnd = jQuery.Event('itemEnd');
+                    jQ_scrollshow.trigger({
+                        type: 'itemEnd'
+                    });
+                }
+
+                //Transformations on non current item
+                jQ_inactiveItems.removeClass('active');
+
+                //If navigation is enabled, then process
+                if(g_parameters.navigation){
+                    //Navigation and its progress
+                    for (var i = 0; i < g_amountOfItems; i++) {
+                        if(i <= g_index){
+                            //Add class active to all read items
+                            jQ_stdNavigation.find('a[href="#'+i.toString()+'"]').addClass('active');
+                        }else{
+                            //Remove class active for all unread items
+                            jQ_stdNavigation.find('a[href="#'+i.toString()+'"]').removeClass('active');
+                        }
+                    }
+                    //Calculates progress ratio between 0 and 1
+                    var cur_progressCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
+                    var cur_currentProgressHeight = cur_progressCoef * g_progressHeight;
+                    if(g_index + 1 == g_amountOfItems){
+                        cur_currentProgressHeight = g_progressHeight - g_navigationBulletMargin - g_navigationBulletHeight;
+                    }
+                    //Assign ratio width to the progress bar
+                    // jQ_stdNavigationFirstChild.children('.progress').height(cur_currentProgressHeight);
+                    jQ_stdNavigation.children('.progress').height(cur_currentProgressHeight);
+                }
+
+                //If intro enabled, disable it at first mouse scroll
+                if(g_parameters.intro){
+                    if(g_scrollTopRaw > 0){
+                        jQ_scrollshow.children('.intro').removeClass('active');
+                    }
+                }
+
+                //If progress bar is enabled
+                if(g_parameters.progressBar){
+                    var cur_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
+                    var cur_progressBarValue = cur_progressBarCoef * jQ_windowWidth;
+                    jQ_scrollshow.children('.progress-bar').css('width',cur_progressBarValue);
+                }
+
+                //After all work done, update previous letter index value
+                g_previousLetterIndex = cur_letterIndex;
             }
         }
 
@@ -303,6 +322,11 @@
         //Callback current item is the last
         jQ_scrollshow.on('lastItem',function(e){
             g_parameters.onLastItem(e);
+        });
+        //Callback item end
+        jQ_scrollshow.on('itemEnd',function(e){
+            console.log('item end')
+            // g_parameters.itemEnd(e);
         });
         //Callback scroll end
         jQ_scrollshow.on('scrollEnd',function(e){
