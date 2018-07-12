@@ -41,7 +41,10 @@
     <script type="text/javascript">
         jQuery.fn.scrollshow({
             onItemChange: function(targetIndex){
-                console.log(targetIndex);
+                console.log('current index is '+targetIndex);
+            },
+            onItemEnd: function(index){
+                console.log('end of '+index);
             },
             onFirstItem: function(){
                 console.log('first item');
@@ -50,6 +53,7 @@
                 console.log('last item');
             },
             onScrollEnd: function(){
+                console.log('end of scroll');
                 jQuery('.link-button').addClass('active');
             }
         });

@@ -13,6 +13,9 @@
             onItemChange:       function(e){        //Callback on item change
 
             },
+            onItemEnd:          function(e){        //Callback on item end
+
+            },
             onFirstItem:        function(e){        //Callback on first item
 
             },
@@ -215,11 +218,12 @@
                         .removeClass('active current');
                 }
 
-                //
+                //Create item end event
                 if(cur_letterIndex == (cur_amountOfLetters - 1)){
                     var e_itemEnd = jQuery.Event('itemEnd');
                     jQ_scrollshow.trigger({
-                        type: 'itemEnd'
+                        type: 'itemEnd',
+                        index: g_index
                     });
                 }
 
@@ -326,8 +330,8 @@
         });
         //Callback item end
         jQ_scrollshow.on('itemEnd',function(e){
-            console.log('item end')
-            // g_parameters.itemEnd(e);
+            var currentItemIndex = e.index;
+            g_parameters.onItemEnd(currentItemIndex);
         });
         //Callback scroll end
         jQ_scrollshow.on('scrollEnd',function(e){
