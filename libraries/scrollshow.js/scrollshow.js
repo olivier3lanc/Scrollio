@@ -10,6 +10,7 @@
             navigation:         false,               //Enable/disable navigation progress and bullets
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
+            clickToGoNext:      true,               //Enable/disable need to click to display next item
             onItemChange:       function(e){        //Callback on item change
 
             },
@@ -50,10 +51,16 @@
         var g_index = 0;
         //Amount of scroll
         var g_scrollTopRaw = 0;
+        //Amount of item relative scroll
+        var g_relativeScroll = 0;
         //Amount of items
         var g_amountOfItems = jQ_scrollshow.children('.item').length;
         //Scroll amount for an item
         var g_itemScrollRange = g_parameters.scrollRange;
+        //Scroll amount history
+        var g_previousScrollAmount = 0;
+        //Scroll speed history
+        var g_previousscrollMove = 0;
         //Apply body height
         jQ_body.height(g_amountOfItems * g_itemScrollRange + jQ_windowHeight);
         //Initialize previous letter index to optimize performance and avoid no use computing
@@ -146,13 +153,14 @@
             //Calculates the displayed item in relation with scroll amount
             g_index = parseInt(g_scrollTopRaw / g_itemScrollRange);
             //Amount of scroll for the current item
-            var cur_relativeScroll = g_scrollTopRaw - g_itemScrollRange * g_index;
-            // var cur_relativeScrollCoef = cur_relativeScroll / g_itemScrollRange;
-            // console.log(cur_relativeScrollCoef);
+            g_relativeScroll = g_scrollTopRaw - g_itemScrollRange * g_index;
+            //
+            // var g_relativeScrollCoef = g_relativeScroll / g_itemScrollRange;
+            // console.log(g_relativeScrollCoef);
             //CSS transform property
-            // var g_transform = 'translateY(calc(-50% - '+cur_relativeScroll / 100+'px))';
+            // var g_transform = 'translateY(calc(-50% - '+g_relativeScroll / 100+'px))';
             //CSS text shadow property
-            // var g_textShadow = '0px '+cur_relativeScroll/50+'px 30px rgba(0,0,0,'+cur_relativeScroll/1900+')';
+            // var g_textShadow = '0px '+g_relativeScroll/50+'px 30px rgba(0,0,0,'+g_relativeScroll/1900+')';
             //jQuery object of the active item
             var jQ_activeItem = jQ_scrollshow.children('.item:eq('+g_index+')');
             //jQuery object of the inactive items
@@ -164,7 +172,7 @@
             //Amount of scroll per step
             var cur_scrollSteps = parseInt(g_itemScrollRange / cur_amountOfLetters);
             //Index of the letter
-            var cur_letterIndex = parseInt(cur_relativeScroll / cur_scrollSteps);
+            var cur_letterIndex = parseInt(g_relativeScroll / cur_scrollSteps);
 
             //Work only if needed: Compare previous letter index, if different, then work
             if(cur_letterIndex != g_previousLetterIndex){
@@ -218,15 +226,6 @@
                         .removeClass('active current');
                 }
 
-                //Create item end event
-                if(cur_letterIndex == (cur_amountOfLetters - 1)){
-                    var e_itemEnd = jQuery.Event('itemEnd');
-                    jQ_scrollshow.trigger({
-                        type: 'itemEnd',
-                        index: g_index
-                    });
-                }
-
                 //Transformations on non current item
                 jQ_inactiveItems.removeClass('active');
 
@@ -266,9 +265,16 @@
                     var cur_progressBarValue = cur_progressBarCoef * jQ_windowWidth;
                     jQ_scrollshow.children('.progress-bar').css('width',cur_progressBarValue);
                 }
-
                 //After all work done, update previous letter index value
                 g_previousLetterIndex = cur_letterIndex;
+            }
+            //Create item end event
+            if(cur_letterIndex == (cur_amountOfLetters - 1)){
+                var e_itemEnd = jQuery.Event('itemEnd');
+                jQ_scrollshow.trigger({
+                    type: 'itemEnd',
+                    index: g_index
+                });
             }
         }
 
@@ -299,9 +305,29 @@
             jQ_scrollshow.append('<div class="progress-bar"></div>');
         }
 
+        //If clickToGoNext, include the button into DOM
+        if(g_parameters.clickToGoNext){
+            jQ_scrollshow.append('<div class="click-to-go-next"><p><a href="#next">next</a></p></div>');
+        }
+
         //On page scroll
         jQuery(document).on('scroll',function(e){
+            //Get the current scrollTop, not the global g_scrollTopRaw to measure speed
+            var currentScrollAmount = jQuery(window).scrollTop();
+            //Difference between previous scrolltop
+            var scrollMove = currentScrollAmount - g_previousScrollAmount;
+            //Track scroll amount and scroll move for further comparisons
+            g_previousScrollAmount = currentScrollAmount;
+            g_previousscrollMove = scrollMove;
+            //If scrollmove is too high, then beware user
+            if(Math.abs(scrollMove) > 500){
+                jQ_body.css('overflow','hidden');
+                alert('you are scrolling too fast, scroll slower');
+                jQ_body.css('overflow','auto');
+            }
+            //Update scroll work
             update();
+
         });
 
         //On window change
@@ -332,6 +358,29 @@
         jQ_scrollshow.on('itemEnd',function(e){
             var currentItemIndex = e.index;
             g_parameters.onItemEnd(currentItemIndex);
+            //If clickToGoNext parameter is set to true, display the clickToGoNext DOM element
+            if(g_parameters.clickToGoNext){
+                //Only for positive scroll and not the last item
+                if((g_previousscrollMove > 0) && (currentItemIndex != g_amountOfItems - 1)){
+                    //Set the new target index
+                    var target = currentItemIndex + 1;
+                    //Avoids user to scroll during clickToGoNext steps prompt
+                    jQ_body.css('overflow','hidden');
+                    //Manage click
+                    jQuery('.click-to-go-next')
+                        .addClass('active')
+                        .one('click',function(){
+                            //Make the scroll work again
+                            jQ_body.css('overflow','auto');
+                            //Calculate the amount of scrolltop to go to the next item
+                            var scrollAmount = target * g_itemScrollRange;
+                            //Scroll to the next item
+                            jQuery(window).scrollTop(scrollAmount);
+                            //Remove clickToGoNext slide
+                            jQuery(this).removeClass('active');
+                        });
+                }
+            }
         });
         //Callback scroll end
         jQ_scrollshow.on('scrollEnd',function(e){
