@@ -65,6 +65,8 @@
         jQ_body.height(g_amountOfItems * g_itemScrollRange + jQ_windowHeight);
         //Initialize previous letter index to optimize performance and avoid no use computing
         var g_previousLetterIndex = -1;
+        //Make a flag to trig itemEnd properly, this avoids to trig itemEnd event several times as a result
+        var g_okToTrigItemEnd = true;
 
         //If navigation enabled, include it into DOM
         if(g_parameters.navigation){
@@ -307,7 +309,15 @@
 
         //If clickToGoNext, include the button into DOM
         if(g_parameters.clickToGoNext){
-            jQ_scrollshow.append('<div class="click-to-go-next"><p><a href="#next"><span>next</span></a></p></div>');
+            jQ_scrollshow.append(
+                '<div class="click-to-go-next">'+
+                    '<p>'+
+                        '<a href="#next">'+
+                            '<span>next</span>'+
+                        '</a>'+
+                    '</p>'+
+                '</div>'
+            );
         }
 
         //On page scroll
@@ -340,50 +350,63 @@
             jQ_body.height(g_amountOfItems * g_itemScrollRange + window.innerHeight);
         });
 
+
         //Callback item change
         //Returns the target index
         jQ_scrollshow.on('itemChange',function(e){
+            //Enable user defined callback
             var targetIndex = e.targetIndex;
             g_parameters.onItemChange(targetIndex);
+            g_okToTrigItemEnd = true;
         });
         //Callback current item is the first
         jQ_scrollshow.on('firstItem',function(e){
+            //Enable user defined callback
             g_parameters.onFirstItem(e);
         });
         //Callback current item is the last
         jQ_scrollshow.on('lastItem',function(e){
+            //Enable user defined callback
             g_parameters.onLastItem(e);
         });
         //Callback item end
         jQ_scrollshow.on('itemEnd',function(e){
-            var currentItemIndex = e.index;
-            g_parameters.onItemEnd(currentItemIndex);
-            //If clickToGoNext parameter is set to true, display the clickToGoNext DOM element
-            if(g_parameters.clickToGoNext){
-                //Only for positive scroll and not the last item
-                if((g_previousscrollMove > 0) && (currentItemIndex != g_amountOfItems - 1)){
-                    //Set the new target index
-                    var target = currentItemIndex + 1;
-                    //Avoids user to scroll during clickToGoNext steps prompt
-                    jQ_body.css('overflow','hidden');
-                    //Manage click
-                    jQuery('.click-to-go-next')
-                        .addClass('active')
-                        .one('click',function(){
-                            //Make the scroll work again
-                            jQ_body.css('overflow','auto');
-                            //Calculate the amount of scrolltop to go to the next item
-                            var scrollAmount = target * g_itemScrollRange;
-                            //Scroll to the next item
-                            jQuery(window).scrollTop(scrollAmount);
-                            //Remove clickToGoNext slide
-                            jQuery(this).removeClass('active');
-                        });
+            //If itemEnd not already launched few milliseconds ago 
+            if(g_okToTrigItemEnd == true){
+                //Enable user defined callback
+                var currentItemIndex = e.index;
+                g_parameters.onItemEnd(currentItemIndex);
+                //If clickToGoNext parameter is set to true, display the clickToGoNext DOM element
+                if(g_parameters.clickToGoNext){
+                    //Only for positive scroll and not the last item
+                    if((g_previousscrollMove > 0) && (currentItemIndex != g_amountOfItems - 1)){
+                        //Set the new target index
+                        var target = currentItemIndex + 1;
+                        //Avoids user to scroll during clickToGoNext steps prompt
+                        jQ_body.css('overflow','hidden');
+                        //Manage click
+                        jQuery('.click-to-go-next')
+                            .addClass('active')
+                            .one('click',function(){
+                                //Make the scroll work again
+                                jQ_body.css('overflow','auto');
+                                //Calculate the amount of scrolltop to go to the next item
+                                var scrollAmount = target * g_itemScrollRange;
+                                //Scroll to the next item
+                                jQuery(window).scrollTop(scrollAmount);
+                                //Remove clickToGoNext slide
+                                jQuery(this).removeClass('active');
+                            });
+                    }
                 }
+                //Now block itemEnd works until next item load
+                g_okToTrigItemEnd = false;
             }
+
         });
         //Callback scroll end
         jQ_scrollshow.on('scrollEnd',function(e){
+            //Enable user defined callback
             g_parameters.onScrollEnd(e);
         });
     };
