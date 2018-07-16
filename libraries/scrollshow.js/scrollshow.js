@@ -17,6 +17,9 @@
             onLetterChange:     function(e){        //Callback on letter change
 
             },
+            onScroll:           function(e){        //Callback on scroll
+
+            },
             onItemEnd:          function(e){        //Callback on item end
 
             },
@@ -333,11 +336,22 @@
         jQuery(document).on('scroll',function(e){
             //Get the current scrollTop, not the global g_scrollTopRaw to measure speed
             var currentScrollAmount = jQuery(window).scrollTop();
+            //By default, we consider down scrolling
+            var scrollDirectionDown = true;
             //Difference between previous scrolltop
             var scrollMove = currentScrollAmount - g_previousScrollAmount;
+            //If scroll direction is up
+            if(scrollMove < 0){
+                scrollDirectionDown = false;
+            }
             //Track scroll amount and scroll move for further comparisons
             g_previousScrollAmount = currentScrollAmount;
+            //Track scrollMove
             g_previousscrollMove = scrollMove;
+            //Add callback for scrollDirectionDown
+            //scrollDirectionDown == true means scroll down
+            //scrollDirectionUp == false means scroll up
+            g_parameters.onScroll(scrollDirectionDown);
             //If scrollmove is too high, then beware user
             if(Math.abs(scrollMove) > 500){
                 jQ_body.css('overflow','hidden');
@@ -346,7 +360,6 @@
             }
             //Update scroll work
             update();
-
         });
 
         //On window change
@@ -358,7 +371,6 @@
             //Update body height
             jQ_body.height(g_amountOfItems * g_itemScrollRange + window.innerHeight);
         });
-
 
         //Callback item change
         //Returns the target index
