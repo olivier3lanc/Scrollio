@@ -371,13 +371,17 @@
         });
         //Callback item end
         jQ_scrollshow.on('itemEnd',function(e){
-            //If itemEnd not already launched few milliseconds ago 
-            if(g_okToTrigItemEnd == true){
+            //If itemEnd not already launched few milliseconds ago
+            if(g_okToTrigItemEnd){
                 //Enable user defined callback
                 var currentItemIndex = e.index;
                 g_parameters.onItemEnd(currentItemIndex);
-                //If clickToGoNext parameter is set to true, display the clickToGoNext DOM element
-                if(g_parameters.clickToGoNext){
+                //Make current item a jQuery object
+                var jQ_currentItem = jQ_scrollshow.children('.item').eq(currentItemIndex);
+                //If clickToGoNext parameter is set to true
+                //And this target item has not been already read
+                //Then display the clickToGoNext DOM element
+                if(g_parameters.clickToGoNext && !jQ_currentItem.hasClass('done')){
                     //Only for positive scroll and not the last item
                     if((g_previousscrollMove > 0) && (currentItemIndex != g_amountOfItems - 1)){
                         //Set the new target index
@@ -388,6 +392,8 @@
                         jQuery('.click-to-go-next')
                             .addClass('active')
                             .one('click',function(){
+                                //Remember user has clicked "next" to avoid click once again
+                                jQ_currentItem.addClass('done');
                                 //Make the scroll work again
                                 jQ_body.css('overflow','auto');
                                 //Calculate the amount of scrolltop to go to the next item
