@@ -14,6 +14,9 @@
             onItemChange:       function(e){        //Callback on item change
 
             },
+            onLetterChange:     function(e){        //Callback on letter change
+
+            },
             onItemEnd:          function(e){        //Callback on item end
 
             },
@@ -203,6 +206,12 @@
                 //Transformations on the active item
                 jQ_activeItem.addClass('active');
 
+                //Create the event for letter state change
+                var e_letterChange = jQuery.Event('letterChange');
+                jQ_scrollshow.trigger({
+                    type: 'letterChange'
+                });
+
                 //Letters management
                 //Common task
                 jQ_activeItem
@@ -368,6 +377,11 @@
         jQ_scrollshow.on('lastItem',function(e){
             //Enable user defined callback
             g_parameters.onLastItem(e);
+        });
+        //Callback on letter change
+        jQ_scrollshow.on('letterChange',function(e){
+            //Enable user defined callback
+            g_parameters.onLetterChange(e);
         });
         //Callback item end
         jQ_scrollshow.on('itemEnd',function(e){
