@@ -307,7 +307,7 @@
 
         //If clickToGoNext, include the button into DOM
         if(g_parameters.clickToGoNext){
-            jQ_scrollshow.append('<div class="click-to-go-next"><p><a href="#next">next</a></p></div>');
+            jQ_scrollshow.append('<div class="click-to-go-next"><p><a href="#next"><span>next</span></a></p></div>');
         }
 
         //On page scroll
