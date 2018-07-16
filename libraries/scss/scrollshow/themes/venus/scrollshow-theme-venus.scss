@@ -150,6 +150,7 @@ body {
                     text-decoration: none;
                     border-radius: 100%;
                     text-align: center;
+                    line-height: 1.5em;
                     &:after,
                     &:before {
                         content: '';
@@ -168,6 +169,21 @@ body {
                     }
                     &:before {
                         animation-delay: 1s;
+                    }
+                }
+                @include qtr-screen(md){ 
+                    &>a {
+                        font-size: qtr-font-size(-3);
+                    }
+                }
+                @include qtr-screen(sm){
+                    &>a {
+                        font-size: qtr-font-size(-4);
+                    }
+                }
+                @include qtr-screen(xs){
+                    &>a {
+                        font-size: qtr-font-size(-5);
                     }
                 }
             }
