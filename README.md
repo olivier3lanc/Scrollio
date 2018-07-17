@@ -6,7 +6,7 @@
 
 Here is the minimal code to make Scrollshow work properly.
 
-```
+``` html
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +45,7 @@ Here is the minimal code to make Scrollshow work properly.
 
 Typical markup with CDN:
 
-```
+``` html
 <html>
 <head>
     <title>My Scrollshow</title>
