@@ -39,6 +39,8 @@
     <script type="text/javascript" src="build/scrollshow.min.js"></script>
     <script type="text/javascript">
         jQuery.fn.scrollshow({
+            intro: true,
+            clickToGoNext: true,
             onItemChange: function(targetIndex){
                 console.log('current index is '+targetIndex);
             },

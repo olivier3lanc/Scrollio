@@ -6,11 +6,11 @@
             scrollRange:        2000,               //Amount of pixels per item
             keepActive:         true,               //Once scrolled, letters keep active
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
-            intro:              true,               //Enable/disable intro (document title + description)
+            intro:              false,               //Enable/disable intro (document title + description)
             navigation:         false,               //Enable/disable navigation progress and bullets
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
-            clickToGoNext:      true,               //Enable/disable need to click to display next item
+            clickToGoNext:      false,               //Enable/disable need to click to display next item
             onItemChange:       function(e){        //Callback on item change
 
             },
@@ -312,6 +312,9 @@
                     jQ_scrollshow.children('.intro').addClass('active');
                 }
             },16);
+        //Otherwise, make the first item active 
+        }else{
+            jQ_scrollshow.children('.item').eq(0).addClass('active');
         }
 
         //If progress bar, include into DOM

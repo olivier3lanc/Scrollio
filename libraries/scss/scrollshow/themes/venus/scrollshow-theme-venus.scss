@@ -95,6 +95,19 @@ body {
                     }
                 }
             }
+            //Very first item, make first letter active
+            &:first-child {
+                .word {
+                    &:first-child {
+                        .letter {
+                            &:first-child {
+                                color: qtr-color(6);
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+            }
         }
         //Progress bar
         &>.progress-bar {
