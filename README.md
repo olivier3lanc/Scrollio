@@ -1,6 +1,6 @@
 # Scrollshow
 
-*A jQuery plugin for story telling*
+*A scroll experience tool for story telling*. Scrollshow is a jQuery plugin that uses the scroll to reveal the content.
 
 ## Usage
 
