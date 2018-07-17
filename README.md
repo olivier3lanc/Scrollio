@@ -11,7 +11,7 @@ Here is the minimal code to make Scrollshow work properly.
 <html>
 <head>
     <!-- Scrollshow core CSS (required) -->
-    <link href="scrollshow-core.min.css" rel="stylesheet">
+    <link href="scrollshow.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -51,7 +51,7 @@ Typical markup with CDN:
     <title>My Scrollshow</title>
     <meta name="description" content="Description of my scrollshow">
     <!-- Scrollshow core CSS -->
-    <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow-core.min.css" rel="stylesheet">
+    <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.css" rel="stylesheet">
 </head>
 
 <body>
