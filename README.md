@@ -4,6 +4,12 @@
 
 Scrollshow is a jQuery plugin that uses the scroll to reveal the text content.
 
+## Demo
+
+* [Demo with only core CSS](https://codepen.io/olivier3lanc/pen/zLBGEL)
+* [Demo with callbacks](https://codepen.io/olivier3lanc/full/bjBbVP/)
+* [Demo with Venus theme](https://codepen.io/olivier3lanc/full/ajBzGZ)
+
 ## Usage
 
 Here is the minimal code to make Scrollshow work properly.
@@ -207,29 +213,30 @@ Becomes
 <div id="scrollshow">
     <div class="item">...</div>
     <div class="item">
+        <!-- Letters wrapping is made on the first html element into the item -->
         <p>
             <span class="word">
-                <span class="letter active">L</span>
-                <span class="letter active">o</span>
-                <span class="letter active">r</span>
-                <span class="letter active">e</span>
-                <span class="letter active">m</span>
+                <span class="letter active" style="z-index:1000;">L</span>
+                <span class="letter active" style="z-index:999;">o</span>
+                <span class="letter active" style="z-index:998;">r</span>
+                <span class="letter active" style="z-index:997;">e</span>
+                <span class="letter active" style="z-index:996;">m</span>
             </span>
             <span class="separator"> </span>
             <span class="word">
-                <span class="letter active">i</span>
-                <span class="letter active current">p</span>
-                <span class="letter">s</span>
-                <span class="letter">u</span>
-                <span class="letter">m</span>
+                <span class="letter active" style="z-index:995;">i</span>
+                <span class="letter active current" style="z-index:994;">p</span>
+                <span class="letter" style="z-index:993;">s</span>
+                <span class="letter" style="z-index:992;">u</span>
+                <span class="letter" style="z-index:991;">m</span>
             </span>
             <span class="separator"> </span>
             <span class="word">
-                <span class="letter">d</span>
-                <span class="letter">o</span>
-                <span class="letter">l</span>
-                <span class="letter">o</span>
-                <span class="letter">r</span>
+                <span class="letter" style="z-index:990;">d</span>
+                <span class="letter" style="z-index:989;">o</span>
+                <span class="letter" style="z-index:988;">l</span>
+                <span class="letter" style="z-index:987;">o</span>
+                <span class="letter" style="z-index:986;">r</span>
             </span>
         </p>
         <p>Another paragraph</p>
@@ -245,6 +252,60 @@ Becomes
 | `<span class="letter active">`         | If `keepActive: true` the letter keeps the `active` class once scrolled. If `keepActive: false` the letter has `active` class only when it is the latest scrolled. |
 | `<span class="letter active current">` | The letter is the latest scrolled |
 
+### Intro
+
+If `intro: true`, an introduction element is included into the `<div id="scrollshow"></div>` that shows up:
+* **Into the first markup of the intro, letters are wrapped just like other items**.
+* Displays page title and page description.
+* `active` class is removed on first scroll and is not set again.
+
+Here is the markup included:
+
+```html
+<div id="scrollshow">
+    <div class="intro active">
+        <header>
+            <h1>[document title]</h1>
+            <p class="description">[head meta description]</p>
+        </header>
+    </div>
+</div>
+```
+
+Renders:
+
+```html
+<div id="scrollshow">
+    <div class="intro active"><!-- On first scroll, active class disappears -->
+        <header>
+            <h1>
+                <span class="word">
+                    <span class="letter" style="z-index:1000;">V</span>
+                    <span class="letter" style="z-index:999;">e</span>
+                    <span class="letter" style="z-index:998;">n</span>
+                    <span class="letter" style="z-index:997;">u</span>
+                    <span class="letter" style="z-index:996;">s</span>
+                </span>
+                <span class="separator"> </span>
+                <span class="word">
+                    <span class="letter" style="z-index:994;">t</span>
+                    <span class="letter" style="z-index:993;">h</span>
+                    <span class="letter" style="z-index:992;">e</span>
+                    <span class="letter" style="z-index:991;">m</span>
+                    <span class="letter" style="z-index:990;">e</span>
+                </span>
+                <span class="separator"> </span>
+                <span class="word">
+                    <span class="letter" style="z-index:988;">.</span>
+                    <span class="letter" style="z-index:987;">.</span>
+                    <span class="letter" style="z-index:986;">.</span>
+                </span>
+            </h1>
+            <p class="description">Demonstration of Venus theme for Scrollshow</p>
+        </header>
+    </div>
+</div>
+```
 
 ### Progress bar
 
