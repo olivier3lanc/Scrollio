@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Scrollshow jQuery plugin</title>
-    <meta name="description" content="A scroll experience tool for story telling. Scrollshow is a jQuery plugin that uses the scroll to reveal the text content.">
+    <title>Scrollshow with Venus theme</title>
+    <meta name="description" content="Demonstration of Venus theme for Scrollshow. A full page scroll experience tool for story telling. Scrollshow is a jQuery plugin that uses the scroll to reveal the text content.">
     <!-- Reset CSS -->
     <link href="libraries/normalize/normalize.min.css" rel="stylesheet">
     <!-- Scrollshow required stylesheet -->
     <link href="build/scrollshow.min.css" rel="stylesheet">
     <!-- Scrollshow optional theme stylesheet -->
-    <!-- <link href="build/scrollshow.theme.venus.min.css" rel="stylesheet"> -->
+    <link href="build/scrollshow.theme.venus.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div id="scrollshow">
         <div class="item">
-            <h2>My First item</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <h2>What is ScrollShow?</h2>
+            <p>Just tell me.</p>
         </div>
         <div class="item">
             <h2>My second punchline</h2>
@@ -40,8 +39,19 @@
     <script type="text/javascript" src="build/scrollshow.min.js"></script>
     <script type="text/javascript">
         jQuery.fn.scrollshow({
+            intro: true,
+            clickToGoNext: true,
             onItemChange: function(targetIndex){
-                console.log(targetIndex);
+                console.log('current index is '+targetIndex);
+            },
+            onLetterChange: function(targetIndex){
+                console.log('letter has changed');
+            },
+            onScroll: function(scrollDirectionDown){
+                console.log('scroll down? '+scrollDirectionDown);
+            },
+            onItemEnd: function(index){
+                console.log('end of '+index);
             },
             onFirstItem: function(){
                 console.log('first item');
@@ -51,6 +61,7 @@
             },
             onScrollEnd: function(){
                 console.log('end of scroll');
+                jQuery('.link-button').addClass('active');
             }
         });
     </script>
