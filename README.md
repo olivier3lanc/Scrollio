@@ -1,10 +1,10 @@
 # Scrollshow
 
-*A full page scroll experience tool for story telling*.
+*A full page scroll experience tool for story telling*. Scrollshow is a jQuery plugin that uses the scroll to reveal the text content.
 
-Scrollshow is a jQuery plugin that uses the scroll to reveal the text content.
 
 ## Demo
+
 
 * [Demo with only core CSS](https://codepen.io/olivier3lanc/pen/zLBGEL)
 * [Demo with callbacks](https://codepen.io/olivier3lanc/full/bjBbVP/)
