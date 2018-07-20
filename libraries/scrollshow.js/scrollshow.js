@@ -73,6 +73,10 @@
         var g_previousLetterIndex = -1;
         //Make a flag to trig itemEnd properly, this avoids to trig itemEnd event several times as a result
         var g_okToTrigItemEnd = true;
+        //Page description
+        var g_pageDescription = jQuery('head meta[name="description"]').attr('content');
+        //Page title
+        var g_pageTitle = document.title;
 
         //If navigation enabled, include it into DOM
         if(g_parameters.navigation){
@@ -294,14 +298,24 @@
 
         //If intro, include into DOM
         if(g_parameters.intro){
+            //Fallback if no meta description
+            if(g_pageDescription === undefined){
+                g_pageDescription = 'Scroll down to discover';
+            }
+            //Fallback if no page title
+            if(g_pageTitle === undefined || g_pageTitle != '' || g_pageTitle != g_parameters.textEllipsis){
+                g_pageTitle = 'Scrollshow';
+            }
+            //Include into scrollshow
             jQ_scrollshow.append(
                 '<div class="intro">'+
                     '<header>'+
-                        '<h1>'+document.title+'</h1>'+
-                        '<p class="description">'+jQuery('head meta[name="description"]').attr('content')+'</p>'+
+                        '<h1>'+g_pageTitle+'</h1>'+
+                        '<p class="description">'+g_pageDescription+'</p>'+
                     '</header>'+
                 '</div>'
             );
+            //Wrap letters
             wrapLetters('.intro header');
 
             //Wait a little to allow transition to be done
@@ -312,7 +326,7 @@
                     jQ_scrollshow.children('.intro').addClass('active');
                 }
             },16);
-        //Otherwise, make the first item active 
+        //Otherwise, make the first item active
         }else{
             jQ_scrollshow.children('.item').eq(0).addClass('active');
         }
