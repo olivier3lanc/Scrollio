@@ -152,7 +152,7 @@ body {
 
         &>.click-to-go-next {
             transition: all 500ms;
-            background: none;
+            background: linear-gradient(to bottom, transparent, rgba(qtr-color(-6),.7));
             align-items: flex-end;
             &>p {
                 padding-bottom: 3em;
