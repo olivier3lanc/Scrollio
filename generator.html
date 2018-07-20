@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Scrollshow core CSS -->
+    <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.css" rel="stylesheet">
+    <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.theme.venus.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- <div id="scrollshow">
+        <div class="item">
+            <p>Any html content 1</p>
+        </div>
+        <div class="item">
+            <p>Any html content 2</p>
+        </div>
+        <div class="item">
+            <p>Any html content 3</p>
+        </div>
+        <div class="item">
+            <p>Any html content 4</p>
+        </div>
+    </div> -->
+    <input type="text">
+    <button type="button" name="add">add</button>
+    <button type="button" name="generate">generate</button>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Scrollshow lib -->
+    <script type="text/javascript" src="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.js"></script>
+    <!-- Initialize -->
+    <script type="text/javascript">
+        // jQuery.fn.scrollshow();
+        var theHash = window.location.hash;
+        if(theHash != ''){
+            var encodedHash = theHash.replace('#','');
+            var decodedString = window.atob(encodedHash);
+            console.log(decodedString);
+
+            var objRecognized = JSON.parse(decodedString);
+            console.log(objRecognized);
+
+            if(typeof objRecognized == 'object'){
+                console.log(Object.keys(objRecognized).length);
+                jQuery('body').append('<div id="scrollshow"></div>');
+                var jQ_scrollshow = jQuery('#scrollshow');
+                for (var i = 0; i < Object.keys(objRecognized).length; i++) {
+                    console.log(objRecognized[i]);
+                    jQ_scrollshow.append(
+                        '<div class="item">'+
+                            objRecognized[i]+
+                        '</div>'
+                    );
+                }
+                jQuery.fn.scrollshow();
+            }
+        }
+
+        var obj = {};
+        // var obj = {
+        //     0: "<h1>Hello world</h1>",
+        //     1: "<h1>Once again</h1>",
+        //     2: "<h1>This is the third</h1>"
+        // };
+
+        // var myJSON = JSON.stringify(obj);
+        // console.log(myJSON);
+        //
+        // var encodedString = window.btoa( myJSON );
+        // console.log(encodedString);
+        // window.location.hash = encodedString;
+
+
+        jQuery('button[name="add"]').on('click',function(){
+            console.log('add');
+            jQuery('input[type="text"]').eq(-1).after('<input type="text">');
+        });
+        jQuery('button[name="generate"]').on('click',function(){
+            jQuery('input[type="text"]').each(function(){
+                console.log(jQuery(this).index());
+                console.log(jQuery(this).val());
+                obj[jQuery(this).index()] = '<h1>'+jQuery(this).val()+'</h1>';
+            });
+            var myJSON = JSON.stringify(obj);
+            var encodedString = window.btoa( myJSON );
+            console.log(encodedString);
+            window.location.hash = encodedString;
+        });
+
+    </script>
+</body>
+
+</html>
