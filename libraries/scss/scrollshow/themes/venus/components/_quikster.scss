@@ -72,8 +72,8 @@ $qtr_font_families: (
     //A Websafe font
     2: ( //{string} or {number} - ID of the Quikster font family
         type:                               'google', //{string} - Valid Google Font family name
-        name:                               'Bubbler One', //{string} - Valid weight for this font family
-        weight:                             '', //{string} - If resource fails to load, this is the fallback system font family name. Each font family can have its own fallback font family
+        name:                               'Encode Sans', //{string} - Valid weight for this font family
+        weight:                             'Regular', //{string} - If resource fails to load, this is the fallback system font family name. Each font family can have its own fallback font family
         fallback:                          '"Times New Roman", Georgia' //{string} - If resource fails to load, this is the fallback system font family name. Each Quikster font family can have its own fallback font family
     )
 );

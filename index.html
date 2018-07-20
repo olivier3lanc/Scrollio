@@ -4,35 +4,60 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Scrollshow with Venus theme</title>
-    <meta name="description" content="Demonstration of Venus theme for Scrollshow. A full page scroll experience tool for story telling. Scrollshow is a jQuery plugin that uses the scroll to reveal the text content.">
+    <title>Scrollshow demo</title>
+    <meta name="description" content="Demonstration of Venus theme for Scrollshow.">
     <!-- Reset CSS -->
     <link href="libraries/normalize/normalize.min.css" rel="stylesheet">
     <!-- Scrollshow required stylesheet -->
     <link href="build/scrollshow.min.css" rel="stylesheet">
     <!-- Scrollshow optional theme stylesheet -->
     <link href="build/scrollshow.theme.venus.min.css" rel="stylesheet">
+    <style>
+        nav#demo {
+            position: fixed;
+            top: 0.5em;
+            right: 2em;
+            z-index: 100;
+            font-size: 14px;
+        }
+        nav#demo a {
+            display: inline-block;
+            padding: 0.3em 0em;
+        }
+    </style>
 </head>
 
 <body>
     <div id="scrollshow">
         <div class="item">
-            <h2>What is ScrollShow?</h2>
-            <p>Just tell me.</p>
+            <h2>What is Scrollshow?</h2>
+            <p>Yes, tell me.</p>
         </div>
         <div class="item">
-            <h2>My second punchline</h2>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <h2>A full page scroll experience tool for story telling</h2>
+            <p>A story telling tool.</p>
         </div>
         <div class="item">
-            <h2>A fancy story telling plugin</h2>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <h2>jQuery plugin that uses the scroll to reveal text</h2>
+            <p>Because words matter.</p>
         </div>
         <div class="item">
-            <h2>Liked it?</h2>
-            <p><a href="https://github.com/olivier3lanc/Scrollshow" class="link-button" target="_blank">view on Github</a></p>
+            <h2>Make your own!</h2>
+            <p>Scrollshow is highly customizable, you can create your own theme.</p>
+        </div>
+        <div class="item">
+            <h2>Many callbacks</h2>
+            <p>Enjoy interactions! Scrollshow includes useful callbacks to enhance your experiences</p>
+        </div>
+        <div class="item">
+            <h2>Create your own Scrollshow now!</h2>
+            <p><a href="#" class="link-button primary">Rewind</a> <a href="https://github.com/olivier3lanc/Scrollshow" class="link-button" target="_blank">View on Github</a></p>
         </div>
     </div>
+
+    <nav id="demo">
+        <a href="https://github.com/olivier3lanc/Scrollshow">Github</a>
+    </nav>
 
     <!-- jQuery -->
     <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
@@ -62,6 +87,10 @@
             onScrollEnd: function(){
                 console.log('end of scroll');
                 jQuery('.link-button').addClass('active');
+                jQuery('.link-button[href="#"]').on('click',function(e){
+                    e.preventDefault();
+                    jQuery('body,html').animate({scrollTop:0},8000);
+                });
             }
         });
     </script>
