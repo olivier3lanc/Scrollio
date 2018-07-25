@@ -101,7 +101,6 @@ Here are all the options and callbacks available in Scrollshow.
         navigation:         false,
         progressBar:        true,
         overlay:            true,
-        clickToGoNext:      false,
         onItemChange:       function(e){
 
         },
@@ -136,7 +135,6 @@ Here are all the options and callbacks available in Scrollshow.
 | navigation    | `false` | Boolean | Display link bullets to items and progress                       |
 | progressBar   | `true`  | Boolean | Display the progress bar                                         |
 | overlay       | `true`  | Boolean | Display overlay between items and body background                |
-| clickToGoNext | `false` | Boolean | User needs to click to display next item                         |
 
 
 | Callback       | Returns  | Description                                                                            |
@@ -154,25 +152,7 @@ Here are all the options and callbacks available in Scrollshow.
 
 ### Items
 
-If `clickToGoNext: true`:
-* When an item is scrolled entirely, a `done` class it added.
-* Current item has `active` class.
-
-```html
-<div id="scrollshow">
-    <div class="item done">
-        <!-- Fully scrolled item -->
-    </div>
-    <div class="item active">
-        <!-- Current item -->
-    </div>
-    <div class="item">
-        <!-- Item not scrolled yet -->
-    </div>
-</div>
-```
-
-If `clickToGoNext: false`, only an `active` class it added on the current item.
+An `active` class it added on the current item.
 
 ```html
 <div id="scrollshow">
@@ -342,35 +322,3 @@ If `navigation: true`, a navigation element with its own progress bar and link b
 ### Text ellipsis
 
 Additional text string can be added to each item. By default it is `...`. **This text ellipsis string is wrapped** like other letters.
-
-### clickToGoNext
-
-You can prompt the user to click to go to the next item each time an item is ended. Here is the markup that is included if the option `clickToGoNext` is set to `true`:
-
-Click to go next is visible:
-
-```html
-<div id="scrollshow">
-    <div class="click-to-go-next active">
-        <p>
-            <a href="#next">
-                <span>next</span>
-            </a>
-        </p>
-    </div>
-</div>
-```
-
-Click to go next is awaiting to be displayed:
-
-```html
-<div id="scrollshow">
-    <div class="click-to-go-next">
-        <p>
-            <a href="#next">
-                <span>next</span>
-            </a>
-        </p>
-    </div>
-</div>
-```

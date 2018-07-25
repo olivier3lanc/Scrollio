@@ -10,7 +10,7 @@
             navigation:         false,               //Enable/disable navigation progress and bullets
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
-            clickToGoNext:      false,               //Enable/disable need to click to display next item
+            // clickToGoNext:      false,               //Enable/disable need to click to display next item
             onItemChange:       function(e){        //Callback on item change
 
             },
@@ -337,17 +337,17 @@
         }
 
         //If clickToGoNext, include the button into DOM
-        if(g_parameters.clickToGoNext){
-            jQ_scrollshow.append(
-                '<div class="click-to-go-next">'+
-                    '<p>'+
-                        '<a href="#next">'+
-                            '<span>next</span>'+
-                        '</a>'+
-                    '</p>'+
-                '</div>'
-            );
-        }
+        // if(g_parameters.clickToGoNext){
+        //     jQ_scrollshow.append(
+        //         '<div class="click-to-go-next">'+
+        //             '<p>'+
+        //                 '<a href="#next">'+
+        //                     '<span>next</span>'+
+        //                 '</a>'+
+        //             '</p>'+
+        //         '</div>'
+        //     );
+        // }
 
         //On page scroll
         jQuery(document).on('scroll',function(e){
@@ -424,30 +424,30 @@
                 //If clickToGoNext parameter is set to true
                 //And this target item has not been already read
                 //Then display the clickToGoNext DOM element
-                if(g_parameters.clickToGoNext && !jQ_currentItem.hasClass('done')){
-                    //Only for positive scroll and not the last item
-                    if((g_previousscrollMove > 0) && (currentItemIndex != g_amountOfItems - 1)){
-                        //Set the new target index
-                        var target = currentItemIndex + 1;
-                        //Avoids user to scroll during clickToGoNext steps prompt
-                        jQ_body.css('overflow','hidden');
-                        //Manage click
-                        jQuery('.click-to-go-next')
-                            .addClass('active')
-                            .one('click',function(){
-                                //Remember user has clicked "next" to avoid click once again
-                                jQ_currentItem.addClass('done');
-                                //Make the scroll work again
-                                jQ_body.css('overflow','auto');
-                                //Calculate the amount of scrolltop to go to the next item
-                                var scrollAmount = target * g_itemScrollRange;
-                                //Scroll to the next item
-                                jQuery(window).scrollTop(scrollAmount);
-                                //Remove clickToGoNext slide
-                                jQuery(this).removeClass('active');
-                            });
-                    }
-                }
+                // if(g_parameters.clickToGoNext && !jQ_currentItem.hasClass('done')){
+                //     //Only for positive scroll and not the last item
+                //     if((g_previousscrollMove > 0) && (currentItemIndex != g_amountOfItems - 1)){
+                //         //Set the new target index
+                //         var target = currentItemIndex + 1;
+                //         //Avoids user to scroll during clickToGoNext steps prompt
+                //         jQ_body.css('overflow','hidden');
+                //         //Manage click
+                //         jQuery('.click-to-go-next')
+                //             .addClass('active')
+                //             .one('click',function(){
+                //                 //Remember user has clicked "next" to avoid click once again
+                //                 jQ_currentItem.addClass('done');
+                //                 //Make the scroll work again
+                //                 jQ_body.css('overflow','auto');
+                //                 //Calculate the amount of scrolltop to go to the next item
+                //                 var scrollAmount = target * g_itemScrollRange;
+                //                 //Scroll to the next item
+                //                 jQuery(window).scrollTop(scrollAmount);
+                //                 //Remove clickToGoNext slide
+                //                 jQuery(this).removeClass('active');
+                //             });
+                //     }
+                // }
                 //Now block itemEnd works until next item load
                 g_okToTrigItemEnd = false;
             }

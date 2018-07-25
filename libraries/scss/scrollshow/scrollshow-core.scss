@@ -151,36 +151,36 @@ body {
             }
         }
 
-        &>.click-to-go-next {
-            background-color: black;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            z-index: 100;
-            opacity: 0;
-            display: flex;
-            align-items: center;
-            pointer-events: none;
-            &>p {
-                flex-grow: 1;
-                &>a {
-                    position: relative;
-                    display: block;
-                    margin: auto;
-                    color: white;
-                    text-decoration: none;
-                    &>span {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translateY(-50%) translateX(-50%);
-                    }
-                }
-            }
-            &.active {
-                opacity: 1;
-                pointer-events: auto;
-            }
-        }
+        // &>.click-to-go-next {
+        //     background-color: black;
+        //     width: 100%;
+        //     height: 100%;
+        //     position: fixed;
+        //     z-index: 100;
+        //     opacity: 0;
+        //     display: flex;
+        //     align-items: center;
+        //     pointer-events: none;
+        //     &>p {
+        //         flex-grow: 1;
+        //         &>a {
+        //             position: relative;
+        //             display: block;
+        //             margin: auto;
+        //             color: white;
+        //             text-decoration: none;
+        //             &>span {
+        //                 position: absolute;
+        //                 top: 50%;
+        //                 left: 50%;
+        //                 transform: translateY(-50%) translateX(-50%);
+        //             }
+        //         }
+        //     }
+        //     &.active {
+        //         opacity: 1;
+        //         pointer-events: auto;
+        //     }
+        // }
     }
 }
