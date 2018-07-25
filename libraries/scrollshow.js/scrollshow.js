@@ -371,9 +371,9 @@
             g_parameters.onScroll(scrollDirectionDown);
             //If scrollmove is too high, then beware user
             if(Math.abs(scrollMove) > 500){
-                jQ_body.css('overflow','hidden');
+                // jQ_body.css('overflow','hidden');
                 alert('you are scrolling too fast, scroll slower');
-                jQ_body.css('overflow','auto');
+                // jQ_body.css('overflow','auto');
             }
             //Update scroll work
             update();
