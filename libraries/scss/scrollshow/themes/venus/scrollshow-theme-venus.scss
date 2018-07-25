@@ -19,10 +19,15 @@ body {
                     padding: 0em 1em;
                     line-height: 1.0em;
                     text-shadow: 4px 0px 5px rgba(qtr-color(-6),.5);
-                    .letter {
-                        transition: all 2000ms;
-                        position: relative;
-                        margin-left: -0.10em;
+                    .word {
+                        .letter {
+                            transition: all 2000ms;
+                            position: relative;
+                            margin-left: -0.10em;
+                        }
+                        &:last-child {
+                            display: none;
+                        }
                     }
                 }
                 .description {
@@ -97,6 +102,22 @@ body {
                                 animation-direction: alternate;
                             }
 
+                        }
+                    }
+                    &:last-child {
+                        display: block;
+                        .letter {
+                            //Unread / Inactive letter properties
+                            opacity: 0.1;
+                            margin-left: 0em;
+                            font-size: qtr-font-size(2);
+                            &.active {
+                                //Read / Active letter properties
+                                opacity: 1;
+                            }
+                            &.current {
+                                opacity: 1;
+                            }
                         }
                     }
                 }
