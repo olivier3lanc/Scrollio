@@ -105,19 +105,9 @@ body {
                         }
                     }
                     &:last-child {
-                        display: block;
                         .letter {
                             //Unread / Inactive letter properties
-                            opacity: 0.1;
-                            margin-left: 0em;
                             font-size: qtr-font-size(2);
-                            &.active {
-                                //Read / Active letter properties
-                                opacity: 1;
-                            }
-                            &.current {
-                                opacity: 1;
-                            }
                         }
                     }
                 }
