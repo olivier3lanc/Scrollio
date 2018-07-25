@@ -7,10 +7,8 @@
             keepActive:         true,               //Once scrolled, letters keep active
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
             intro:              false,               //Enable/disable intro (document title + description)
-            navigation:         false,               //Enable/disable navigation progress and bullets
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
-            // clickToGoNext:      false,               //Enable/disable need to click to display next item
             onItemChange:       function(e){        //Callback on item change
 
             },
@@ -78,45 +76,6 @@
         //Page title
         var g_pageTitle = document.title;
 
-        //If navigation enabled, include it into DOM
-        if(g_parameters.navigation){
-            //Navigation and progress
-            //Include navigation
-            jQ_scrollshow.append('<nav class="navigation"></nav>');
-            //jQuery object of the navigation
-            var jQ_stdNavigation = jQ_scrollshow.children('.navigation');
-            //Include a bullet link for each item
-            for (var i = 0; i < g_amountOfItems; i++) {
-                jQ_stdNavigation.append('<a href="#'+i.toString()+'"></a>');
-                //Include progress bar on the first item
-                if(i == 0){
-                    // jQ_stdNavigation.children('a:first-child').append('<span class="progress"></span>');
-                    jQ_stdNavigation.append('<span class="progress"></span>');
-                }
-            }
-            //First bullet link jQuery object
-            var jQ_stdNavigationFirstChild = jQ_stdNavigation.children('a:first-child');
-            //Link bullet width
-            var g_navigationBulletWidth = jQ_stdNavigationFirstChild.outerWidth();
-            //Link bullet height
-            var g_navigationBulletHeight = jQ_stdNavigationFirstChild.outerHeight();
-            //Link bullet margin
-            var g_navigationBulletMargin = parseFloat(jQ_stdNavigationFirstChild.css('margin-bottom'));
-            //Computed 100% progress height
-            var g_progressHeight = g_amountOfItems * (g_navigationBulletHeight + g_navigationBulletMargin);
-
-
-            //Manage click on bullet link: Go to the target item
-            jQ_stdNavigation.find('a').on('click',function(e){
-                e.preventDefault();
-                var currentHash = jQuery(this).attr('href');
-                var currentIndex = currentHash.replace('#','');
-                currentIndex = parseInt(currentIndex);
-                var scrollAmount = currentIndex * g_itemScrollRange;
-                jQuery(document).scrollTop(scrollAmount);
-            });
-        }
-
         //Wrap letters
         var wrapLetters = function(selector){
             if(typeof(selector) == 'string'){
@@ -166,13 +125,6 @@
             g_index = parseInt(g_scrollTopRaw / g_itemScrollRange);
             //Amount of scroll for the current item
             g_relativeScroll = g_scrollTopRaw - g_itemScrollRange * g_index;
-            //
-            // var g_relativeScrollCoef = g_relativeScroll / g_itemScrollRange;
-            // console.log(g_relativeScrollCoef);
-            //CSS transform property
-            // var g_transform = 'translateY(calc(-50% - '+g_relativeScroll / 100+'px))';
-            //CSS text shadow property
-            // var g_textShadow = '0px '+g_relativeScroll/50+'px 30px rgba(0,0,0,'+g_relativeScroll/1900+')';
             //jQuery object of the active item
             var jQ_activeItem = jQ_scrollshow.children('.item:eq('+g_index+')');
             //jQuery object of the inactive items
@@ -336,19 +288,6 @@
             jQ_scrollshow.append('<div class="progress-bar"></div>');
         }
 
-        //If clickToGoNext, include the button into DOM
-        // if(g_parameters.clickToGoNext){
-        //     jQ_scrollshow.append(
-        //         '<div class="click-to-go-next">'+
-        //             '<p>'+
-        //                 '<a href="#next">'+
-        //                     '<span>next</span>'+
-        //                 '</a>'+
-        //             '</p>'+
-        //         '</div>'
-        //     );
-        // }
-
         //On page scroll
         jQuery(document).on('scroll',function(e){
             //Get the current scrollTop, not the global g_scrollTopRaw to measure speed
@@ -371,9 +310,6 @@
             g_parameters.onScroll(scrollDirectionDown);
             //If scrollmove is too high, then beware user
             if(Math.abs(scrollMove) > 500){
-                // jQ_body.css('overflow','hidden');
-                alert('you are scrolling too fast, scroll slower');
-                // jQ_body.css('overflow','auto');
             }
             //Update scroll work
             update();
@@ -421,34 +357,8 @@
                 g_parameters.onItemEnd(currentItemIndex);
                 //Make current item a jQuery object
                 var jQ_currentItem = jQ_scrollshow.children('.item').eq(currentItemIndex);
-                //If clickToGoNext parameter is set to true
-                //And this target item has not been already read
-                //Then display the clickToGoNext DOM element
-                // if(g_parameters.clickToGoNext && !jQ_currentItem.hasClass('done')){
-                //     //Only for positive scroll and not the last item
-                //     if((g_previousscrollMove > 0) && (currentItemIndex != g_amountOfItems - 1)){
-                //         //Set the new target index
-                //         var target = currentItemIndex + 1;
-                //         //Avoids user to scroll during clickToGoNext steps prompt
-                //         jQ_body.css('overflow','hidden');
-                //         //Manage click
-                //         jQuery('.click-to-go-next')
-                //             .addClass('active')
-                //             .one('click',function(){
-                //                 //Remember user has clicked "next" to avoid click once again
-                //                 jQ_currentItem.addClass('done');
-                //                 //Make the scroll work again
-                //                 jQ_body.css('overflow','auto');
-                //                 //Calculate the amount of scrolltop to go to the next item
-                //                 var scrollAmount = target * g_itemScrollRange;
-                //                 //Scroll to the next item
-                //                 jQuery(window).scrollTop(scrollAmount);
-                //                 //Remove clickToGoNext slide
-                //                 jQuery(this).removeClass('active');
-                //             });
-                //     }
-                // }
                 //Now block itemEnd works until next item load
+                //This avoids firing itemEnd several time as a result
                 g_okToTrigItemEnd = false;
             }
 

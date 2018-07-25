@@ -98,7 +98,6 @@ Here are all the options and callbacks available in Scrollshow.
         keepActive:         true,
         textEllipsis:       '...',
         intro:              false,
-        navigation:         false,
         progressBar:        true,
         overlay:            true,
         onItemChange:       function(e){
@@ -132,7 +131,6 @@ Here are all the options and callbacks available in Scrollshow.
 | keepActive    | `true`  | Boolean | Once scrolled, letters keep active CSS class                     |
 | textEllipsis  | `...`   | String  | String displayed at the end of each text to scroll               |
 | intro         | `false` | Boolean | Display intro (document title + description) before first scroll |
-| navigation    | `false` | Boolean | Display link bullets to items and progress                       |
 | progressBar   | `true`  | Boolean | Display the progress bar                                         |
 | overlay       | `true`  | Boolean | Display overlay between items and body background                |
 
@@ -300,22 +298,6 @@ If `overlay: true`, an overlay is included into the `<div id="scrollshow"></div>
 ```html
 <div id="scrollshow">
     <div class="overlay"></div>
-</div>
-```
-
-### Navigation
-
-If `navigation: true`, a navigation element with its own progress bar and link bullets is included into the `<div id="scrollshow"></div>`. A `<nav>` element containing links to associated items. Each item scrolled is set to `active`.
-
-```html
-<div id="scrollshow">
-    <nav class="navigation">
-        <a href="#0" class="active"></a>
-        <span class="progress" style="height: ...px;"></span>
-        <a href="#1" class="">
-        </a><a href="#2" class=""></a>
-        <a href="#3" class=""></a>
-    </nav>
 </div>
 ```
 
