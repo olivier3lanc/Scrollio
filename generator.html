@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Scrollshow generator</title>
+    <meta name="description" content="Generate your own Scrollshow.">
     <!-- Scrollshow core CSS -->
     <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.css" rel="stylesheet">
     <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.theme.venus.min.css" rel="stylesheet">
 </head>
 
 <body>
+    <div id="scrollshow">
+    </div>
     <input type="text">
     <button type="button" name="add">add</button>
     <button type="button" name="generate">generate</button>
@@ -16,7 +23,7 @@
     <script type="text/javascript" src="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
-        // jQuery.fn.scrollshow();
+        jQuery.fn.scrollshow();
         var theHash = window.location.hash;
         if(theHash != ''){
             var encodedHash = theHash.replace('#','');
@@ -28,7 +35,6 @@
 
             if(typeof objRecognized == 'object'){
                 console.log(Object.keys(objRecognized).length);
-                jQuery('body').append('<div id="scrollshow"></div>');
                 var jQ_scrollshow = jQuery('#scrollshow');
                 for (var i = 0; i < Object.keys(objRecognized).length; i++) {
                     console.log(objRecognized[i]);
