@@ -1,0 +1,31 @@
+body {
+    #generator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+        display: none;
+        pointer-events: none;
+        &>.wrapper {
+            max-width: 40ch;
+            margin: auto;
+            height: 100%;
+            &>.item {
+                textarea {
+                    width: 100%;
+                    pointer-events: auto;
+                }
+            }
+            &>.commands {
+                position: fixed;
+                bottom: 0;
+                pointer-events: auto;
+            }
+        }
+        &.active {
+            display: inherit;
+        }
+    }
+}

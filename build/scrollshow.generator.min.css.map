@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AACI,eAAW,CACP,QAAQ,CAAE,KAAK,CACf,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,GAAG,CACZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,IAAI,CACpB,wBAAW,CACP,SAAS,CAAE,IAAI,CACf,MAAM,CAAE,IAAI,CACZ,MAAM,CAAE,IAAI,CAER,uCAAS,CACL,KAAK,CAAE,IAAI,CACX,cAAc,CAAE,IAAI,CAG5B,kCAAY,CACR,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,CAAC,CACT,cAAc,CAAE,IAAI,CAG5B,sBAAS,CACL,OAAO,CAAE,OAAO",
+"sources": ["../libraries/scss/scrollshow/generator/scrollshow.generator.scss"],
 "names": [],
 "file": "scrollshow.generator.min.css"
 }
