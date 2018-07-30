@@ -6,47 +6,99 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Scrollshow generator</title>
     <meta name="description" content="Generate your own Scrollshow.">
-    <!-- Scrollshow core CSS -->
-    <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.css" rel="stylesheet">
-    <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.theme.venus.min.css" rel="stylesheet">
+    <!-- Scrollshow generator -->
+    <link href="./build/scrollshow.generator.min.css" rel="stylesheet">
+    <!-- Scrollshow core -->
+    <link href="build/scrollshow.min.css" rel="stylesheet">
+    <!-- Scrollshow Theme -->
+    <link href="build/scrollshow.theme.venus.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div id="scrollshow">
+        <div class="item">
+            <h1>My first item</h1>
+        </div>
     </div>
-    <input type="text">
-    <button type="button" name="add">add</button>
-    <button type="button" name="generate">generate</button>
+
+    <div id="generator">
+        <form class="wrapper" action="">
+            <div class="commands">
+                <button type="button" name="add">add</button>
+                <button name="generate">generate</button>
+            </div>
+        </form>
+    </div>
+
     <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
     <!-- Scrollshow lib -->
-    <script type="text/javascript" src="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.js"></script>
+    <script type="text/javascript" src="build/scrollshow.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
         jQuery.fn.scrollshow();
-        var theHash = window.location.hash;
-        if(theHash != ''){
-            var encodedHash = theHash.replace('#','');
-            var decodedString = window.atob(encodedHash);
-            console.log(decodedString);
+        var decode = function() {
+            var theHash = window.location.hash;
+            if(theHash != ''){
+                var encodedHash = theHash.replace('#','');
+                var decodedString = window.atob(encodedHash);
+                console.log(decodedString);
 
-            var objRecognized = JSON.parse(decodedString);
-            console.log(objRecognized);
+                var objRecognized = JSON.parse(decodedString);
+                console.log(objRecognized);
 
-            if(typeof objRecognized == 'object'){
-                console.log(Object.keys(objRecognized).length);
-                var jQ_scrollshow = jQuery('#scrollshow');
-                for (var i = 0; i < Object.keys(objRecognized).length; i++) {
-                    console.log(objRecognized[i]);
-                    jQ_scrollshow.append(
-                        '<div class="item">'+
-                            objRecognized[i]+
-                        '</div>'
-                    );
+                if(typeof objRecognized == 'object'){
+                    console.log(Object.keys(objRecognized).length);
+                    var jQ_scrollshow = jQuery('#scrollshow');
+                    jQ_scrollshow.html('');
+                    for (var i = 0; i < Object.keys(objRecognized).length; i++) {
+                        console.log(objRecognized[i]);
+                        jQ_scrollshow.append(
+                            '<div class="item">'+
+                                objRecognized[i]+
+                            '</div>'
+                        );
+                    }
+                    jQuery.fn.scrollshow();
                 }
-                jQuery.fn.scrollshow();
             }
         }
+
+        var updateEdits = function(){
+            jQuery('#generator .item').remove();
+            var amount = jQuery('#scrollshow h1').length;
+            jQuery('#scrollshow h1').each(function(index){
+                var text = jQuery(this).text();
+                var pattern =   '<div class="item">'+
+                                    '<textarea>'+text+'</textarea>'+
+                                '</div>';
+                //For the first
+                if(index == 0){
+                    jQuery('#generator .wrapper').prepend(pattern);
+                    console.log('égal 0');
+                }else{
+                    jQuery('#generator .item').eq(-1).after(pattern);
+                    console.log('insert after');
+                }
+            });
+        }
+
+        var updateListeners = function(){
+            jQuery('#scrollshow h1')
+                .off()
+                .on('click',function(e){
+                    // var textEllipsis = jQuery.fn.scrollshow('textEllipsis');
+                    var text = jQuery(this).text();
+                    // text = text.replace(textEllipsis,'');
+                    var itemIndex = jQuery(this).parent().index();
+                    jQuery('#generator').addClass('active');
+                    jQuery('#generator textarea').eq(itemIndex)
+                        .val(text)
+                        .focus()
+                        .select();
+                });
+        }
+
 
         var obj = {};
         // var obj = {
@@ -61,22 +113,39 @@
         // var encodedString = window.btoa( myJSON );
         // console.log(encodedString);
         // window.location.hash = encodedString;
+        updateEdits();
+        updateListeners();
 
 
-        jQuery('button[name="add"]').on('click',function(){
+        jQuery('#generator button[name="add"]').on('click',function(){
             console.log('add');
-            jQuery('input[type="text"]').eq(-1).after('<input type="text">');
+            jQuery('#generator .item').eq(-1).after(
+                '<div class="item">'+
+                    '<textarea></textarea>'+
+                '</div>'
+            );
+            jQuery('#generator .item').eq(-1).focus();
         });
-        jQuery('button[name="generate"]').on('click',function(){
-            jQuery('input[type="text"]').each(function(){
-                console.log(jQuery(this).index());
-                console.log(jQuery(this).val());
-                obj[jQuery(this).index()] = '<h1>'+jQuery(this).val()+'</h1>';
+        jQuery('#generator button[name="generate"]').on('click',function(){
+            jQuery('#scrollshow').removeClass('initialized');
+            jQuery('#generator .item').each(function(){
+                var index = jQuery(this).index();
+                var text = jQuery(this).find('textarea').val();
+                console.log('Index: '+index);
+                console.log('text: '+text);
+                if(text != ''){
+                    obj[index] = '<h1>'+text+'</h1>';
+                }
+
             });
             var myJSON = JSON.stringify(obj);
             var encodedString = window.btoa( myJSON );
             console.log(encodedString);
             window.location.hash = encodedString;
+            console.log(window.atob(encodedString));
+            decode();
+            updateListeners();
+            // updateEdits();
         });
 
     </script>
