@@ -15,20 +15,30 @@
 </head>
 
 <body>
-    <div id="scrollshow">
+    <header>
+        <h1>Scrollshow generator</h1>
+        <nav>
+            <button name="generate">generate</button>
+        </nav>
+    </header>
+
+    <div id="scrollshow" class="edit-mode">
         <div class="item">
             <h1>My first item</h1>
         </div>
     </div>
 
-    <div id="generator">
-        <form class="wrapper" action="">
+    <div id="generator" class="edit-mode">
+        <div class="wrapper">
             <div class="commands">
                 <button type="button" name="add">add</button>
-                <button name="generate">generate</button>
             </div>
-        </form>
+        </div>
     </div>
+
+    <footer>
+
+    </footer>
 
     <!-- jQuery -->
     <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
@@ -37,6 +47,7 @@
     <!-- Initialize -->
     <script type="text/javascript">
         jQuery.fn.scrollshow();
+
         var decode = function() {
             var theHash = window.location.hash;
             if(theHash != ''){
@@ -52,32 +63,60 @@
                     var jQ_scrollshow = jQuery('#scrollshow');
                     jQ_scrollshow.html('');
                     for (var i = 0; i < Object.keys(objRecognized).length; i++) {
-                        console.log(objRecognized[i]);
+                        console.log(typeof objRecognized[i]);
                         jQ_scrollshow.append(
                             '<div class="item">'+
                                 objRecognized[i]+
                             '</div>'
                         );
+                        //if it is a string, it is content
+                        if(typeof objRecognized == 'string'){
+
+                        }
+                        //
+                        if(typeof objRecognized == 'object'){
+                            // jQ_scrollshow.append(
+                            //     '<div class="item">'+
+                            //         objRecognized[i]+
+                            //     '</div>'
+                            // );
+                        }
                     }
                     jQuery.fn.scrollshow();
                 }
             }
         }
 
+        var editorPattern = function(text = ''){
+            var pattern =   '<div class="item">'+
+                                '<nav>'+
+                                    '<button name="remove">remove</button>'+
+                                '</nav>'+
+                                '<textarea>'+text+'</textarea>'+
+                            '</div>';
+            return pattern;
+        }
+
         var updateEdits = function(){
-            jQuery('#generator .item').remove();
+            jQuery('#generator').find('.item').remove();
             var amount = jQuery('#scrollshow h1').length;
             jQuery('#scrollshow h1').each(function(index){
+                // var jQ_html = jQuery(this).clone();
+                // jQ_html.find('.word').eq(-1).remove();
+                // var text = jQ_html.text();
+                var textEllipsis = jQuery.fn.scrollshow('textEllipsis');
                 var text = jQuery(this).text();
-                var pattern =   '<div class="item">'+
-                                    '<textarea>'+text+'</textarea>'+
-                                '</div>';
+                text = text.replace(' '+textEllipsis,'');
+                var pattern = editorPattern(text);
+                // var pattern =   '<div class="item">'+
+                //                     '<textarea>'+text+'</textarea>'+
+                //                 '</div>';
                 //For the first
                 if(index == 0){
                     jQuery('#generator .wrapper').prepend(pattern);
                     console.log('égal 0');
                 }else{
-                    jQuery('#generator .item').eq(-1).after(pattern);
+                    jQuery('#generator').find('.item').eq(-1).after(pattern);
                     console.log('insert after');
                 }
             });
@@ -87,65 +126,59 @@
             jQuery('#scrollshow h1')
                 .off()
                 .on('click',function(e){
+
+
                     // var textEllipsis = jQuery.fn.scrollshow('textEllipsis');
-                    var text = jQuery(this).text();
+                    // var text = jQuery(this).text();
                     // text = text.replace(textEllipsis,'');
                     var itemIndex = jQuery(this).parent().index();
-                    jQuery('#generator').addClass('active');
+                    // jQuery('#scrollshow,#generator').addClass('edit-mode');
                     jQuery('#generator textarea').eq(itemIndex)
-                        .val(text)
                         .focus()
                         .select();
+                });
+            jQuery('#generator button[name="remove"]')
+                .off()
+                .on('click',function(){
+                    jQuery(this).closest('.item').remove();
                 });
         }
 
 
-        var obj = {};
-        // var obj = {
-        //     0: "<h1>Hello world</h1>",
-        //     1: "<h1>Once again</h1>",
-        //     2: "<h1>This is the third</h1>"
-        // };
 
-        // var myJSON = JSON.stringify(obj);
-        // console.log(myJSON);
-        //
-        // var encodedString = window.btoa( myJSON );
-        // console.log(encodedString);
-        // window.location.hash = encodedString;
         updateEdits();
         updateListeners();
 
 
-        jQuery('#generator button[name="add"]').on('click',function(){
-            console.log('add');
-            jQuery('#generator .item').eq(-1).after(
-                '<div class="item">'+
-                    '<textarea></textarea>'+
-                '</div>'
-            );
-            jQuery('#generator .item').eq(-1).focus();
+        jQuery('button[name="add"]').on('click',function(){
+            var pattern = editorPattern();
+            jQuery('#generator').find('.item').eq(-1).after(pattern);
+            jQuery('#generator').find('.item').eq(-1).find('textarea').focus().select();
+            updateListeners();
         });
-        jQuery('#generator button[name="generate"]').on('click',function(){
+        jQuery('button[name="generate"]').on('click',function(){
+            var obj = {};
+            var index = 0;
             jQuery('#scrollshow').removeClass('initialized');
-            jQuery('#generator .item').each(function(){
-                var index = jQuery(this).index();
+            jQuery('#generator').find('.item').each(function(){
+                // var index = jQuery(this).index();
                 var text = jQuery(this).find('textarea').val();
-                console.log('Index: '+index);
-                console.log('text: '+text);
                 if(text != ''){
                     obj[index] = '<h1>'+text+'</h1>';
+                    index++;
                 }
-
             });
             var myJSON = JSON.stringify(obj);
             var encodedString = window.btoa( myJSON );
             console.log(encodedString);
             window.location.hash = encodedString;
-            console.log(window.atob(encodedString));
+            console.log(encodedString);
             decode();
+
+            // jQuery('#scrollshow,#generator').removeClass('edit-mode');
+            jQuery(window).scrollTop(0);
+            updateEdits();
             updateListeners();
-            // updateEdits();
         });
 
     </script>
