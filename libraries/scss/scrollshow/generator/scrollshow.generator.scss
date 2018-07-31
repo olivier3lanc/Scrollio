@@ -1,10 +1,38 @@
+
 body {
-    #generator {
+    header {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 38px;
+        z-index: 200;
+        background-color: black;
+        padding: 0em 1em;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        line-height: 0;
+        h1 {
+            font-size: small;
+            flex-grow: 1;
+            padding: 0;
+            margin: 0;
+        }
+        nav {
+            text-align: right;
+            button {
+
+            }
+        }
+    }
+    #generator {
+        position: fixed;
+        top: 38px;
+        left: 0;
+        width: 50%;
+        box-sizing: border-box;
+        height: calc(100% - 38px);
         z-index: 200;
         display: none;
         pointer-events: none;
@@ -12,20 +40,44 @@ body {
             max-width: 40ch;
             margin: auto;
             height: 100%;
+            overflow: auto;
+            padding: 1em;
+            box-sizing: border-box;
             &>.item {
+                nav {
+                    pointer-events: auto;
+                    text-align: right;
+                }
                 textarea {
                     width: 100%;
+                    resize: vertical;
                     pointer-events: auto;
+                }
+                &:first-child {
+                    nav {
+                        button {
+                            &[name="remove"] {
+                                display: none;
+                            }
+                        }
+                    }
                 }
             }
             &>.commands {
-                position: fixed;
-                bottom: 0;
                 pointer-events: auto;
             }
         }
-        &.active {
+        &.edit-mode {
             display: inherit;
+        }
+    }
+    #scrollshow {
+        transition: all 500ms;
+        &.edit-mode {
+            transform: scale(0.5) translateX(50%) translateY(-50%);
+            position: fixed;
+            top: 38px;
+            width: 100%;
         }
     }
 }

@@ -4,6 +4,7 @@
 body {
     #scrollshow {
         overflow: auto;
+        height: 100vh;
         &>.intro {
             opacity: 0;
             transition: all 300ms;
