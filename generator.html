@@ -64,14 +64,14 @@
                     jQ_scrollshow.html('');
                     for (var i = 0; i < Object.keys(objRecognized).length; i++) {
                         console.log(typeof objRecognized[i]);
-                        jQ_scrollshow.append(
-                            '<div class="item">'+
-                                objRecognized[i]+
-                            '</div>'
-                        );
-                        //if it is a string, it is content
-                        if(typeof objRecognized == 'string'){
 
+                        //if it is a string, it is content
+                        if(typeof objRecognized[i] == 'string'){
+                            jQ_scrollshow.append(
+                                '<div class="item">'+
+                                    objRecognized[i]+
+                                '</div>'
+                            );
                         }
                         //
                         if(typeof objRecognized == 'object'){
@@ -104,7 +104,7 @@
                 // var jQ_html = jQuery(this).clone();
                 // jQ_html.find('.word').eq(-1).remove();
                 // var text = jQ_html.text();
-                var textEllipsis = jQuery.fn.scrollshow('textEllipsis');
+                var textEllipsis = jQuery.fn.scrollshow('get:textEllipsis');
                 var text = jQuery(this).text();
                 text = text.replace(' '+textEllipsis,'');
                 var pattern = editorPattern(text);
