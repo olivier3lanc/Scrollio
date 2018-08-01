@@ -33,9 +33,18 @@
         }
         //Returns parameters through jQuery.fn.scrollshow('parameterName')
         if(typeof options == 'string'){
-            if(g_parameters[options] !== undefined){
-                return g_parameters[options];
+            if(options.indexOf('get:') == 0){
+                var parameter = options.replace('get:','');
+                if(parameter == 'all'){
+                    return g_parameters;
+                }else if(g_parameters[parameter] !== undefined){
+                    return g_parameters[parameter];
+                }else{
+                    console.log('not a valid scrollshow parameter');
+                    return false;
+                }
             }else{
+                console.log('not a valid request');
                 return false;
             }
         }
