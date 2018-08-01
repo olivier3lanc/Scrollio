@@ -31,7 +31,7 @@
 
             }
         }
-        //Returns parameters through jQuery.fn.scrollshow('parameterName')
+        //Scrollshow API through jQuery.fn.scrollshow('get:[parameterName]')
         if(typeof options == 'string'){
             if(options.indexOf('get:') == 0){
                 var parameter = options.replace('get:','');
