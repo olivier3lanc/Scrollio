@@ -1,6 +1,6 @@
 
 body {
-    header {
+    #topbar {
         position: fixed;
         top: 0;
         left: 0;
@@ -66,6 +66,9 @@ body {
             &>.commands {
                 pointer-events: auto;
             }
+            &>.settings {
+                pointer-events: auto;
+            }
         }
         &.edit-mode {
             display: inherit;
@@ -78,6 +81,7 @@ body {
             position: fixed;
             top: 38px;
             width: 100%;
+            overflow: hidden;
         }
     }
 }
