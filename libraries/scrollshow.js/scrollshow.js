@@ -104,14 +104,14 @@
                         //First child of the .item is the scroller
                         var jQ_text = jQuery(this).children().eq(0);
                         //Text content of the element to scroll
-                        var text = jQ_text.text()+' '+g_parameters.textEllipsis;
+                        var text = jQ_text.text();
                         var result = '';
                         var zIndex = 1000;
                         result += '<span class="word">'; //Very first word
                         for(var i = 0; i < text.length; i++){
                             if(text[i] == ' '){
                                result += '</span>'; //end of a word
-                               result += '<span class="separator">'+text[i]+'</span>'; //add separator
+                               result += '<span class="separator"> </span>'; //add separator
                                result += '<span class="word">'; //restart another word
                             }else{
                                result += '<span class="letter" style="z-index:'+zIndex+';">'+text[i]+'</span>';
@@ -119,9 +119,27 @@
                             //Decrease z-index;
                             zIndex--;
                         }
-                        result += '</span>';//End of last word
+                        result += '</span>'; //End of last word
+                        //Ellipsis management
+                        var ellipsis = ' ';
+                        //if options for text ellipsis is not empty, use it
+                        if(g_parameters.textEllipsis != ''){
+                            ellipsis = g_parameters.textEllipsis;
+                        }
+                        var ellipsisLetters = '';
+                        //Wrap each ellipsis letters like other letters
+                        for(var i = 0; i < ellipsis.length; i++){
+                            ellipsisLetters +=  '<span class="letter" style="z-index:'+zIndex+';">'+
+                                                    ellipsis[i]+
+                                                '</span>';
+                            //Decrease z-index;
+                            zIndex--;
+                        }
+                        //Insert the whole ellipsis into a .word span
+                        var finalEllipsis = '<span class="word">'+ellipsisLetters+'</span>';
+                        var finalResult = result+finalEllipsis;
                         //Replace html
-                        jQ_text.html(result);
+                        jQ_text.html(finalResult);
                     });
                 }
             }
@@ -243,6 +261,11 @@
                         index: g_index
                     });
                 }
+            }
+
+            //If keepActive, add a class to Scrollshow container
+            if(g_parameters.keepActive){
+                jQ_scrollshow.addClass('keep-active');
             }
 
             //If intro, include into DOM
