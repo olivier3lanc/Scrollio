@@ -81,6 +81,10 @@
             var g_amountOfItems = jQ_scrollshow.children('.item').length;
             //Scroll amount for an item
             var g_itemScrollRange = g_parameters.scrollRange;
+            //Item progression coefficient
+            var g_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
+            //Item progress bar width value in pixel
+            var g_progressBarValue = g_progressBarCoef * jQ_windowWidth;
             //Scroll amount history
             var g_previousScrollAmount = 0;
             //Scroll speed history
@@ -246,9 +250,9 @@
 
                     //If progress bar is enabled
                     if(g_parameters.progressBar){
-                        var cur_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
-                        var cur_progressBarValue = cur_progressBarCoef * jQ_windowWidth;
-                        jQ_scrollshow.children('.progress-bar').css('width',cur_progressBarValue);
+                        g_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
+                        g_progressBarValue = g_progressBarCoef * jQ_windowWidth;
+                        jQ_scrollshow.children('.progress-bar').css('width',g_progressBarValue);
                     }
                     //After all work done, update previous letter index value
                     g_previousLetterIndex = cur_letterIndex;
@@ -330,7 +334,14 @@
                 //Add callback for scrollDirectionDown
                 //scrollDirectionDown == true means scroll down
                 //scrollDirectionUp == false means scroll up
-                g_parameters.onScroll(scrollDirectionDown);
+                g_parameters.onScroll({
+                    //Returns true if scroll event is down
+                    isScrollDown: scrollDirectionDown,
+                    //Between 0 and 1, the overall progress of the Scrollshow
+                    progressBarCoef: g_progressBarCoef,
+                    //Between 0 and 1, the progress of the current item
+                    itemProgressCoef: g_relativeScroll / g_itemScrollRange
+                });
                 //If scrollmove is too high, then beware user
                 if(Math.abs(scrollMove) > 500){
                 }

@@ -139,7 +139,7 @@ Here are all the options and callbacks available in Scrollshow.
 | -------------- | -------- | -------------------------------------------------------------------------------------- |
 | onItemChange   | `number` | Fired on item change, returns the index number of the target item                      |
 | onLetterChange |          | Fired on letter change                                                                 |
-| onScroll       |          | Fired on user scroll                                                                   |
+| onScroll       | `object` | Fired on user scroll, returns `object`:<br>`isScrollDown`: `[boolean]` Returns true if scroll event is down<br>`progressBarCoef`: `[number]` Between 0 and 1, the overall progress of the Scrollshow<br>`itemProgressCoef`: `[number]` Between 0 and 1, the progress of the current item |
 | onItemEnd      | `number` | Fired when user reaches the end of an item, returns the index number of the ended item |
 | onFirstItem    |          | Fired when user reaches the first item                                                 |
 | onLastItem     |          | Fired when user reaches the last item                                                  |
