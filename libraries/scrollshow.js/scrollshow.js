@@ -136,7 +136,7 @@
                             zIndex--;
                         }
                         //Insert the whole ellipsis into a .word span
-                        var finalEllipsis = '<span class="word">'+ellipsisLetters+'</span>';
+                        var finalEllipsis = '<span class="word ellipsis">'+ellipsisLetters+'</span>';
                         var finalResult = result+finalEllipsis;
                         //Replace html
                         jQ_text.html(finalResult);
