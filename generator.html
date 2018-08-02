@@ -6,6 +6,8 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Scrollshow generator</title>
     <meta name="description" content="Generate your own Scrollshow.">
+    <!-- Reset CSS -->
+    <link href="libraries/normalize/normalize.min.css" rel="stylesheet">
     <!-- Scrollshow generator -->
     <link href="./build/scrollshow.generator.min.css" rel="stylesheet">
     <!-- Scrollshow core -->
@@ -15,7 +17,7 @@
 </head>
 
 <body>
-    <header id="topbar">
+    <header id="topbar" class="edit-mode">
         <h1>Scrollshow generator</h1>
         <nav>
             <button name="generate">generate</button>
@@ -132,6 +134,15 @@
                 }else{
                     jQuery('#generator').find('.item').eq(-1).after(pattern);
                 }
+            });
+            //Toolbar
+            jQuery('#scrollshow').append(
+                '<nav class="toolbar">'+
+                    '<button name="edit-mode">toggle fullscreen</button>'+
+                '</nav>'
+            );
+            jQuery('#scrollshow .toolbar button[name="edit-mode"]').on('click',function(){
+                jQuery('#scrollshow, #generator, #topbar').toggleClass('edit-mode');
             });
             //parameters
             jQuery('#generator .settings').html('');

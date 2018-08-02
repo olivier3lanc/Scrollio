@@ -9,7 +9,7 @@ body {
         z-index: 200;
         background-color: black;
         padding: 0em 1em;
-        display: flex;
+        display: none;
         align-items: center;
         box-sizing: border-box;
         line-height: 0;
@@ -24,6 +24,9 @@ body {
             button {
 
             }
+        }
+        &.edit-mode {
+            display: flex;
         }
     }
     #generator {
@@ -76,12 +79,37 @@ body {
     }
     #scrollshow {
         transition: all 500ms;
+        &>.toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1em;
+            box-sizing: border-box;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            text-align: right;
+        }
         &.edit-mode {
             transform: scale(0.5) translateX(50%) translateY(-50%);
             position: fixed;
             top: 38px;
             width: 100%;
             overflow: hidden;
+            &>.item {
+                &>* {
+                    &:hover {
+                        cursor: context-menu;
+                    }
+                }
+            }
+        }
+        &:hover {
+            &>.toolbar {
+                pointer-events: auto;
+                opacity: 1;
+            }
         }
     }
 }
