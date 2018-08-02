@@ -1,66 +1,67 @@
 body {
-    font-family: qtr-font-family(2);
-    font-size: qtr-font-size();
-    line-height: 1.5em;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-th {
-    font-family: qtr-font-family(1);
-}
-h1 { font-size: qtr-font-size(6); }
-h2 { font-size: qtr-font-size(5); }
-h3 { font-size: qtr-font-size(4); }
-h4 { font-size: qtr-font-size(3); }
-h5 { font-size: qtr-font-size(2); }
-h6 { font-size: qtr-font-size(1); }
-
-@include qtr-screen(xs){
-    h1 { font-size: qtr-font-size(3); }
-    h2 { font-size: qtr-font-size(2); }
-    h3 { font-size: qtr-font-size(1); }
-    h4 { font-size: qtr-font-size(); }
-    h5 { font-size: qtr-font-size(); }
-    h6 { font-size: qtr-font-size(); }
-    body {
-        font-size: qtr-font-size(-3);
-    }
-}
-@include qtr-screen(sm){
-    h1 { font-size: qtr-font-size(4); }
-    h2 { font-size: qtr-font-size(3); }
-    h3 { font-size: qtr-font-size(2); }
-    h4 { font-size: qtr-font-size(1); }
-    h5 { font-size: qtr-font-size(); }
-    h6 { font-size: qtr-font-size(); }
-    body {
-        font-size: qtr-font-size(-2);
-    }
-}
-@include qtr-screen(md){
-    h1 { font-size: qtr-font-size(5); }
-    h2 { font-size: qtr-font-size(4); }
-    h3 { font-size: qtr-font-size(3); }
-    h4 { font-size: qtr-font-size(2); }
-    h5 { font-size: qtr-font-size(1); }
-    h6 { font-size: qtr-font-size(); }
-    body {
-        font-size: qtr-font-size(-1);
-    }
-}
-@include qtr-screen(lg){
-    h1 { font-size: qtr-font-size(6); }
-    h2 { font-size: qtr-font-size(5); }
-    h3 { font-size: qtr-font-size(4); }
-    h4 { font-size: qtr-font-size(3); }
-    h5 { font-size: qtr-font-size(2); }
-    h6 { font-size: qtr-font-size(1); }
-    body {
+    #scrollshow {
+        font-family: qtr-font-family(2);
         font-size: qtr-font-size();
+        line-height: 1.5em;
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        th {
+            font-family: qtr-font-family(1);
+        }
+        h1 { font-size: qtr-font-size(6); }
+        h2 { font-size: qtr-font-size(5); }
+        h3 { font-size: qtr-font-size(4); }
+        h4 { font-size: qtr-font-size(3); }
+        h5 { font-size: qtr-font-size(2); }
+        h6 { font-size: qtr-font-size(1); }
+
+        @include qtr-screen(xs){
+            h1 { font-size: qtr-font-size(3); }
+            h2 { font-size: qtr-font-size(2); }
+            h3 { font-size: qtr-font-size(1); }
+            h4 { font-size: qtr-font-size(); }
+            h5 { font-size: qtr-font-size(); }
+            h6 { font-size: qtr-font-size(); }
+            body {
+                font-size: qtr-font-size(-3);
+            }
+        }
+        @include qtr-screen(sm){
+            h1 { font-size: qtr-font-size(4); }
+            h2 { font-size: qtr-font-size(3); }
+            h3 { font-size: qtr-font-size(2); }
+            h4 { font-size: qtr-font-size(1); }
+            h5 { font-size: qtr-font-size(); }
+            h6 { font-size: qtr-font-size(); }
+            body {
+                font-size: qtr-font-size(-2);
+            }
+        }
+        @include qtr-screen(md){
+            h1 { font-size: qtr-font-size(5); }
+            h2 { font-size: qtr-font-size(4); }
+            h3 { font-size: qtr-font-size(3); }
+            h4 { font-size: qtr-font-size(2); }
+            h5 { font-size: qtr-font-size(1); }
+            h6 { font-size: qtr-font-size(); }
+            body {
+                font-size: qtr-font-size(-1);
+            }
+        }
+        @include qtr-screen(lg){
+            h1 { font-size: qtr-font-size(6); }
+            h2 { font-size: qtr-font-size(5); }
+            h3 { font-size: qtr-font-size(4); }
+            h4 { font-size: qtr-font-size(3); }
+            h5 { font-size: qtr-font-size(2); }
+            h6 { font-size: qtr-font-size(1); }
+            body {
+                font-size: qtr-font-size();
+            }
+        }
     }
 }

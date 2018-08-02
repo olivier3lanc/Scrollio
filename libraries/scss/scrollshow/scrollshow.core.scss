@@ -71,18 +71,6 @@ body {
                     }
                 }
             }
-            //Very first item, make first letter active
-            &:first-child {
-                .word {
-                    &:first-child {
-                        .letter {
-                            &:first-child {
-                                color: black;
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         //Progress bar
@@ -94,6 +82,24 @@ body {
             height: 3px;
             background-color: black;
             z-index: 10;
+        }
+
+        //Only for keepActive = true
+        &.keep-active {
+            &>.item {
+                //Very first item, make first letter active
+                &:first-child {
+                    .word {
+                        &:first-child {
+                            .letter {
+                                &:first-child {
+                                    color: black;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
