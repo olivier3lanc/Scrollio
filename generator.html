@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <header>
+    <header id="topbar">
         <h1>Scrollshow generator</h1>
         <nav>
             <button name="generate">generate</button>
@@ -33,12 +33,9 @@
             <div class="commands">
                 <button type="button" name="add">add</button>
             </div>
+            <div class="settings"></div>
         </div>
     </div>
-
-    <footer>
-
-    </footer>
 
     <!-- jQuery -->
     <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
@@ -46,6 +43,8 @@
     <script type="text/javascript" src="build/scrollshow.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
+        var currentScrollshowParameters = jQuery.fn.scrollshow('get:all');
+
         jQuery.fn.scrollshow();
 
         var decode = function() {
@@ -60,8 +59,11 @@
 
                 if(typeof objRecognized == 'object'){
                     console.log(Object.keys(objRecognized).length);
+                    //Destroy instance
+                    jQuery('#scrollshow').remove();
+                    //Build a new one
+                    jQuery('body').append('<div id="scrollshow" class="edit-mode"></div>');
                     var jQ_scrollshow = jQuery('#scrollshow');
-                    jQ_scrollshow.html('');
                     for (var i = 0; i < Object.keys(objRecognized).length; i++) {
                         console.log(typeof objRecognized[i]);
 
@@ -73,16 +75,27 @@
                                 '</div>'
                             );
                         }
-                        //
-                        if(typeof objRecognized == 'object'){
-                            // jQ_scrollshow.append(
-                            //     '<div class="item">'+
-                            //         objRecognized[i]+
-                            //     '</div>'
-                            // );
-                        }
                     }
-                    jQuery.fn.scrollshow();
+                    //
+                    var customParameters = {};
+                    if(typeof objRecognized.options == 'object'){
+                        console.log('options found');
+                        //Manage parameters
+                        var userProperties = Object.getOwnPropertyNames(objRecognized.options);
+                        //Replace each parameter by its new value
+                        userProperties.forEach(function(property){
+                            if(currentScrollshowParameters.hasOwnProperty(property)){
+                                customParameters[property] = objRecognized.options[property];
+                                currentScrollshowParameters[property] = objRecognized.options[property];
+                            }
+                        });
+                    }
+                    console.log('custom params');
+                    console.log(customParameters);
+
+                    jQuery.fn.scrollshow(customParameters);
+                    updateEdits();
+                    updateListeners();
                 }
             }
         }
@@ -99,14 +112,16 @@
 
         var updateEdits = function(){
             jQuery('#generator').find('.item').remove();
-            var amount = jQuery('#scrollshow h1').length;
-            jQuery('#scrollshow h1').each(function(index){
-                // var jQ_html = jQuery(this).clone();
-                // jQ_html.find('.word').eq(-1).remove();
-                // var text = jQ_html.text();
-                var textEllipsis = jQuery.fn.scrollshow('get:textEllipsis');
-                var text = jQuery(this).text();
-                text = text.replace(' '+textEllipsis,'');
+            var amount = jQuery('#scrollshow .item h1').length;
+            jQuery('#scrollshow .item h1').each(function(index){
+                var jQ_html = jQuery(this).clone();
+                jQ_html.find('.word').eq(-1).remove();
+                // jQ_html.find('.separator').eq(-1).remove();
+                var text = jQ_html.text();
+                // var textEllipsis = jQuery.fn.scrollshow('get:textEllipsis');
+                // var textEllipsis = currentScrollshowParameters.textEllipsis;
+                // var text = jQuery(this).text();
+                // text = text.replace(' '+textEllipsis,'');
                 var pattern = editorPattern(text);
                 // var pattern =   '<div class="item">'+
                 //                     '<textarea>'+text+'</textarea>'+
@@ -114,10 +129,38 @@
                 //For the first
                 if(index == 0){
                     jQuery('#generator .wrapper').prepend(pattern);
-                    console.log('égal 0');
                 }else{
                     jQuery('#generator').find('.item').eq(-1).after(pattern);
-                    console.log('insert after');
+                }
+            });
+            //parameters
+            jQuery('#generator .settings').html('');
+            var settingsParameters = Object.getOwnPropertyNames(currentScrollshowParameters);
+            settingsParameters.forEach(function(property){
+                var type = typeof currentScrollshowParameters[property];
+                var form;
+                if(property != 'id' && type != 'function'){
+                    if(type == 'boolean'){
+                        var checkMarkup = 'checked';
+                        var checkTrueStatus = '';
+                        var checkFalseStatus = '';
+                        if(currentScrollshowParameters[property]){
+                            checkTrueStatus = checkMarkup;
+                        }else{
+                            checkFalseStatus = checkMarkup;
+                        }
+                        form =  '<input type="radio" id="'+property+'-true" name="'+property+'" '+checkTrueStatus+'>'+
+                                '<label for="'+property+'-true">true</label> '+
+                                '<input type="radio" id="'+property+'-false" name="'+property+'" '+checkFalseStatus+'>'+
+                                '<label for="'+property+'-false">false</label>';
+                    }else if(type == 'string'){
+                        form = '<input type="text" id="'+property+'" name="'+property+'" value="'+currentScrollshowParameters[property]+'">';
+                    }else if(type == 'number'){
+                        form = '<input type="number" id="'+property+'"  name="'+property+'" value="'+currentScrollshowParameters[property]+'">';
+                    }
+                    jQuery('#generator .settings').append(
+                        '<fieldset><legend>'+property+'</legend> '+form+'</fieldset>'
+                    );
                 }
             });
         }
@@ -157,7 +200,7 @@
             updateListeners();
         });
         jQuery('button[name="generate"]').on('click',function(){
-            var obj = {};
+            var obj = { options: {}};
             var index = 0;
             jQuery('#scrollshow').removeClass('initialized');
             jQuery('#generator').find('.item').each(function(){
@@ -168,17 +211,33 @@
                     index++;
                 }
             });
+            //get user parameters
+            jQuery('#generator .settings input').each(function(){
+                var parameter = jQuery(this).attr('name');
+                if(jQuery(this).attr('type') == 'radio'){
+                    var value = jQuery('input[type="radio"][name="'+parameter+'"]').prop('checked');
+                }else if(jQuery(this).attr('type') == 'number'){
+                    var value = parseFloat(jQuery(this).val());
+                }else if(jQuery(this).attr('type') == 'text'){
+                    var value = jQuery(this).val();
+                }
+                obj.options[parameter] = value;
+                currentScrollshowParameters[parameter] = value;
+            });
             var myJSON = JSON.stringify(obj);
             var encodedString = window.btoa( myJSON );
             console.log(encodedString);
             window.location.hash = encodedString;
             console.log(encodedString);
-            decode();
+            jQuery(window).scrollTop(0);
+            setTimeout(function(){
+                decode();
+            },100);
+
 
             // jQuery('#scrollshow,#generator').removeClass('edit-mode');
-            jQuery(window).scrollTop(0);
-            updateEdits();
-            updateListeners();
+
+
         });
 
     </script>
