@@ -6,7 +6,8 @@
             scrollRange:        2000,               //Amount of pixels per item
             keepActive:         true,               //Once scrolled, letters keep active
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
-            intro:              false,               //Enable/disable intro (document title + description)
+            fontSize:           6,                  //1-7: Font size of the scrolled text (managed by theme CSS)
+            intro:              false,              //Enable/disable intro (document title + description)
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
             onItemChange:       function(e){        //Callback on item change
@@ -272,6 +273,19 @@
                 jQ_scrollshow.addClass('keep-active');
             }
 
+            //Add CSS class for font size
+            if(typeof g_parameters.fontSize == 'number'){
+                if(g_parameters.fontSize >= 1 && g_parameters.fontSize <= 7){
+                    g_parameters.fontSize = parseInt(g_parameters.fontSize);
+                    var g_fontSizeClass = 'font-size-'+g_parameters.fontSize.toString();
+                    jQ_scrollshow.addClass(g_fontSizeClass);
+                }else{
+                    console.log('invalid font size: must be a integer from 1 to 7');
+                }
+            }else{
+                console.log('fontSize option must be a number');
+            }
+
             //If intro, include into DOM
             if(g_parameters.intro){
                 //Fallback if no meta description
@@ -335,6 +349,10 @@
                 //scrollDirectionDown == true means scroll down
                 //scrollDirectionUp == false means scroll up
                 g_parameters.onScroll({
+                    //Returns current item index
+                    index: g_index,
+                    //Returns current amount of scroll for this item only
+                    relativeScroll: g_relativeScroll,
                     //Returns true if scroll event is down
                     isScrollDown: scrollDirectionDown,
                     //Between 0 and 1, the overall progress of the Scrollshow
