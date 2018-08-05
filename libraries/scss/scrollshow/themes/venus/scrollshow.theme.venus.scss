@@ -104,13 +104,6 @@ body {
                                 animation-iteration-count: infinite;
                                 animation-direction: alternate;
                             }
-
-                        }
-                    }
-                    &:last-child {
-                        .letter {
-                            //Unread / Inactive letter properties
-                            font-size: qtr-font-size(2);
                         }
                     }
                 }
