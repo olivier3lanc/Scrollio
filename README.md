@@ -97,6 +97,7 @@ Here are all the options and callbacks available in Scrollshow.
         scrollRange:        2000,
         keepActive:         true,
         textEllipsis:       '...',
+        fontSize:           7,
         intro:              false,
         progressBar:        true,
         overlay:            true,
@@ -124,22 +125,22 @@ Here are all the options and callbacks available in Scrollshow.
     });
 </script>
 ```
-
-| Option        | Default | Type    | Description                                                      |
-| ------------- | ------- | ------- | ---------------------------------------------------------------- |
-| scrollRange   | `2000`  | Number  | Amount of pixels scrolled per item                               |
-| keepActive    | `true`  | Boolean | Once scrolled, letters keep active CSS class                     |
-| textEllipsis  | `...`   | String  | String displayed at the end of each text to scroll               |
-| intro         | `false` | Boolean | Display intro (document title + description) before first scroll |
-| progressBar   | `true`  | Boolean | Display the progress bar                                         |
-| overlay       | `true`  | Boolean | Display overlay between items and body background                |
+| Option       | Default | Type    | Description                                                        |
+| ------------ | ------- | ------- | ------------------------------------------------------------------ |
+| scrollRange  | `2000`  | Number  | Amount of pixels scrolled per item                                 |
+| keepActive   | `true`  | Boolean | Once scrolled, letters keep active CSS class                       |
+| textEllipsis | `...`   | String  | String displayed at the end of each text to scroll                 |
+| fontSize:    | `7`     | Number  | From 1 to 7: Font size of the scrolled text (managed by theme CSS) |
+| intro        | `false` | Boolean | Display intro (document title + description) before first scroll   |
+| progressBar  | `true`  | Boolean | Display the progress bar                                           |
+| overlay      | `true`  | Boolean | Display overlay between items and body background                  |
 
 
 | Callback       | Returns  | Description                                                                            |
 | -------------- | -------- | -------------------------------------------------------------------------------------- |
 | onItemChange   | `number` | Fired on item change, returns the index number of the target item                      |
 | onLetterChange |          | Fired on letter change                                                                 |
-| onScroll       | `object` | Fired on user scroll, returns `object`:<br>`isScrollDown`: `[boolean]` Returns true if scroll event is down<br>`progressBarCoef`: `[number]` Between 0 and 1, the overall progress of the Scrollshow<br>`itemProgressCoef`: `[number]` Between 0 and 1, the progress of the current item |
+| onScroll       | `object` | Fired on user scroll, returns `object`: <br>`index`: `[number]` Returns the current item index <br>`relativeScroll`: `[number]` Returns the amount of scroll for the current item <br>`isScrollDown`: `[boolean]` Returns true if scroll event is down <br>`progressBarCoef`: `[number]` Between 0 and 1, the overall progress of the Scrollshow <br>`itemProgressCoef`: `[number]` Between 0 and 1, the progress of the current item |
 | onItemEnd      | `number` | Fired when user reaches the end of an item, returns the index number of the ended item |
 | onFirstItem    |          | Fired when user reaches the first item                                                 |
 | onLastItem     |          | Fired when user reaches the last item                                                  |
