@@ -110,10 +110,14 @@
             }
             //Current item index
             var g_index = 0;
+            //Update API
+            api.index = g_index;
             //Amount of scroll
             var g_scrollTopRaw = 0;
             //Amount of item relative scroll
             var g_relativeScroll = 0;
+            //Update API
+            api.relativeScroll = g_relativeScroll;
             //Amount of items
             var g_amountOfItems = jQ_scrollio.children('.item').length;
             //Update API
@@ -122,10 +126,14 @@
             var g_itemScrollRange = g_parameters.scrollRange;
             //Item progression coefficient
             var g_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
+            //Update API
+            api.progressBarCoef = g_progressBarCoef;
             //Item progress bar width value in pixel
             var g_progressBarValue = g_progressBarCoef * jQ_windowWidth;
             //Between 0 and 1, the progress coef of the current item
             var g_itemProgressCoef = 0;
+            //Update API
+            api.itemProgressCoef = g_itemProgressCoef;
             //Scroll amount history
             var g_previousScrollAmount = 0;
             //Scroll speed history
