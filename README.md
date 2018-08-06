@@ -87,7 +87,7 @@ Typical markup with CDN:
 </html>
 ```
 
-## Options and callbacks
+## Options
 
 Here are all the options and callbacks available in Scrollio.
 
@@ -139,7 +139,7 @@ Here are all the options and callbacks available in Scrollio.
 | progressBar      | `true`  | Boolean | Display the progress bar                                            |
 | overlay          | `true`  | Boolean | Display overlay between items and body background                   |
 
-
+## Callbacks
 
 | Callback       | Returns  | Description                                                                            |
 | -------------- | -------- | -------------------------------------------------------------------------------------- |
@@ -151,6 +151,27 @@ Here are all the options and callbacks available in Scrollio.
 | onLastItem     |          | Fired when user reaches the last item                                                  |
 | onScrollEnd    |          | Fired when user reaches the very end of the scrollio                                 |
 
+## API
+
+Through the command `jQuery.fn.scrollio('get:[yourRequestString]')`, Scrollio API allows to get values and informations at any time:
+
+| `[yourRequestString]` | Returns                 | Description                                              |
+| --------------------- | ----------------------- | -------------------------------------------------------- |
+| `parameters`          | `object`                | Returns all current Scrollio parameters                  |
+| `index`               | `integer`               | Returns the current active item index                    |
+| `relativeScroll`      | `integer`               | Returns the amount of scroll for the current item        |
+| `amountOfItems`       | `integer`               | Returns the amount items in the Scrollio                 |
+| `progressBarCoef`     | `float` between 0 and 1 | Returns the current overall progress of the Scrollio     |
+| `itemProgressCoef`    | `float` between 0 and 1 | Returns the progress of the current item                 |
+| `api`                 | `object`                | Returns the complete API data                            |
+
+### Examples
+
+* `jQuery.fn.scrollio('get:parameters')` returns all current Scrollio parameters into an object
+* `jQuery.fn.scrollio('get:textEllipsis')` returns the current text ellipsis value
+* `jQuery.fn.scrollio('get:index')` returns the current item index
+* `jQuery.fn.scrollio('get:itemProgressCoef')` returns the current item progression coefficient
+* `jQuery.fn.scrollio('get:api')` returns the complete API data object
 
 ## How it works
 
