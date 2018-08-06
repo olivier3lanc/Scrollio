@@ -4,27 +4,27 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Scrollshow generator</title>
-    <meta name="description" content="Generate your own Scrollshow.">
+    <title>Scrollio generator</title>
+    <meta name="description" content="Generate your own Scrollio.">
     <!-- Reset CSS -->
     <link href="libraries/normalize/normalize.min.css" rel="stylesheet">
-    <!-- Scrollshow generator -->
-    <link href="./build/scrollshow.generator.min.css" rel="stylesheet">
-    <!-- Scrollshow core -->
-    <link href="build/scrollshow.min.css" rel="stylesheet">
-    <!-- Scrollshow Theme -->
-    <link href="build/scrollshow.theme.venus.min.css" rel="stylesheet">
+    <!-- Scrollio generator -->
+    <link href="./build/scrollio.generator.min.css" rel="stylesheet">
+    <!-- Scrollio core -->
+    <link href="build/scrollio.min.css" rel="stylesheet">
+    <!-- Scrollio Theme -->
+    <link href="build/scrollio.theme.venus.min.css" rel="stylesheet">
 </head>
 
 <body>
     <header id="topbar" class="edit-mode">
-        <h1>Scrollshow generator</h1>
+        <h1>Scrollio generator</h1>
         <nav>
             <button name="generate">generate</button>
         </nav>
     </header>
 
-    <div id="scrollshow" class="edit-mode">
+    <div id="scrollio" class="edit-mode">
         <div class="item">
             <h1>My first item</h1>
         </div>
@@ -41,13 +41,13 @@
 
     <!-- jQuery -->
     <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
-    <!-- Scrollshow lib -->
-    <script type="text/javascript" src="build/scrollshow.min.js"></script>
+    <!-- Scrollio lib -->
+    <script type="text/javascript" src="build/scrollio.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
-        var currentScrollshowParameters = jQuery.fn.scrollshow('get:all');
+        var currentScrollioParameters = jQuery.fn.scrollio('get:all');
 
-        jQuery.fn.scrollshow();
+        jQuery.fn.scrollio();
 
         var decode = function() {
             var theHash = window.location.hash;
@@ -62,16 +62,16 @@
                 if(typeof objRecognized == 'object'){
                     console.log(Object.keys(objRecognized).length);
                     //Destroy instance
-                    jQuery('#scrollshow').remove();
+                    jQuery('#scrollio').remove();
                     //Build a new one
-                    jQuery('body').append('<div id="scrollshow" class="edit-mode"></div>');
-                    var jQ_scrollshow = jQuery('#scrollshow');
+                    jQuery('body').append('<div id="scrollio" class="edit-mode"></div>');
+                    var jQ_scrollio = jQuery('#scrollio');
                     for (var i = 0; i < Object.keys(objRecognized).length; i++) {
                         console.log(typeof objRecognized[i]);
 
                         //if it is a string, it is content
                         if(typeof objRecognized[i] == 'string'){
-                            jQ_scrollshow.append(
+                            jQ_scrollio.append(
                                 '<div class="item">'+
                                     objRecognized[i]+
                                 '</div>'
@@ -86,16 +86,16 @@
                         var userProperties = Object.getOwnPropertyNames(objRecognized.options);
                         //Replace each parameter by its new value
                         userProperties.forEach(function(property){
-                            if(currentScrollshowParameters.hasOwnProperty(property)){
+                            if(currentScrollioParameters.hasOwnProperty(property)){
                                 customParameters[property] = objRecognized.options[property];
-                                currentScrollshowParameters[property] = objRecognized.options[property];
+                                currentScrollioParameters[property] = objRecognized.options[property];
                             }
                         });
                     }
                     console.log('custom params');
                     console.log(customParameters);
 
-                    jQuery.fn.scrollshow(customParameters);
+                    jQuery.fn.scrollio(customParameters);
                     updateEdits();
                     updateListeners();
                 }
@@ -114,14 +114,14 @@
 
         var updateEdits = function(){
             jQuery('#generator').find('.item').remove();
-            var amount = jQuery('#scrollshow .item h1').length;
-            jQuery('#scrollshow .item h1').each(function(index){
+            var amount = jQuery('#scrollio .item h1').length;
+            jQuery('#scrollio .item h1').each(function(index){
                 var jQ_html = jQuery(this).clone();
                 jQ_html.find('.word').eq(-1).remove();
                 // jQ_html.find('.separator').eq(-1).remove();
                 var text = jQ_html.text();
-                // var textEllipsis = jQuery.fn.scrollshow('get:textEllipsis');
-                // var textEllipsis = currentScrollshowParameters.textEllipsis;
+                // var textEllipsis = jQuery.fn.scrollio('get:textEllipsis');
+                // var textEllipsis = currentScrollioParameters.textEllipsis;
                 // var text = jQuery(this).text();
                 // text = text.replace(' '+textEllipsis,'');
                 var pattern = editorPattern(text);
@@ -136,26 +136,26 @@
                 }
             });
             //Toolbar
-            jQuery('#scrollshow').append(
+            jQuery('#scrollio').append(
                 '<nav class="toolbar">'+
                     '<button name="edit-mode">toggle fullscreen</button>'+
                 '</nav>'
             );
-            jQuery('#scrollshow .toolbar button[name="edit-mode"]').on('click',function(){
-                jQuery('#scrollshow, #generator, #topbar').toggleClass('edit-mode');
+            jQuery('#scrollio .toolbar button[name="edit-mode"]').on('click',function(){
+                jQuery('#scrollio, #generator, #topbar').toggleClass('edit-mode');
             });
             //parameters
             jQuery('#generator .settings').html('');
-            var settingsParameters = Object.getOwnPropertyNames(currentScrollshowParameters);
+            var settingsParameters = Object.getOwnPropertyNames(currentScrollioParameters);
             settingsParameters.forEach(function(property){
-                var type = typeof currentScrollshowParameters[property];
+                var type = typeof currentScrollioParameters[property];
                 var form;
                 if(property != 'id' && type != 'function'){
                     if(type == 'boolean'){
                         var checkMarkup = 'checked';
                         var checkTrueStatus = '';
                         var checkFalseStatus = '';
-                        if(currentScrollshowParameters[property]){
+                        if(currentScrollioParameters[property]){
                             checkTrueStatus = checkMarkup;
                         }else{
                             checkFalseStatus = checkMarkup;
@@ -165,9 +165,9 @@
                                 '<input type="radio" id="'+property+'-false" name="'+property+'" '+checkFalseStatus+'>'+
                                 '<label for="'+property+'-false">false</label>';
                     }else if(type == 'string'){
-                        form = '<input type="text" id="'+property+'" name="'+property+'" value="'+currentScrollshowParameters[property]+'">';
+                        form = '<input type="text" id="'+property+'" name="'+property+'" value="'+currentScrollioParameters[property]+'">';
                     }else if(type == 'number'){
-                        form = '<input type="number" id="'+property+'"  name="'+property+'" value="'+currentScrollshowParameters[property]+'">';
+                        form = '<input type="number" id="'+property+'"  name="'+property+'" value="'+currentScrollioParameters[property]+'">';
                     }
                     jQuery('#generator .settings').append(
                         '<fieldset><legend>'+property+'</legend> '+form+'</fieldset>'
@@ -177,16 +177,16 @@
         }
 
         var updateListeners = function(){
-            jQuery('#scrollshow h1')
+            jQuery('#scrollio h1')
                 .off()
                 .on('click',function(e){
 
 
-                    // var textEllipsis = jQuery.fn.scrollshow('textEllipsis');
+                    // var textEllipsis = jQuery.fn.scrollio('textEllipsis');
                     // var text = jQuery(this).text();
                     // text = text.replace(textEllipsis,'');
                     var itemIndex = jQuery(this).parent().index();
-                    // jQuery('#scrollshow,#generator').addClass('edit-mode');
+                    // jQuery('#scrollio,#generator').addClass('edit-mode');
                     jQuery('#generator textarea').eq(itemIndex)
                         .focus()
                         .select();
@@ -213,7 +213,7 @@
         jQuery('button[name="generate"]').on('click',function(){
             var obj = { options: {}};
             var index = 0;
-            jQuery('#scrollshow').removeClass('initialized');
+            jQuery('#scrollio').removeClass('initialized');
             jQuery('#generator').find('.item').each(function(){
                 // var index = jQuery(this).index();
                 var text = jQuery(this).find('textarea').val();
@@ -233,7 +233,7 @@
                     var value = jQuery(this).val();
                 }
                 obj.options[parameter] = value;
-                currentScrollshowParameters[parameter] = value;
+                currentScrollioParameters[parameter] = value;
             });
             var myJSON = JSON.stringify(obj);
             var encodedString = window.btoa( myJSON );
@@ -246,7 +246,7 @@
             },100);
 
 
-            // jQuery('#scrollshow,#generator').removeClass('edit-mode');
+            // jQuery('#scrollio,#generator').removeClass('edit-mode');
 
 
         });

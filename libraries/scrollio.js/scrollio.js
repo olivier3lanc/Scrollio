@@ -1,8 +1,8 @@
 (function(jQuery){
-    jQuery.fn.scrollshow = function(options) {
+    jQuery.fn.scrollio = function(options) {
         //Defaults parameters
         var g_parameters = {
-            id:                 'scrollshow',       //ID if the main Scrollshow wrapper
+            id:                 'scrollio',       //ID if the main Scrollio wrapper
             scrollRange:        2000,               //Amount of pixels per item
             keepActive:         true,               //Once scrolled, letters keep active
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
@@ -34,7 +34,7 @@
 
             }
         }
-        //Scrollshow API through jQuery.fn.scrollshow('get:[parameterName]')
+        //Scrollio API through jQuery.fn.scrollio('get:[parameterName]')
         if(typeof options == 'string'){
             if(options.indexOf('get:') == 0){
                 var parameter = options.replace('get:','');
@@ -43,7 +43,7 @@
                 }else if(g_parameters[parameter] !== undefined){
                     return g_parameters[parameter];
                 }else{
-                    console.log('not a valid scrollshow parameter');
+                    console.log('not a valid scrollio parameter');
                     return false;
                 }
             }else{
@@ -51,10 +51,10 @@
                 return false;
             }
         }
-        //Main Scrollshow jQuery element
-        var jQ_scrollshow = jQuery('#'+g_parameters.id);
-        //Run only if Scrollshow not already initialized
-        if(!jQ_scrollshow.hasClass('initialized')){
+        //Main Scrollio jQuery element
+        var jQ_scrollio = jQuery('#'+g_parameters.id);
+        //Run only if Scrollio not already initialized
+        if(!jQ_scrollio.hasClass('initialized')){
             //jQuery objects
             var jQ_body = jQuery('body');
             var jQ_windowWidth = window.innerWidth;
@@ -72,7 +72,7 @@
             }
             //If overlay, include it into DOM
             if(g_parameters.overlay){
-                jQ_scrollshow.append('<div class="overlay"></div>');
+                jQ_scrollio.append('<div class="overlay"></div>');
             }
             //Current item index
             var g_index = 0;
@@ -81,7 +81,7 @@
             //Amount of item relative scroll
             var g_relativeScroll = 0;
             //Amount of items
-            var g_amountOfItems = jQ_scrollshow.children('.item').length;
+            var g_amountOfItems = jQ_scrollio.children('.item').length;
             //Scroll amount for an item
             var g_itemScrollRange = g_parameters.scrollRange;
             //Item progression coefficient
@@ -107,7 +107,7 @@
             var wrapLetters = function(selector){
                 if(typeof(selector) == 'string'){
                     //Wrap every letter of each item title
-                    jQ_scrollshow.find(selector).each(function(){
+                    jQ_scrollio.find(selector).each(function(){
                         //First child of the .item is the scroller
                         var jQ_text = jQuery(this).children().eq(0);
                         //Text content of the element to scroll
@@ -162,7 +162,7 @@
                     g_scrollTopRaw = g_amountOfItems * g_itemScrollRange - 1;
                     //Trigger event end of scroll
                     var e_scrollEnd = jQuery.Event('scrollEnd');
-                    jQ_scrollshow.trigger({
+                    jQ_scrollio.trigger({
                         type: 'scrollEnd'
                     });
                 }
@@ -171,13 +171,13 @@
                 //Amount of scroll for the current item
                 g_relativeScroll = g_scrollTopRaw - g_itemScrollRange * g_index;
                 //jQuery object of the active item
-                var jQ_activeItem = jQ_scrollshow.children('.item:eq('+g_index+')');
+                var jQ_activeItem = jQ_scrollio.children('.item:eq('+g_index+')');
                 //jQuery object of the inactive items
-                var jQ_inactiveItems = jQ_scrollshow.children('.item:not(:eq('+g_index+'))');
+                var jQ_inactiveItems = jQ_scrollio.children('.item:not(:eq('+g_index+'))');
 
                 //LETTERS
                 //How many letters into this item title
-                var cur_amountOfLetters = jQ_scrollshow.find('.item:eq('+g_index+') .letter').length;
+                var cur_amountOfLetters = jQ_scrollio.find('.item:eq('+g_index+') .letter').length;
                 //Amount of scroll per step
                 var cur_scrollSteps = parseInt(g_itemScrollRange / cur_amountOfLetters);
                 //Index of the letter
@@ -191,17 +191,17 @@
                         var e_itemChange = jQuery.Event('itemChange');
                         var e_lastItem = jQuery.Event('lastItem');
                         var e_firstItem = jQuery.Event('firstItem');
-                        jQ_scrollshow.trigger({
+                        jQ_scrollio.trigger({
                             type: 'itemChange',
                             targetIndex: g_index
                         });
                         if(g_index == 0){
-                            jQ_scrollshow.trigger({
+                            jQ_scrollio.trigger({
                                 type: 'firstItem'
                             });
                         }
                         if(g_index == (g_amountOfItems - 1)){
-                            jQ_scrollshow.trigger({
+                            jQ_scrollio.trigger({
                                 type: 'lastItem'
                             });
                         }
@@ -212,7 +212,7 @@
 
                     //Create the event for letter state change
                     var e_letterChange = jQuery.Event('letterChange');
-                    jQ_scrollshow.trigger({
+                    jQ_scrollio.trigger({
                         type: 'letterChange'
                     });
 
@@ -247,7 +247,7 @@
                     //If intro enabled, disable it at first mouse scroll
                     if(g_parameters.intro){
                         if(g_scrollTopRaw > 0){
-                            jQ_scrollshow.children('.intro').removeClass('active');
+                            jQ_scrollio.children('.intro').removeClass('active');
                         }
                     }
 
@@ -255,7 +255,7 @@
                     if(g_parameters.progressBar){
                         g_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
                         g_progressBarValue = g_progressBarCoef * jQ_windowWidth;
-                        jQ_scrollshow.children('.progress-bar').css('width',g_progressBarValue);
+                        jQ_scrollio.children('.progress-bar').css('width',g_progressBarValue);
                     }
                     //After all work done, update previous letter index value
                     g_previousLetterIndex = cur_letterIndex;
@@ -263,16 +263,16 @@
                 //Create item end event
                 if(cur_letterIndex == (cur_amountOfLetters - 1)){
                     var e_itemEnd = jQuery.Event('itemEnd');
-                    jQ_scrollshow.trigger({
+                    jQ_scrollio.trigger({
                         type: 'itemEnd',
                         index: g_index
                     });
                 }
             }
 
-            //If keepActive, add a class to Scrollshow container
+            //If keepActive, add a class to Scrollio container
             if(g_parameters.keepActive){
-                jQ_scrollshow.addClass('keep-active');
+                jQ_scrollio.addClass('keep-active');
             }
 
             //Add CSS class for font size
@@ -280,7 +280,7 @@
                 if(g_parameters.fontSize >= 1 && g_parameters.fontSize <= 7){
                     g_parameters.fontSize = parseInt(g_parameters.fontSize);
                     var g_fontSizeClass = 'font-size-'+g_parameters.fontSize.toString();
-                    jQ_scrollshow.find('.item>*:first-child').addClass(g_fontSizeClass);
+                    jQ_scrollio.find('.item>*:first-child').addClass(g_fontSizeClass);
                 }else{
                     console.log('invalid font size: must be a integer from 1 to 7');
                 }
@@ -296,7 +296,7 @@
                 }else{
                     //Fallback if no page title
                     if(g_pageTitle === undefined || g_pageTitle == '' || g_pageTitle == g_parameters.textEllipsis){
-                        g_pageTitle = 'Scrollshow';
+                        g_pageTitle = 'Scrollio';
                     }
                 }
                 //If custom intro description
@@ -308,8 +308,8 @@
                         g_pageDescription = 'Scroll down to discover';
                     }
                 }
-                //Include into scrollshow
-                jQ_scrollshow.append(
+                //Include into scrollio
+                jQ_scrollio.append(
                     '<div class="intro">'+
                         '<header>'+
                             '<h1 class="font-size-7">'+g_pageTitle+'</h1>'+
@@ -325,21 +325,21 @@
                     //if page is not scrolled at start or refreshed, then display
                     //Avoids displaying intro if page is refreshed
                     if(g_previousLetterIndex == -1){
-                        jQ_scrollshow.children('.intro').addClass('active');
+                        jQ_scrollio.children('.intro').addClass('active');
                     }
                 },16);
             //Otherwise, make the first item active
             }else{
-                jQ_scrollshow.children('.item').eq(0).addClass('active');
+                jQ_scrollio.children('.item').eq(0).addClass('active');
             }
 
             //If progress bar, include into DOM
             if(g_parameters.progressBar){
-                jQ_scrollshow.append('<div class="progress-bar"></div>');
+                jQ_scrollio.append('<div class="progress-bar"></div>');
             }
 
-            //Now Scrollshow is initialized, this avoids recalls
-            jQ_scrollshow.addClass('initialized');
+            //Now Scrollio is initialized, this avoids recalls
+            jQ_scrollio.addClass('initialized');
 
             //On page scroll
             jQuery(document).on('scroll',function(e){
@@ -367,7 +367,7 @@
                     relativeScroll: g_relativeScroll,
                     //Returns true if scroll event is down
                     isScrollDown: scrollDirectionDown,
-                    //Between 0 and 1, the overall progress of the Scrollshow
+                    //Between 0 and 1, the overall progress of the Scrollio
                     progressBarCoef: g_progressBarCoef,
                     //Between 0 and 1, the progress of the current item
                     itemProgressCoef: g_relativeScroll / g_itemScrollRange
@@ -391,48 +391,48 @@
 
             //Callback item change
             //Returns the target index
-            jQ_scrollshow.on('itemChange',function(e){
+            jQ_scrollio.on('itemChange',function(e){
                 //Enable user defined callback
                 var targetIndex = e.targetIndex;
                 g_parameters.onItemChange(targetIndex);
                 g_okToTrigItemEnd = true;
             });
             //Callback current item is the first
-            jQ_scrollshow.on('firstItem',function(e){
+            jQ_scrollio.on('firstItem',function(e){
                 //Enable user defined callback
                 g_parameters.onFirstItem(e);
             });
             //Callback current item is the last
-            jQ_scrollshow.on('lastItem',function(e){
+            jQ_scrollio.on('lastItem',function(e){
                 //Enable user defined callback
                 g_parameters.onLastItem(e);
             });
             //Callback on letter change
-            jQ_scrollshow.on('letterChange',function(e){
+            jQ_scrollio.on('letterChange',function(e){
                 //Enable user defined callback
                 g_parameters.onLetterChange(e);
             });
             //Callback item end
-            jQ_scrollshow.on('itemEnd',function(e){
+            jQ_scrollio.on('itemEnd',function(e){
                 //If itemEnd not already launched few milliseconds ago
                 if(g_okToTrigItemEnd){
                     //Enable user defined callback
                     var currentItemIndex = e.index;
                     g_parameters.onItemEnd(currentItemIndex);
                     //Make current item a jQuery object
-                    var jQ_currentItem = jQ_scrollshow.children('.item').eq(currentItemIndex);
+                    var jQ_currentItem = jQ_scrollio.children('.item').eq(currentItemIndex);
                     //Now block itemEnd works until next item load
                     //This avoids firing itemEnd several time as a result
                     g_okToTrigItemEnd = false;
                 }
             });
             //Callback scroll end
-            jQ_scrollshow.on('scrollEnd',function(e){
+            jQ_scrollio.on('scrollEnd',function(e){
                 //Enable user defined callback
                 g_parameters.onScrollEnd(e);
             });
         }else{
-            console.log('Scrollshow already initialized');
+            console.log('Scrollio already initialized');
         }
     }
 }(jQuery));

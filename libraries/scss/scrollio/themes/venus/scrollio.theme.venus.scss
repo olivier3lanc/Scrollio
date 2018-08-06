@@ -2,13 +2,13 @@
 @import 'components/fonts';
 @import 'components/links';
 /*
-* Scrollshow Theme - Optional
+* Scrollio Theme - Optional
 */
 body {
     background-color: qtr-color(-2);
     color: qtr-color(6);
     -webkit-font-smoothing: antialiased;
-    #scrollshow {
+    #scrollio {
         &>.intro {
             transition: all 800ms;
             &>header {

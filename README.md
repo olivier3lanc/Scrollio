@@ -1,6 +1,6 @@
-# Scrollshow
+# Scrollio
 
-*A full page scroll experience tool for story telling*. Scrollshow is a jQuery plugin that uses the scroll to reveal the text content.
+*A full page scroll experience tool for story telling*. Scrollio is a jQuery plugin that uses the scroll to reveal the text content.
 
 * [Demo with only core CSS](https://codepen.io/olivier3lanc/pen/zLBGEL)
 * [Demo with callbacks](https://codepen.io/olivier3lanc/full/bjBbVP/)
@@ -8,18 +8,18 @@
 
 ## Usage
 
-Here is the minimal code to make Scrollshow work properly.
+Here is the minimal code to make Scrollio work properly.
 
 ``` html
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Scrollshow core CSS (required) -->
-    <link href="scrollshow.min.css" rel="stylesheet">
+    <!-- Scrollio core CSS (required) -->
+    <link href="scrollio.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="scrollshow">
+    <div id="scrollio">
         <div class="item">
             [your content]
         </div>
@@ -36,11 +36,11 @@ Here is the minimal code to make Scrollshow work properly.
 
     <!-- jQuery (required) -->
     <script type="text/javascript" src="jquery.min.js"></script>
-    <!-- Scrollshow (required) -->
-    <script type="text/javascript" src="scrollshow.min.js"></script>
+    <!-- Scrollio (required) -->
+    <script type="text/javascript" src="scrollio.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
-        jQuery.fn.scrollshow();
+        jQuery.fn.scrollio();
     </script>
 </body>
 
@@ -52,14 +52,14 @@ Typical markup with CDN:
 ``` html
 <html>
 <head>
-    <title>My Scrollshow</title>
-    <meta name="description" content="Description of my scrollshow">
-    <!-- Scrollshow core CSS -->
-    <link href="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.css" rel="stylesheet">
+    <title>My Scrollio</title>
+    <meta name="description" content="Description of my scrollio">
+    <!-- Scrollio core CSS -->
+    <link href="https://olivier3lanc.github.io/Scrollio/build/scrollio.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="scrollshow">
+    <div id="scrollio">
         <div class="item">
             <p>Any html content 1</p>
         </div>
@@ -76,11 +76,11 @@ Typical markup with CDN:
 
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <!-- Scrollshow lib -->
-    <script type="text/javascript" src="https://olivier3lanc.github.io/Scrollshow/build/scrollshow.min.js"></script>
+    <!-- Scrollio lib -->
+    <script type="text/javascript" src="https://olivier3lanc.github.io/Scrollio/build/scrollio.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
-        jQuery.fn.scrollshow();
+        jQuery.fn.scrollio();
     </script>
 </body>
 
@@ -89,11 +89,11 @@ Typical markup with CDN:
 
 ## Options and callbacks
 
-Here are all the options and callbacks available in Scrollshow.
+Here are all the options and callbacks available in Scrollio.
 
 ```html
 <script type="text/javascript">
-    jQuery.fn.scrollshow({
+    jQuery.fn.scrollio({
         scrollRange:        2000,
         keepActive:         true,
         textEllipsis:       '...',
@@ -145,11 +145,11 @@ Here are all the options and callbacks available in Scrollshow.
 | -------------- | -------- | -------------------------------------------------------------------------------------- |
 | onItemChange   | `number` | Fired on item change, returns the index number of the target item                      |
 | onLetterChange |          | Fired on letter change                                                                 |
-| onScroll       | `object` | Fired on user scroll, returns `object`: <br>`index`: `[number]` Returns the current item index <br>`relativeScroll`: `[number]` Returns the amount of scroll for the current item <br>`isScrollDown`: `[boolean]` Returns true if scroll event is down <br>`progressBarCoef`: `[number]` Between 0 and 1, the overall progress of the Scrollshow <br>`itemProgressCoef`: `[number]` Between 0 and 1, the progress of the current item |
+| onScroll       | `object` | Fired on user scroll, returns `object`: <br>`index`: `[number]` Returns the current item index <br>`relativeScroll`: `[number]` Returns the amount of scroll for the current item <br>`isScrollDown`: `[boolean]` Returns true if scroll event is down <br>`progressBarCoef`: `[number]` Between 0 and 1, the overall progress of the Scrollio <br>`itemProgressCoef`: `[number]` Between 0 and 1, the progress of the current item |
 | onItemEnd      | `number` | Fired when user reaches the end of an item, returns the index number of the ended item |
 | onFirstItem    |          | Fired when user reaches the first item                                                 |
 | onLastItem     |          | Fired when user reaches the last item                                                  |
-| onScrollEnd    |          | Fired when user reaches the very end of the scrollshow                                 |
+| onScrollEnd    |          | Fired when user reaches the very end of the scrollio                                 |
 
 
 ## How it works
@@ -159,7 +159,7 @@ Here are all the options and callbacks available in Scrollshow.
 An `active` class it added on the current item.
 
 ```html
-<div id="scrollshow">
+<div id="scrollio">
     <div class="item">
         <!-- not current item -->
     </div>
@@ -174,12 +174,12 @@ An `active` class it added on the current item.
 
 ### Text wrapping
 
-For each `.item`, **Scrollshow wraps every word and every letter of the first markup found**.
+For each `.item`, **Scrollio wraps every word and every letter of the first markup found**.
 
 Example:
 
 ```html
-<div id="scrollshow">
+<div id="scrollio">
     <div class="item">
         <p>Lorem ipsum dolor</p>
         <p>Another paragraph</p>
@@ -190,7 +190,7 @@ Example:
 Becomes
 
 ```html
-<div id="scrollshow">
+<div id="scrollio">
     <div class="item">...</div>
     <div class="item">
         <!-- Letters wrapping is made on the first html element into the item -->
@@ -234,7 +234,7 @@ Becomes
 
 ### Intro
 
-If `intro: true`, an introduction element is included into the `<div id="scrollshow"></div>` that shows up:
+If `intro: true`, an introduction element is included into the `<div id="scrollio"></div>` that shows up:
 * **Into the first markup of the intro, letters are wrapped just like other items**.
 * Displays page title and page description.
 * `active` class is removed on first scroll and is not set again.
@@ -242,7 +242,7 @@ If `intro: true`, an introduction element is included into the `<div id="scrolls
 Here is the markup included:
 
 ```html
-<div id="scrollshow">
+<div id="scrollio">
     <div class="intro active">
         <header>
             <h1>[document title]</h1>
@@ -255,7 +255,7 @@ Here is the markup included:
 Renders:
 
 ```html
-<div id="scrollshow">
+<div id="scrollio">
     <div class="intro active"><!-- On first scroll, active class disappears -->
         <header>
             <h1>
@@ -281,7 +281,7 @@ Renders:
                     <span class="letter" style="z-index:986;">.</span>
                 </span>
             </h1>
-            <p class="description">Demonstration of Venus theme for Scrollshow</p>
+            <p class="description">Demonstration of Venus theme for Scrollio</p>
         </header>
     </div>
 </div>
@@ -289,20 +289,20 @@ Renders:
 
 ### Progress bar
 
-If `progressBar: true`, a progress bar is included into the `<div id="scrollshow"></div>` as follows:
+If `progressBar: true`, a progress bar is included into the `<div id="scrollio"></div>` as follows:
 
 ```html
-<div id="scrollshow">
+<div id="scrollio">
     <div class="progress-bar" style="width:..."></div>
 </div>
 ```
 
 ### Overlay
 
-If `overlay: true`, an overlay is included into the `<div id="scrollshow"></div>` as follows:
+If `overlay: true`, an overlay is included into the `<div id="scrollio"></div>` as follows:
 
 ```html
-<div id="scrollshow">
+<div id="scrollio">
     <div class="overlay"></div>
 </div>
 ```
