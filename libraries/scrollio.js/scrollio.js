@@ -1,4 +1,6 @@
 (function(jQuery){
+    //Include an API object that will be updated each time Scrollio is running
+    api = {};
     jQuery.fn.scrollio = function(options) {
         //Defaults parameters
         var g_parameters = {
@@ -38,12 +40,24 @@
         if(typeof options == 'string'){
             if(options.indexOf('get:') == 0){
                 var parameter = options.replace('get:','');
-                if(parameter == 'all'){
+                if(parameter == 'parameters'){
                     return g_parameters;
                 }else if(g_parameters[parameter] !== undefined){
                     return g_parameters[parameter];
+                }else if(parameter == 'index'){
+                    return api.index;
+                }else if(parameter == 'relativeScroll'){
+                    return api.relativeScroll;
+                }else if(parameter == 'amountOfItems'){
+                    return api.amountOfItems;
+                }else if(parameter == 'progressBarCoef'){
+                    return api.progressBarCoef;
+                }else if(parameter == 'itemProgressCoef'){
+                    return api.itemProgressCoef;
+                }else if(parameter == 'api'){
+                    return api;
                 }else{
-                    console.log('not a valid scrollio parameter');
+                    console.log('not a valid scrollio API request');
                     return false;
                 }
             }else{
@@ -82,12 +96,16 @@
             var g_relativeScroll = 0;
             //Amount of items
             var g_amountOfItems = jQ_scrollio.children('.item').length;
+            //Update API
+            api.amountOfItems = g_amountOfItems;
             //Scroll amount for an item
             var g_itemScrollRange = g_parameters.scrollRange;
             //Item progression coefficient
             var g_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
             //Item progress bar width value in pixel
             var g_progressBarValue = g_progressBarCoef * jQ_windowWidth;
+            //Between 0 and 1, the progress coef of the current item
+            var g_itemProgressCoef = 0;
             //Scroll amount history
             var g_previousScrollAmount = 0;
             //Scroll speed history
@@ -168,12 +186,20 @@
                 }
                 //Calculates the displayed item in relation with scroll amount
                 g_index = parseInt(g_scrollTopRaw / g_itemScrollRange);
+                //Update API
+                api.index = g_index;
                 //Amount of scroll for the current item
                 g_relativeScroll = g_scrollTopRaw - g_itemScrollRange * g_index;
+                //Update API
+                api.relativeScroll = g_relativeScroll;
                 //jQuery object of the active item
                 var jQ_activeItem = jQ_scrollio.children('.item:eq('+g_index+')');
                 //jQuery object of the inactive items
                 var jQ_inactiveItems = jQ_scrollio.children('.item:not(:eq('+g_index+'))');
+                //Between 0 and 1, the progress coef of the current item
+                g_itemProgressCoef = g_relativeScroll / g_itemScrollRange;
+                //Update API
+                api.itemProgressCoef = g_itemProgressCoef;
 
                 //LETTERS
                 //How many letters into this item title
@@ -256,6 +282,8 @@
                         g_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
                         g_progressBarValue = g_progressBarCoef * jQ_windowWidth;
                         jQ_scrollio.children('.progress-bar').css('width',g_progressBarValue);
+                        //Update API
+                        api.progressBarCoef = g_progressBarCoef;
                     }
                     //After all work done, update previous letter index value
                     g_previousLetterIndex = cur_letterIndex;
@@ -369,8 +397,8 @@
                     isScrollDown: scrollDirectionDown,
                     //Between 0 and 1, the overall progress of the Scrollio
                     progressBarCoef: g_progressBarCoef,
-                    //Between 0 and 1, the progress of the current item
-                    itemProgressCoef: g_relativeScroll / g_itemScrollRange
+                    //Between 0 and 1, the progress coef of the current item
+                    itemProgressCoef: g_itemProgressCoef
                 });
                 //If scrollmove is too high, then beware user
                 if(Math.abs(scrollMove) > 500){
