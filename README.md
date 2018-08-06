@@ -218,6 +218,11 @@ Becomes
                 <span class="letter" style="z-index:987;">o</span>
                 <span class="letter" style="z-index:986;">r</span>
             </span>
+            <span class="word ellipsis">
+                <span class="letter" style="z-index:985;">.</span>
+                <span class="letter" style="z-index:984;">.</span>
+                <span class="letter" style="z-index:983;">.</span>
+            </span>
         </p>
         <p>Another paragraph</p>
     </div>
@@ -225,18 +230,21 @@ Becomes
 </div>
 ```
 
-| Wrapper CSS class                     | Description                       |
-| ------------------------------------- | --------------------------------- |
-| `<span class="word>`                  | Wrap every word                   |
-| `<span class="letter>`                | Wrap every letter                 |
+| Wrapper CSS class                      | Description                                 |
+| -------------------------------------- | ------------------------------------------- |
+| `<span class="word>`                   | Wrap every word                             |
+| `<span class="word ellipsis>`          | The very last word is always text ellipsis  |
+| `<span class="letter>`                 | Wrap every letter                           |
 | `<span class="letter active">`         | If `keepActive: true` the letter keeps the `active` class once scrolled. If `keepActive: false` the letter has `active` class only when it is the latest scrolled. |
-| `<span class="letter active current">` | The letter is the latest scrolled |
+| `<span class="letter active current">` | The letter is the latest scrolled           |
 
 ### Intro
 
 If `intro: true`, an introduction element is included into the `<div id="scrollio"></div>` that shows up:
 * **Into the first markup of the intro, letters are wrapped just like other items**.
-* Displays page title and page description.
+* By default it displays page title and page description.
+* `introTitle: ''` Replaces page title by your own title.
+* `introDescription: ''` Replaces page description by your own description.
 * `active` class is removed on first scroll and is not set again.
 
 Here is the markup included:
@@ -245,8 +253,8 @@ Here is the markup included:
 <div id="scrollio">
     <div class="intro active">
         <header>
-            <h1>[document title]</h1>
-            <p class="description">[head meta description]</p>
+            <h1>Page Title or `introTitle` option</h1>
+            <p class="description">Page description or `introDescription` option</p>
         </header>
     </div>
 </div>
@@ -275,7 +283,7 @@ Renders:
                     <span class="letter" style="z-index:990;">e</span>
                 </span>
                 <span class="separator"> </span>
-                <span class="word">
+                <span class="word ellipsis">
                     <span class="letter" style="z-index:988;">.</span>
                     <span class="letter" style="z-index:987;">.</span>
                     <span class="letter" style="z-index:986;">.</span>
