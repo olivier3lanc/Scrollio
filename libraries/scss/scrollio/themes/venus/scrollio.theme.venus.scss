@@ -1,5 +1,4 @@
 @import 'components/quikster';
-@import 'components/fonts';
 @import 'components/links';
 /*
 * Scrollio Theme - Optional
@@ -113,7 +112,7 @@ body {
         &>.progress-bar {
             background-color: qtr-color(6);
         }
-
+        //Keep active
         &.keep-active {
             &>.item {
                 //Very first item, make first letter active
@@ -129,6 +128,123 @@ body {
                         }
                     }
                 }
+            }
+        }
+        //Font sizes
+        font-family: qtr-font-family(1);
+        font-size: qtr-font-size();
+        line-height: 1.5em;
+        .font-size-1 {
+            font-size: qtr-font-size();
+        }
+        .font-size-2 {
+            font-size: qtr-font-size(1);
+        }
+        .font-size-3 {
+            font-size: qtr-font-size(2);
+        }
+        .font-size-4 {
+            font-size: qtr-font-size(3);
+        }
+        .font-size-5 {
+            font-size: qtr-font-size(4);
+        }
+        .font-size-6 {
+            font-size: qtr-font-size(5);
+        }
+        .font-size-7 {
+            font-size: qtr-font-size(6);
+        }
+        @include qtr-screen(xs){
+            .font-size-1 {
+                font-size: qtr-font-size(-4);
+            }
+            .font-size-2 {
+                font-size: qtr-font-size(-3);
+            }
+            .font-size-3 {
+                font-size: qtr-font-size(-2);
+            }
+            .font-size-4 {
+                font-size: qtr-font-size(-1);
+            }
+            .font-size-5 {
+                font-size: qtr-font-size();
+            }
+            .font-size-6 {
+                font-size: qtr-font-size(1);
+            }
+            .font-size-7 {
+                font-size: qtr-font-size(2);
+            }
+        }
+        @include qtr-screen(sm){
+            .font-size-1 {
+                font-size: qtr-font-size(-3);
+            }
+            .font-size-2 {
+                font-size: qtr-font-size(-2);
+            }
+            .font-size-3 {
+                font-size: qtr-font-size(-1);
+            }
+            .font-size-4 {
+                font-size: qtr-font-size();
+            }
+            .font-size-5 {
+                font-size: qtr-font-size(1);
+            }
+            .font-size-6 {
+                font-size: qtr-font-size(2);
+            }
+            .font-size-7 {
+                font-size: qtr-font-size(3);
+            }
+        }
+        @include qtr-screen(md){
+            .font-size-1 {
+                font-size: qtr-font-size(-2);
+            }
+            .font-size-2 {
+                font-size: qtr-font-size(-1);
+            }
+            .font-size-3 {
+                font-size: qtr-font-size();
+            }
+            .font-size-4 {
+                font-size: qtr-font-size(1);
+            }
+            .font-size-5 {
+                font-size: qtr-font-size(2);
+            }
+            .font-size-6 {
+                font-size: qtr-font-size(3);
+            }
+            .font-size-7 {
+                font-size: qtr-font-size(4);
+            }
+        }
+        @include qtr-screen(lg){
+            .font-size-1 {
+                font-size: qtr-font-size(-1);
+            }
+            .font-size-2 {
+                font-size: qtr-font-size();
+            }
+            .font-size-3 {
+                font-size: qtr-font-size(1);
+            }
+            .font-size-4 {
+                font-size: qtr-font-size(2);
+            }
+            .font-size-5 {
+                font-size: qtr-font-size(3);
+            }
+            .font-size-6 {
+                font-size: qtr-font-size(4);
+            }
+            .font-size-7 {
+                font-size: qtr-font-size(5);
             }
         }
     }
