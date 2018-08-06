@@ -8,6 +8,8 @@
             textEllipsis:       '...',              //String displayed at the end of each text to scroll
             fontSize:           6,                  //1-7: Font size of the scrolled text (managed by theme CSS)
             intro:              false,              //Enable/disable intro (document title + description)
+            introTitle:         '',                 //Display a custom title for the intro
+            introDescription:   '',                 //Display a custom description for the intro
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
             onItemChange:       function(e){        //Callback on item change
@@ -278,7 +280,7 @@
                 if(g_parameters.fontSize >= 1 && g_parameters.fontSize <= 7){
                     g_parameters.fontSize = parseInt(g_parameters.fontSize);
                     var g_fontSizeClass = 'font-size-'+g_parameters.fontSize.toString();
-                    jQ_scrollshow.addClass(g_fontSizeClass);
+                    jQ_scrollshow.find('.item>*:first-child').addClass(g_fontSizeClass);
                 }else{
                     console.log('invalid font size: must be a integer from 1 to 7');
                 }
@@ -288,20 +290,30 @@
 
             //If intro, include into DOM
             if(g_parameters.intro){
-                //Fallback if no meta description
-                if(g_pageDescription === undefined){
-                    g_pageDescription = 'Scroll down to discover';
+                //If custom intro title
+                if(g_parameters.introTitle != ''){
+                    g_pageTitle = g_parameters.introTitle;
+                }else{
+                    //Fallback if no page title
+                    if(g_pageTitle === undefined || g_pageTitle == '' || g_pageTitle == g_parameters.textEllipsis){
+                        g_pageTitle = 'Scrollshow';
+                    }
                 }
-                //Fallback if no page title
-                if(g_pageTitle === undefined || g_pageTitle != '' || g_pageTitle != g_parameters.textEllipsis){
-                    g_pageTitle = 'Scrollshow';
+                //If custom intro description
+                if(g_parameters.introDescription != ''){
+                    g_pageDescription = g_parameters.introDescription;
+                }else{
+                    //Fallback if no meta description
+                    if(g_pageDescription === undefined || g_pageDescription == ''){
+                        g_pageDescription = 'Scroll down to discover';
+                    }
                 }
                 //Include into scrollshow
                 jQ_scrollshow.append(
                     '<div class="intro">'+
                         '<header>'+
-                            '<h1>'+g_pageTitle+'</h1>'+
-                            '<p class="description">'+g_pageDescription+'</p>'+
+                            '<h1 class="font-size-7">'+g_pageTitle+'</h1>'+
+                            '<p class="description font-size-2">'+g_pageDescription+'</p>'+
                         '</header>'+
                     '</div>'
                 );

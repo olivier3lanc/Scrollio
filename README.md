@@ -99,6 +99,8 @@ Here are all the options and callbacks available in Scrollshow.
         textEllipsis:       '...',
         fontSize:           7,
         intro:              false,
+        introTitle:         '',
+        introDescription:   '',
         progressBar:        true,
         overlay:            true,
         onItemChange:       function(e){
@@ -125,15 +127,18 @@ Here are all the options and callbacks available in Scrollshow.
     });
 </script>
 ```
-| Option       | Default | Type    | Description                                                        |
-| ------------ | ------- | ------- | ------------------------------------------------------------------ |
-| scrollRange  | `2000`  | Number  | Amount of pixels scrolled per item                                 |
-| keepActive   | `true`  | Boolean | Once scrolled, letters keep active CSS class                       |
-| textEllipsis | `...`   | String  | String displayed at the end of each text to scroll                 |
-| fontSize:    | `7`     | Number  | From 1 to 7: Font size of the scrolled text (managed by theme CSS) |
-| intro        | `false` | Boolean | Display intro (document title + description) before first scroll   |
-| progressBar  | `true`  | Boolean | Display the progress bar                                           |
-| overlay      | `true`  | Boolean | Display overlay between items and body background                  |
+| Option           | Default | Type    | Description                                                         |
+| ---------------- | ------- | ------- | ------------------------------------------------------------------- |
+| scrollRange      | `2000`  | Number  | Amount of pixels scrolled per item                                  |
+| keepActive       | `true`  | Boolean | Once scrolled, letters keep active CSS class                        |
+| textEllipsis     | `...`   | String  | String displayed at the end of each text to scroll                  |
+| fontSize:        | `7`     | Number  | From 1 to 7: Font size of the scrolled text (managed by theme CSS)  |
+| intro            | `false` | Boolean | Display intro (document title + description) before first scroll    |
+| introTitle       |         | String  | Display a custom title for the intro. HTML allowed <br>Applicable only if intro: `true`       |
+| introDescription |         | String  | Display a custom description for the intro. HTML allowed <br>Applicable only if intro: `true` |
+| progressBar      | `true`  | Boolean | Display the progress bar                                            |
+| overlay          | `true`  | Boolean | Display overlay between items and body background                   |
+
 
 
 | Callback       | Returns  | Description                                                                            |
