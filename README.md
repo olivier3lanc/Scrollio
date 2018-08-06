@@ -132,7 +132,7 @@ Here are all the options and callbacks available in Scrollio.
 | scrollRange      | `2000`  | Number  | Amount of pixels scrolled per item                                  |
 | keepActive       | `true`  | Boolean | Once scrolled, letters keep active CSS class                        |
 | textEllipsis     | `...`   | String  | String displayed at the end of each text to scroll                  |
-| fontSize:        | `7`     | Number  | From 1 to 7: Font size of the scrolled text (managed by theme CSS)  |
+| fontSize:        | `6`     | Number  | From 1 to 7: Font size of the scrolled text (managed by theme CSS)  |
 | intro            | `false` | Boolean | Display intro (document title + description) before first scroll    |
 | introTitle       |         | String  | Display a custom title for the intro. HTML allowed <br>Applicable only if intro: `true`       |
 | introDescription |         | String  | Display a custom description for the intro. HTML allowed <br>Applicable only if intro: `true` |
@@ -297,7 +297,7 @@ Renders:
 
 ### Progress bar
 
-If `progressBar: true`, a progress bar is included into the `<div id="scrollio"></div>` as follows:
+If `progressBar: true` `[boolean]`, a progress bar is included into the `<div id="scrollio"></div>` as follows:
 
 ```html
 <div id="scrollio">
@@ -307,7 +307,7 @@ If `progressBar: true`, a progress bar is included into the `<div id="scrollio">
 
 ### Overlay
 
-If `overlay: true`, an overlay is included into the `<div id="scrollio"></div>` as follows:
+If `overlay: true` `[boolean]`, an overlay is included into the `<div id="scrollio"></div>` as follows:
 
 ```html
 <div id="scrollio">
@@ -317,4 +317,15 @@ If `overlay: true`, an overlay is included into the `<div id="scrollio"></div>` 
 
 ### Text ellipsis
 
-Additional text string can be added to each item. By default it is `...`. **This text ellipsis string is wrapped** like other letters.
+`textEllipsis` option `[string]`. Additional text string is added at the end of each item. By default it is `...`. **This text ellipsis string is wrapped** like other letters.
+
+### Font size
+
+`fontSize` option `[number]`. You can adjust the font size of the scrolled text. Scrollio supports 7 font sizes that are managed by the theme.
+* `fontSize: 1` XXSmall font size
+* `fontSize: 2` XSmall font size
+* `fontSize: 3` Small font size
+* `fontSize: 4` Medium font size
+* `fontSize: 5` Large font size
+* `fontSize: 6` XLarge font size
+* `fontSize: 7` XXLarge font size
