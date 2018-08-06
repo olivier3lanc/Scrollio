@@ -38,8 +38,9 @@
         }
         //Scrollio API through jQuery.fn.scrollio('get:[parameterName]')
         if(typeof options == 'string'){
+            var parameter = '';
             if(options.indexOf('get:') == 0){
-                var parameter = options.replace('get:','');
+                parameter = options.replace('get:','');
                 if(parameter == 'parameters'){
                     return g_parameters;
                 }else if(g_parameters[parameter] !== undefined){
@@ -59,6 +60,25 @@
                 }else{
                     console.log('not a valid scrollio API request');
                     return false;
+                }
+            }else if(options.indexOf('do:') == 0){
+                parameter = options.replace('do:','');
+                if(parameter == 'goToNextItem'){
+                    if(api.index < api.amountOfItems){
+                        var scrollTarget = (api.index + 1) * g_parameters.scrollRange;
+                        jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
+                    }else{
+                        console.log('unable to go to next item, this is the last item');
+                    }
+                    return;
+                }else if(parameter == 'goToPreviousItem'){
+                    if(api.index > 0){
+                        var scrollTarget = (api.index - 1) * g_parameters.scrollRange;
+                        jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
+                    }else{
+                        console.log('unable to go to previous item, this is the first item');
+                    }
+                    return;
                 }
             }else{
                 console.log('not a valid request');
