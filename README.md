@@ -153,6 +153,8 @@ Here are all the options and callbacks available in Scrollio.
 
 ## API
 
+### Values and informations with get:
+
 Through the command `jQuery.fn.scrollio('get:[yourRequestString]')`, Scrollio API allows to get values and informations at any time:
 
 | `[yourRequestString]` | Returns                 | Description                                              |
@@ -163,15 +165,35 @@ Through the command `jQuery.fn.scrollio('get:[yourRequestString]')`, Scrollio AP
 | `amountOfItems`       | `integer`               | Returns the amount items in the Scrollio                 |
 | `progressBarCoef`     | `float` between 0 and 1 | Returns the current overall progress of the Scrollio     |
 | `itemProgressCoef`    | `float` between 0 and 1 | Returns the progress of the current item                 |
+| `scrollTop`           | `integer`               | Returns the current amount of scroll from the top        |
 | `api`                 | `object`                | Returns the complete API data                            |
 
-### Examples
+#### Examples
 
 * `jQuery.fn.scrollio('get:parameters')` returns all current Scrollio parameters into an object
 * `jQuery.fn.scrollio('get:textEllipsis')` returns the current text ellipsis value
 * `jQuery.fn.scrollio('get:index')` returns the current item index
 * `jQuery.fn.scrollio('get:itemProgressCoef')` returns the current item progression coefficient
 * `jQuery.fn.scrollio('get:api')` returns the complete API data object
+
+### Actions with do:
+
+Through the command `jQuery.fn.scrollio('do:[yourRequestString]')`, Scrollio API allows to call actions.
+
+| `[yourRequestString]` | Description                                       |
+| --------------------- | ------------------------------------------------- |
+| `goToNextItem`        | Scroll jump to the beginning of the next item     |
+| `goToPreviousItem`    | Scroll jump to the beginning of the previous item |
+| `goToFirstItem`       | Scroll jump to the beginning of the first item    |
+| `goToLastItem`        | Scroll jump to the beginning of the last item     |
+| `goToItemStart`       | Scroll jump to the beginning of the current item  |
+| `goToItemEnd`         | Scroll jump to the end of the current item        |
+
+
+#### Examples
+
+* `jQuery.fn.scrollio('do:goToNextItem')` Scroll jump to the beginning of the next item
+* `jQuery.fn.scrollio('do:goToPreviousItem')` Scroll jump to the beginning of the previous item
 
 ## How it works
 
