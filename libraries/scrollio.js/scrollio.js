@@ -58,7 +58,7 @@
                 }else if(parameter == 'api'){
                     return api;
                 }else{
-                    console.log('not a valid scrollio API request');
+                    console.log('not a valid "get:" request');
                     return false;
                 }
             }else if(options.indexOf('do:') == 0){
@@ -74,14 +74,37 @@
                 }else if(parameter == 'goToPreviousItem'){
                     if(api.index > 0){
                         var scrollTarget = (api.index - 1) * g_parameters.scrollRange;
+                        //One ms per pixel
                         jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
                     }else{
                         console.log('unable to go to previous item, this is the first item');
                     }
                     return;
+                }else if(parameter == 'goToFirstItem'){
+                    //One ms per pixel
+                    jQuery('body,html').animate({scrollTop:0},api.scrollTop);
+                    return;
+                }else if(parameter == 'goToLastItem'){
+                    var scrollTarget = (api.amountOfItems - 1) * g_parameters.scrollRange;
+                    //One ms per pixel
+                    jQuery('body,html').animate({scrollTop:scrollTarget},scrollTarget);
+                    return;
+                }else if(parameter == 'goToItemStart'){
+                    var scrollTarget = api.index * g_parameters.scrollRange;
+                    //One ms per pixel
+                    jQuery('body,html').animate({scrollTop:scrollTarget},api.relativeScroll);
+                    return;
+                }else if(parameter == 'goToItemEnd'){
+                    var scrollTarget = api.index * g_parameters.scrollRange + g_parameters.scrollRange - 20;
+                    //One ms per pixel
+                    jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
+                    return;
+                }else{
+                    console.log('not a valid "do:" request');
+                    return false;
                 }
             }else{
-                console.log('not a valid request');
+                console.log('not a valid API request');
                 return false;
             }
         }
@@ -114,6 +137,8 @@
             api.index = g_index;
             //Amount of scroll
             var g_scrollTopRaw = 0;
+            //Update API
+            api.scrollTop = g_scrollTopRaw;
             //Amount of item relative scroll
             var g_relativeScroll = 0;
             //Update API
@@ -203,6 +228,8 @@
             var update = function(){
                 //Update value of the scroll top amount
                 g_scrollTopRaw = jQuery(window).scrollTop();
+                //Update API
+                api.scrollTop = g_scrollTopRaw;
                 //If end of scroll, decrease g_scrollTopRaw to avoid jump
                 if(g_scrollTopRaw >= (g_amountOfItems * g_itemScrollRange)){
                     g_scrollTopRaw = g_amountOfItems * g_itemScrollRange - 1;
