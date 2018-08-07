@@ -92,7 +92,7 @@
                 jQuery('.link-button').addClass('active');
                 jQuery('.link-button[href="#"]').on('click',function(e){
                     e.preventDefault();
-                    jQuery('body,html').animate({scrollTop:0},8000);
+                    jQuery.fn.scrollio('do:goToFirstItem');
                 });
             }
         });
