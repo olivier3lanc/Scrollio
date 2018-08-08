@@ -24,6 +24,11 @@
         </nav>
     </header>
 
+    <nav id="toolbar">
+        <button name="copy-link" data-clipboard-text="">copy link</button>
+        <button name="edit-mode">fs</button>
+    </nav>
+
     <div id="scrollio" class="edit-mode">
         <div class="item">
             <h1>My first item</h1>
@@ -43,9 +48,12 @@
     <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
     <!-- Scrollio lib -->
     <script type="text/javascript" src="build/scrollio.min.js"></script>
+    <!-- Clipboard.js lib -->
+    <script type="text/javascript" src="libraries/clipboard.js/clipboard.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
-        var currentScrollioParameters = jQuery.fn.scrollio('get:all');
+        var defaultScrollioParameters = jQuery.fn.scrollio('get:parameters');
+        var currentScrollioParameters = defaultScrollioParameters;
 
         jQuery.fn.scrollio();
 
@@ -73,7 +81,7 @@
                         if(typeof objRecognized[i] == 'string'){
                             jQ_scrollio.append(
                                 '<div class="item">'+
-                                    objRecognized[i]+
+                                    '<p>'+objRecognized[i]+'</p>'+
                                 '</div>'
                             );
                         }
@@ -114,8 +122,8 @@
 
         var updateEdits = function(){
             jQuery('#generator').find('.item').remove();
-            var amount = jQuery('#scrollio .item h1').length;
-            jQuery('#scrollio .item h1').each(function(index){
+            var amount = jQuery('#scrollio .item>*:first-child').length;
+            jQuery('#scrollio .item>*:first-child').each(function(index){
                 var jQ_html = jQuery(this).clone();
                 jQ_html.find('.word').eq(-1).remove();
                 // jQ_html.find('.separator').eq(-1).remove();
@@ -136,12 +144,7 @@
                 }
             });
             //Toolbar
-            jQuery('#scrollio').append(
-                '<nav class="toolbar">'+
-                    '<button name="edit-mode">toggle fullscreen</button>'+
-                '</nav>'
-            );
-            jQuery('#scrollio .toolbar button[name="edit-mode"]').on('click',function(){
+            jQuery('#toolbar button[name="edit-mode"]').on('click',function(){
                 jQuery('#scrollio, #generator, #topbar').toggleClass('edit-mode');
             });
             //parameters
@@ -218,7 +221,7 @@
                 // var index = jQuery(this).index();
                 var text = jQuery(this).find('textarea').val();
                 if(text != ''){
-                    obj[index] = '<h1>'+text+'</h1>';
+                    obj[index] = text;
                     index++;
                 }
             });
@@ -232,13 +235,16 @@
                 }else if(jQuery(this).attr('type') == 'text'){
                     var value = jQuery(this).val();
                 }
-                obj.options[parameter] = value;
-                currentScrollioParameters[parameter] = value;
+                if(value != defaultScrollioParameters[parameter]){
+                    obj.options[parameter] = value;
+                    currentScrollioParameters[parameter] = value;
+                }
             });
             var myJSON = JSON.stringify(obj);
             var encodedString = window.btoa( myJSON );
             console.log(encodedString);
             window.location.hash = encodedString;
+            jQuery('button[name="copy-link"]').attr('data-clipboard-text',encodedString);
             console.log(encodedString);
             jQuery(window).scrollTop(0);
             setTimeout(function(){
@@ -251,6 +257,12 @@
 
         });
 
+        //Clipboard management
+        var clipboard = new ClipboardJS('button[name="copy-link"]');
+        clipboard.on('success', function(e) {
+            alert(e);
+            e.clearSelection();
+        });
     </script>
 </body>
 
