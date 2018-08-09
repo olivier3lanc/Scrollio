@@ -25,13 +25,19 @@
     </header>
 
     <nav id="toolbar">
-        <button name="copy-link" data-clipboard-text="">copy link</button>
+        <button name="prev"><</button>
+        <span class="index">
+            <span class="current"></span> /
+            <span class="total"></span>
+        </span>
+        <button name="next">></button>
+        <button name="copy-link">copy link</button>
         <button name="edit-mode">fs</button>
     </nav>
 
     <div id="scrollio" class="edit-mode">
         <div class="item">
-            <h1>My first item</h1>
+            <p>My first item</p>
         </div>
     </div>
 
@@ -53,7 +59,7 @@
     <!-- Initialize -->
     <script type="text/javascript">
         var defaultScrollioParameters = jQuery.fn.scrollio('get:parameters');
-        var currentScrollioParameters = defaultScrollioParameters;
+        var currentScrollioParameters = jQuery.fn.scrollio('get:parameters');
 
         jQuery.fn.scrollio();
 
@@ -94,7 +100,7 @@
                         var userProperties = Object.getOwnPropertyNames(objRecognized.options);
                         //Replace each parameter by its new value
                         userProperties.forEach(function(property){
-                            if(currentScrollioParameters.hasOwnProperty(property)){
+                            if(defaultScrollioParameters.hasOwnProperty(property)){
                                 customParameters[property] = objRecognized.options[property];
                                 currentScrollioParameters[property] = objRecognized.options[property];
                             }
@@ -163,24 +169,49 @@
                         }else{
                             checkFalseStatus = checkMarkup;
                         }
-                        form =  '<input type="radio" id="'+property+'-true" name="'+property+'" '+checkTrueStatus+'>'+
-                                '<label for="'+property+'-true">true</label> '+
-                                '<input type="radio" id="'+property+'-false" name="'+property+'" '+checkFalseStatus+'>'+
-                                '<label for="'+property+'-false">false</label>';
+                        form =  '<input type="radio" id="'+property+'-true" name="'+property+'" value="true"  '+checkTrueStatus+'>'+
+                                ' <label for="'+property+'-true">true</label> '+
+                                '<input type="radio" id="'+property+'-false" name="'+property+'" value="false"  '+checkFalseStatus+'>'+
+                                ' <label for="'+property+'-false">false</label>';
                     }else if(type == 'string'){
                         form = '<input type="text" id="'+property+'" name="'+property+'" value="'+currentScrollioParameters[property]+'">';
                     }else if(type == 'number'){
-                        form = '<input type="number" id="'+property+'"  name="'+property+'" value="'+currentScrollioParameters[property]+'">';
+                        var min,max,step;
+                        if(property == 'fontSize'){
+                            min = 1;
+                            max = 7;
+                            step = 1;
+                        }else if(property == 'scrollRange'){
+                            min = 50;
+                            max = 50000;
+                            step = 50;
+                        }
+                        form = '<input type="number" id="'+property+'"  name="'+property+'" value="'+currentScrollioParameters[property]+'" min="'+min+'" max="'+max+'" step="'+step+'">';
                     }
                     jQuery('#generator .settings').append(
                         '<fieldset><legend>'+property+'</legend> '+form+'</fieldset>'
                     );
+                    //Conditional display for intro
+                    var jQ_settings = jQuery('#generator .settings'),
+                        jQ_radioIntro = jQ_settings.find('input[name="intro"]'),
+                        jQ_radioIntroTitle = jQ_settings.find('input[name="introTitle"]'),
+                        jQ_radioIntroDescription = jQ_settings.find('input[name="introDescription"]');
+                    jQ_radioIntro.on('click',function(data){
+                        if(jQuery(this).val() == 'true'){
+                            jQ_radioIntroTitle.prop('disabled',false);
+                            jQ_radioIntroDescription.prop('disabled',false);
+                        }else{
+                            jQ_radioIntroTitle.prop('disabled',true);
+                            jQ_radioIntroDescription.prop('disabled',true);
+                        }
+                    });
+                    jQuery('input[name="intro"]:checked').click();
                 }
             });
         }
 
         var updateListeners = function(){
-            jQuery('#scrollio h1')
+            jQuery('#scrollio .item>*:first-child')
                 .off()
                 .on('click',function(e){
 
@@ -235,6 +266,8 @@
                 }else if(jQuery(this).attr('type') == 'text'){
                     var value = jQuery(this).val();
                 }
+                // console.log(defaultScrollioParameters);
+                // defaultScrollioParameters = jQuery.fn.scrollio('get:parameters');
                 if(value != defaultScrollioParameters[parameter]){
                     obj.options[parameter] = value;
                     currentScrollioParameters[parameter] = value;
