@@ -58,8 +58,8 @@
     <script type="text/javascript" src="libraries/clipboard.js/clipboard.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
-        var defaultScrollioParameters = jQuery.fn.scrollio('get:parameters');
-        var currentScrollioParameters = jQuery.fn.scrollio('get:parameters');
+        var defaultScrollioParameters = jQuery.fn.scrollio('get:defaults');
+        var currentScrollioParameters = jQuery.fn.scrollio('get:defaults');
 
         jQuery.fn.scrollio();
 
@@ -267,7 +267,7 @@
                     var value = jQuery(this).val();
                 }
                 // console.log(defaultScrollioParameters);
-                // defaultScrollioParameters = jQuery.fn.scrollio('get:parameters');
+                // defaultScrollioParameters = jQuery.fn.scrollio('get:defaults');
                 if(value != defaultScrollioParameters[parameter]){
                     obj.options[parameter] = value;
                     currentScrollioParameters[parameter] = value;
