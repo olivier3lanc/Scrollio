@@ -1,0 +1,136 @@
+/*
+* Scrollshow core SCSS - Required
+*/
+body {
+    #scrollio {
+        overflow: auto;
+        height: 100vh;
+        &>.intro {
+            opacity: 0;
+            transition: all 300ms;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: table;
+            text-align: center;
+            &>header {
+                display: table-cell;
+                vertical-align: middle;
+            }
+            &.active {
+                opacity: 1;
+            }
+        }
+        &>.overlay {
+            position: fixed;
+            top: -10vh;
+            left: 0;
+            height: 120vh;
+            width: 100%;
+            z-index: 1;
+            opacity: 0.3; //Default: Opacity of the overlay
+            background-color: black; //Default: Color of the overlay
+            transition: all 2000ms; //Default: Transition duration of the overlay
+        }
+        &>.item {
+            opacity: 0;
+            box-sizing: border-box;
+            text-align: center;
+            position: fixed;
+            top: 100%;
+            width: 100%;
+            top: 50%;
+            transition: all 300ms; //Default: Transition duration on item leave
+            will-change: transform, opacity, letter-spacing, text-shadow;
+            transition-timing-function: linear;
+            perspective: 500px;
+            transform: translateY(-50%); //Default: Transform when inactive
+            z-index: 10;
+            pointer-events: none;
+            &.active {
+                z-index: 100;
+                opacity: 1;
+                transition: all 200ms; //Default Transition duration on item enter
+                pointer-events: auto;
+            }
+            //Letters
+            &>*:first-child {
+                &>.word {
+                    .letter {
+                        //Unread / Inactive letter properties
+                        color: lightgrey;
+                        &.active {
+                            //Read / Active letter properties
+                            color: black;
+                        }
+                        &.current {
+                        }
+                    }
+                    //Text ellipsis
+                    &.ellipsis {
+                        .letter {
+                            &.active {
+                            }
+                            &.current {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //Progress bar
+        &>.progress-bar {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 3px;
+            background-color: black;
+            z-index: 10;
+        }
+
+        //Only for keepActive = true
+        &.keep-active {
+            &>.item {
+                //Very first item, make first letter active
+                &:first-child {
+                    .word {
+                        &:first-child {
+                            .letter {
+                                &:first-child {
+                                    color: black;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //Font sizes
+        .font-size-1 {
+            font-size: xx-small;
+        }
+        .font-size-2 {
+            font-size: x-small;
+        }
+        .font-size-3 {
+            font-size: small;
+        }
+        .font-size-4 {
+            font-size: medium;
+        }
+        .font-size-5 {
+            font-size: large;
+        }
+        .font-size-6 {
+            font-size: x-large;
+        }
+        .font-size-7 {
+            font-size: xx-large;
+        }
+    }
+}
