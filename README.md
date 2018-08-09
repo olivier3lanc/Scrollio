@@ -103,6 +103,9 @@ Here are all the options and callbacks available in Scrollio.
         introDescription:   '',
         progressBar:        true,
         overlay:            true,
+        onInit:             function(e){
+
+        },
         onItemChange:       function(e){
 
         },
@@ -126,6 +129,7 @@ Here are all the options and callbacks available in Scrollio.
         }
     });
 </script>
+
 ```
 | Option           | Default | Type    | Description                                                         |
 | ---------------- | ------- | ------- | ------------------------------------------------------------------- |
