@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Scrollio view</title>
+    <meta name="description" content="A message for you from Scrollio.">
+    <!-- Reset CSS -->
+    <link href="../libraries/normalize/normalize.min.css" rel="stylesheet">
+    <!-- Scrollio core -->
+    <link href="../build/scrollio.min.css" rel="stylesheet">
+    <!-- Scrollio Theme -->
+    <link href="../build/scrollio.theme.venus.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="../libraries/jquery/jquery-3.3.1.min.js"></script>
+    <!-- Scrollio lib -->
+    <script type="text/javascript" src="../build/scrollio.min.js"></script>
+    <!-- Clipboard.js lib -->
+    <script type="text/javascript" src="../libraries/clipboard.js/clipboard.min.js"></script>
+    <!-- Initialize -->
+    <script type="text/javascript">
+        //Permanent callbacks for viewer
+        var generatorParameters = {
+        };
+        //Initialize Scrollion with generator parameters
+        jQuery.fn.scrollio(generatorParameters);
+
+        var decode = function() {
+            var theHash = window.location.hash;
+            if(theHash != ''){
+                var encodedHash = theHash.replace('#','');
+                try {
+                    var decodedString = window.atob(encodedHash);
+                    var objRecognized = JSON.parse(decodedString);
+                    console.log(objRecognized);
+
+                    if(typeof objRecognized == 'object'){
+                        console.log(Object.keys(objRecognized).length);
+                        //Destroy instance
+                        // jQuery('#scrollio').remove();
+                        //Build a new one
+                        jQuery('body').append('<div id="scrollio"></div>');
+                        var jQ_scrollio = jQuery('#scrollio');
+                        for (var i = 0; i < Object.keys(objRecognized).length; i++) {
+                            console.log(typeof objRecognized[i]);
+
+                            //if it is a string, it is content
+                            if(typeof objRecognized[i] == 'string'){
+                                jQ_scrollio.append(
+                                    '<div class="item">'+
+                                        '<p>'+objRecognized[i]+'</p>'+
+                                    '</div>'
+                                );
+                            }
+                        }
+
+                        if(typeof objRecognized.options == 'object'){
+                            console.log('options found');
+                            //Manage parameters
+                            var userProperties = Object.getOwnPropertyNames(objRecognized.options);
+                            //Replace each parameter by its new value
+                            userProperties.forEach(function(property){
+                                if(defaultScrollioParameters.hasOwnProperty(property)){
+                                    generatorParameters[property] = objRecognized.options[property];
+                                    currentScrollioParameters[property] = objRecognized.options[property];
+                                }
+                            });
+                        }
+                        console.log('custom params');
+                        console.log(generatorParameters);
+
+                        jQuery.fn.scrollio(generatorParameters);
+
+                    }
+                } catch(e) {
+                    // something failed
+                    alert('invalid URL');
+                    // if you want to be specific and only catch the error which means
+                    // the base 64 was invalid, then check for 'e.code === 5'.
+                    // (because 'DOMException.INVALID_CHARACTER_ERR === 5')
+                }
+                // var decodedString = window.atob(encodedHash);
+                // console.log(decodedString);
+
+
+            }
+        }
+        decode();
+        //Clipboard management
+        // var clipboard = new ClipboardJS('button[name="copy-link"]');
+        // clipboard.on('success', function(e) {
+        //     alert(e);
+        //     e.clearSelection();
+        // });
+    </script>
+</body>
+
+</html>
