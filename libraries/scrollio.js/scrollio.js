@@ -41,8 +41,10 @@
             var parameter = '';
             if(options.indexOf('get:') == 0){
                 parameter = options.replace('get:','');
-                if(parameter == 'parameters'){
+                if(parameter == 'defaults'){
                     return g_parameters;
+                }else if(parameter == 'current'){
+                    return api.current;
                 }else if(g_parameters[parameter] !== undefined){
                     return g_parameters[parameter];
                 }else if(parameter == 'index'){
@@ -116,6 +118,8 @@
             var jQ_body = jQuery('body');
             var jQ_windowWidth = window.innerWidth;
             var jQ_windowHeight = window.innerHeight;
+            //Update api for current parameters applied
+            api.current = g_parameters;
             //Check user parameters
             if(typeof options == 'object'){
                 //Manage parameters
@@ -124,6 +128,8 @@
                 userProperties.forEach(function(property){
                     if(g_parameters.hasOwnProperty(property)){
                         g_parameters[property] = options[property];
+                        //Update api for current parameters applied
+                        api.current[property] = options[property];
                     }
                 });
             }

@@ -159,7 +159,8 @@ Through the command `jQuery.fn.scrollio('get:[yourRequestString]')`, Scrollio AP
 
 | `[yourRequestString]` | Returns                 | Description                                              |
 | --------------------- | ----------------------- | -------------------------------------------------------- |
-| `parameters`          | `object`                | Returns all current Scrollio parameters                  |
+| `defaults`            | `object`                | Returns all default Scrollio parameters                  |
+| `current`             | `object`                | Returns all current Scrollio parameters applied          |
 | `index`               | `integer`               | Returns the current active item index                    |
 | `relativeScroll`      | `integer`               | Returns the amount of scroll for the current item        |
 | `amountOfItems`       | `integer`               | Returns the amount items in the Scrollio                 |
@@ -170,7 +171,7 @@ Through the command `jQuery.fn.scrollio('get:[yourRequestString]')`, Scrollio AP
 
 #### Examples
 
-* `jQuery.fn.scrollio('get:parameters')` returns all current Scrollio parameters into an object
+* `jQuery.fn.scrollio('get:defaults')` returns all default Scrollio parameters into an object
 * `jQuery.fn.scrollio('get:textEllipsis')` returns the current text ellipsis value
 * `jQuery.fn.scrollio('get:index')` returns the current item index
 * `jQuery.fn.scrollio('get:itemProgressCoef')` returns the current item progression coefficient
