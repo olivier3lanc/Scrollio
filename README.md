@@ -143,6 +143,7 @@ Here are all the options and callbacks available in Scrollio.
 
 | Callback       | Returns  | Description                                                                            |
 | -------------- | -------- | -------------------------------------------------------------------------------------- |
+| onInit         |          | Fired on Scrollio initialization                                                       |
 | onItemChange   | `number` | Fired on item change, returns the index number of the target item                      |
 | onLetterChange |          | Fired on letter change                                                                 |
 | onScroll       | `object` | Fired on user scroll, returns `object`: <br>`index`: `[number]` Returns the current item index <br>`relativeScroll`: `[number]` Returns the amount of scroll for the current item <br>`isScrollDown`: `[boolean]` Returns true if scroll event is down <br>`progressBarCoef`: `[number]` Between 0 and 1, the overall progress of the Scrollio <br>`itemProgressCoef`: `[number]` Between 0 and 1, the progress of the current item |
