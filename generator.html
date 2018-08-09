@@ -58,10 +58,24 @@
     <script type="text/javascript" src="libraries/clipboard.js/clipboard.min.js"></script>
     <!-- Initialize -->
     <script type="text/javascript">
+        //Store default parameters of Scrollio
         var defaultScrollioParameters = jQuery.fn.scrollio('get:defaults');
+        //Initialize an object with current parameters applied
         var currentScrollioParameters = jQuery.fn.scrollio('get:defaults');
-
-        jQuery.fn.scrollio();
+        //Permanent callbacks for generator
+        var generatorParameters = {
+            onScroll: function(object){
+                var currentItem = object.index + 1;
+                jQuery('#toolbar span.current').text(currentItem);
+            },
+            onInit: function(){
+                var currentItem = jQuery.fn.scrollio('get:index') + 1;
+                jQuery('#toolbar span.current').text(currentItem);
+                jQuery('#toolbar span.total').text(jQuery.fn.scrollio('get:amountOfItems'));
+            }
+        };
+        //Initialize Scrollion with generator parameters
+        jQuery.fn.scrollio(generatorParameters);
 
         var decode = function() {
             var theHash = window.location.hash;
@@ -92,8 +106,7 @@
                             );
                         }
                     }
-                    //
-                    var customParameters = {};
+
                     if(typeof objRecognized.options == 'object'){
                         console.log('options found');
                         //Manage parameters
@@ -101,15 +114,16 @@
                         //Replace each parameter by its new value
                         userProperties.forEach(function(property){
                             if(defaultScrollioParameters.hasOwnProperty(property)){
-                                customParameters[property] = objRecognized.options[property];
+                                generatorParameters[property] = objRecognized.options[property];
                                 currentScrollioParameters[property] = objRecognized.options[property];
                             }
                         });
                     }
                     console.log('custom params');
-                    console.log(customParameters);
+                    console.log(generatorParameters);
 
-                    jQuery.fn.scrollio(customParameters);
+                    jQuery.fn.scrollio(generatorParameters);
+
                     updateEdits();
                     updateListeners();
                 }
@@ -149,10 +163,7 @@
                     jQuery('#generator').find('.item').eq(-1).after(pattern);
                 }
             });
-            //Toolbar
-            jQuery('#toolbar button[name="edit-mode"]').on('click',function(){
-                jQuery('#scrollio, #generator, #topbar').toggleClass('edit-mode');
-            });
+
             //parameters
             jQuery('#generator .settings').html('');
             var settingsParameters = Object.getOwnPropertyNames(currentScrollioParameters);
@@ -237,7 +248,16 @@
         updateEdits();
         updateListeners();
 
-
+        //Toolbar
+        jQuery('#toolbar button[name="edit-mode"]').on('click',function(){
+            jQuery('#scrollio, #generator, #topbar').toggleClass('edit-mode');
+        });
+        jQuery('#toolbar button[name="next"]').on('click',function(){
+            jQuery.fn.scrollio('do:goToNextItem');
+        });
+        jQuery('#toolbar button[name="prev"]').on('click',function(){
+            jQuery.fn.scrollio('do:goToPreviousItem');
+        });
         jQuery('button[name="add"]').on('click',function(){
             var pattern = editorPattern();
             jQuery('#generator').find('.item').eq(-1).after(pattern);
