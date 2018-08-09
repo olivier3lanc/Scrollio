@@ -14,6 +14,9 @@
             introDescription:   '',                 //Display a custom description for the intro
             progressBar:        true,               //Enable/disable progress bar
             overlay:            true,               //Enable/disable overlay between items and body background
+            onInit:             function(e){        //Callback on Scrollio initialization
+
+            },
             onItemChange:       function(e){        //Callback on item change
 
             },
@@ -429,6 +432,16 @@
 
             //Now Scrollio is initialized, this avoids recalls
             jQ_scrollio.addClass('initialized');
+            //Callback Scrollio initialization
+            jQ_scrollio.on('init',function(e){
+                //Enable user defined callback
+                g_parameters.onInit(e);
+            });
+            //Trigger event initialized
+            var e_init = jQuery.Event('init');
+            jQ_scrollio.trigger({
+                type: 'init'
+            });
 
             //On page scroll
             jQuery(document).on('scroll',function(e){
