@@ -38,7 +38,6 @@ body {
         height: calc(100% - 38px);
         z-index: 200;
         display: none;
-        pointer-events: none;
         &>.wrapper {
             max-width: 40ch;
             margin: auto;
@@ -48,13 +47,11 @@ body {
             box-sizing: border-box;
             &>.item {
                 nav {
-                    pointer-events: auto;
                     text-align: right;
                 }
                 textarea {
                     width: 100%;
                     resize: vertical;
-                    pointer-events: auto;
                 }
                 &:first-child {
                     nav {
@@ -67,10 +64,14 @@ body {
                 }
             }
             &>.commands {
-                pointer-events: auto;
+
             }
             &>.settings {
-                pointer-events: auto;
+                input {
+                    &:disabled {
+                        opacity: 0.2;
+                    }
+                }
             }
         }
         &.edit-mode {
