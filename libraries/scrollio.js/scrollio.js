@@ -66,7 +66,7 @@
             }else if(options.indexOf('do:') == 0){
                 parameter = options.replace('do:','');
                 if(parameter == 'goToNextItem'){
-                    if(api.index < api.amountOfItems){
+                    if(api.index < (api.amountOfItems - 1)){
                         var scrollTarget = (api.index + 1) * g_parameters.scrollRange;
                         jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
                     }else{
