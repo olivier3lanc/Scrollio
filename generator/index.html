@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Scrollio generator</title>
+    <meta name="description" content="Generate your own Scrollio.">
+    <!-- Reset CSS -->
+    <link href="../libraries/normalize/normalize.min.css" rel="stylesheet">
+    <!-- Scrollio generator -->
+    <link href="../build/scrollio.generator.min.css" rel="stylesheet">
+    <!-- Scrollio core -->
+    <link href="../build/scrollio.min.css" rel="stylesheet">
+    <!-- Scrollio Theme -->
+    <link href="../build/scrollio.theme.venus.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header id="topbar" class="edit-mode">
+        <h1>Scrollio generator</h1>
+        <nav>
+            <button name="generate">generate</button>
+        </nav>
+    </header>
+
+    <nav id="toolbar">
+        <button name="prev"><</button>
+        <span class="index">
+            <span class="current"></span> /
+            <span class="total"></span>
+        </span>
+        <button name="next">></button>
+        <button name="copy-link">copy link</button>
+        <button name="edit-mode">fs</button>
+    </nav>
+
+    <div id="scrollio" class="edit-mode">
+        <div class="item">
+            <p>My first item</p>
+        </div>
+    </div>
+
+    <div id="generator" class="edit-mode">
+        <div class="wrapper">
+            <div class="commands">
+                <button type="button" name="add">add</button>
+            </div>
+            <div class="settings"></div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="../libraries/jquery/jquery-3.3.1.min.js"></script>
+    <!-- Scrollio lib -->
+    <script type="text/javascript" src="../build/scrollio.min.js"></script>
+    <!-- Clipboard.js lib -->
+    <script type="text/javascript" src="../libraries/clipboard.js/clipboard.min.js"></script>
+    <!-- Initialize -->
+    <script type="text/javascript">
+        //Store default parameters of Scrollio
+        var defaultScrollioParameters = jQuery.fn.scrollio('get:defaults');
+        //Initialize an object to be updated by generator parameters
+        var currentScrollioParameters = jQuery.fn.scrollio('get:defaults');
+        //Permanent callbacks for generator
+        var generatorParameters = {
+            onScroll: function(object){
+                var currentItem = object.index + 1;
+                jQuery('#toolbar span.current').text(currentItem);
+            },
+            onInit: function(){
+                var currentItem = jQuery.fn.scrollio('get:index') + 1;
+                jQuery('#toolbar span.current').text(currentItem);
+                jQuery('#toolbar span.total').text(jQuery.fn.scrollio('get:amountOfItems'));
+            }
+        };
+        //Initialize Scrollion with generator parameters
+        jQuery.fn.scrollio(generatorParameters);
+        //Initialize the custom Scrollio
+        var obj = { options: {}};
+        var scrollioHash = '';
+
+        var decode = function() {
+            var decodedString = window.atob(scrollioHash);
+            console.log(decodedString);
+
+            var objRecognized = JSON.parse(decodedString);
+            console.log(objRecognized);
+
+            if(typeof objRecognized == 'object'){
+                console.log(Object.keys(objRecognized).length);
+                //Destroy instance
+                jQuery('#scrollio').remove();
+                //Build a new one
+                jQuery('body').append('<div id="scrollio" class="edit-mode"></div>');
+                var jQ_scrollio = jQuery('#scrollio');
+                for (var i = 0; i < Object.keys(objRecognized).length; i++) {
+                    console.log(typeof objRecognized[i]);
+
+                    //if it is a string, it is content
+                    if(typeof objRecognized[i] == 'string'){
+                        jQ_scrollio.append(
+                            '<div class="item">'+
+                                '<p>'+objRecognized[i]+'</p>'+
+                            '</div>'
+                        );
+                    }
+                }
+
+                if(typeof objRecognized.options == 'object'){
+                    console.log('options found');
+                    //Manage parameters
+                    var userProperties = Object.getOwnPropertyNames(objRecognized.options);
+                    //Replace each parameter by its new value
+                    userProperties.forEach(function(property){
+                        if(defaultScrollioParameters.hasOwnProperty(property)){
+                            generatorParameters[property] = objRecognized.options[property];
+                            currentScrollioParameters[property] = objRecognized.options[property];
+                        }
+                    });
+                }
+                console.log('custom params');
+                console.log(generatorParameters);
+
+                jQuery.fn.scrollio(generatorParameters);
+
+                updateEdits();
+                updateListeners();
+            }
+        }
+
+        var editorPattern = function(text = ''){
+            var pattern =   '<div class="item">'+
+                                '<nav>'+
+                                    '<button name="remove">remove</button>'+
+                                '</nav>'+
+                                '<textarea>'+text+'</textarea>'+
+                            '</div>';
+            return pattern;
+        }
+
+        var updateEdits = function(){
+            jQuery('#generator').find('.item').remove();
+            var amount = jQuery('#scrollio .item>*:first-child').length;
+            jQuery('#scrollio .item>*:first-child').each(function(index){
+                var jQ_html = jQuery(this).clone();
+                jQ_html.find('.word').eq(-1).remove();
+                // jQ_html.find('.separator').eq(-1).remove();
+                var text = jQ_html.text();
+                // var textEllipsis = jQuery.fn.scrollio('get:textEllipsis');
+                // var textEllipsis = currentScrollioParameters.textEllipsis;
+                // var text = jQuery(this).text();
+                // text = text.replace(' '+textEllipsis,'');
+                var pattern = editorPattern(text);
+                // var pattern =   '<div class="item">'+
+                //                     '<textarea>'+text+'</textarea>'+
+                //                 '</div>';
+                //For the first
+                if(index == 0){
+                    jQuery('#generator .wrapper').prepend(pattern);
+                }else{
+                    jQuery('#generator').find('.item').eq(-1).after(pattern);
+                }
+            });
+
+            //parameters
+            jQuery('#generator .settings').html('');
+            var settingsParameters = Object.getOwnPropertyNames(currentScrollioParameters);
+            settingsParameters.forEach(function(property){
+                var type = typeof currentScrollioParameters[property];
+                var form;
+                if(property != 'id' && type != 'function'){
+                    if(type == 'boolean'){
+                        var checkMarkup = 'checked';
+                        var checkTrueStatus = '';
+                        var checkFalseStatus = '';
+                        if(currentScrollioParameters[property]){
+                            checkTrueStatus = checkMarkup;
+                        }else{
+                            checkFalseStatus = checkMarkup;
+                        }
+                        form =  '<input type="radio" id="'+property+'-true" name="'+property+'" value="true"  '+checkTrueStatus+'>'+
+                                ' <label for="'+property+'-true">true</label> '+
+                                '<input type="radio" id="'+property+'-false" name="'+property+'" value="false"  '+checkFalseStatus+'>'+
+                                ' <label for="'+property+'-false">false</label>';
+                    }else if(type == 'string'){
+                        form = '<input type="text" id="'+property+'" name="'+property+'" value="'+currentScrollioParameters[property]+'">';
+                    }else if(type == 'number'){
+                        var min,max,step;
+                        if(property == 'fontSize'){
+                            min = 1;
+                            max = 7;
+                            step = 1;
+                        }else if(property == 'scrollRange'){
+                            min = 50;
+                            max = 50000;
+                            step = 50;
+                        }
+                        form = '<input type="number" id="'+property+'"  name="'+property+'" value="'+currentScrollioParameters[property]+'" min="'+min+'" max="'+max+'" step="'+step+'">';
+                    }
+                    jQuery('#generator .settings').append(
+                        '<fieldset><legend>'+property+'</legend> '+form+'</fieldset>'
+                    );
+                    //Conditional display for intro
+                    var jQ_settings = jQuery('#generator .settings'),
+                        jQ_radioIntro = jQ_settings.find('input[name="intro"]'),
+                        jQ_radioIntroTitle = jQ_settings.find('input[name="introTitle"]'),
+                        jQ_radioIntroDescription = jQ_settings.find('input[name="introDescription"]');
+                    jQ_radioIntro.on('click',function(data){
+                        if(jQuery(this).val() == 'true'){
+                            jQ_radioIntroTitle.prop('disabled',false);
+                            jQ_radioIntroDescription.prop('disabled',false);
+                        }else{
+                            jQ_radioIntroTitle.prop('disabled',true);
+                            jQ_radioIntroDescription.prop('disabled',true);
+                        }
+                    });
+                    jQuery('input[name="intro"]:checked').click();
+                }
+            });
+        }
+
+        var updateListeners = function(){
+            jQuery('#scrollio .item>*:first-child')
+                .off()
+                .on('click',function(e){
+
+
+                    // var textEllipsis = jQuery.fn.scrollio('textEllipsis');
+                    // var text = jQuery(this).text();
+                    // text = text.replace(textEllipsis,'');
+                    var itemIndex = jQuery(this).parent().index();
+                    // jQuery('#scrollio,#generator').addClass('edit-mode');
+                    jQuery('#generator textarea').eq(itemIndex)
+                        .focus()
+                        .select();
+                });
+            jQuery('#generator button[name="remove"]')
+                .off()
+                .on('click',function(){
+                    jQuery(this).closest('.item').remove();
+                });
+        }
+
+
+
+        updateEdits();
+        updateListeners();
+
+        //Toolbar
+        jQuery('#toolbar button[name="edit-mode"]').on('click',function(){
+            jQuery('#scrollio, #generator, #topbar').toggleClass('edit-mode');
+        });
+        jQuery('#toolbar button[name="next"]').on('click',function(){
+            jQuery.fn.scrollio('do:goToNextItem');
+        });
+        jQuery('#toolbar button[name="prev"]').on('click',function(){
+            jQuery.fn.scrollio('do:goToPreviousItem');
+        });
+        jQuery('button[name="add"]').on('click',function(){
+            var pattern = editorPattern();
+            jQuery('#generator').find('.item').eq(-1).after(pattern);
+            jQuery('#generator').find('.item').eq(-1).find('textarea').focus().select();
+            updateListeners();
+        });
+        jQuery('button[name="generate"]').on('click',function(){
+            //Reset obj
+            obj = { options: {}};
+            var index = 0;
+            jQuery('#scrollio').removeClass('initialized');
+            jQuery('#generator').find('.item').each(function(){
+                // var index = jQuery(this).index();
+                var text = jQuery(this).find('textarea').val();
+                if(text != ''){
+                    obj[index] = text;
+                    index++;
+                }
+            });
+            //get user parameters
+            jQuery('#generator .settings input').each(function(){
+                var parameter = jQuery(this).attr('name');
+                if(jQuery(this).attr('type') == 'radio'){
+                    var value = jQuery('input[type="radio"][name="'+parameter+'"]').prop('checked');
+                }else if(jQuery(this).attr('type') == 'number'){
+                    var value = parseFloat(jQuery(this).val());
+                }else if(jQuery(this).attr('type') == 'text'){
+                    var value = jQuery(this).val();
+                }
+                // console.log(defaultScrollioParameters);
+                // defaultScrollioParameters = jQuery.fn.scrollio('get:defaults');
+                if(value != defaultScrollioParameters[parameter]){
+                    obj.options[parameter] = value;
+                    currentScrollioParameters[parameter] = value;
+                }
+            });
+            var myJSON = JSON.stringify(obj);
+            scrollioHash = window.btoa( myJSON );
+            // console.log(scrollioHash);
+            // window.location.hash = scrollioHash;
+            jQuery('button[name="copy-link"]').attr('data-clipboard-text',scrollioHash);
+            // console.log(scrollioHash);
+            jQuery(window).scrollTop(0);
+            setTimeout(function(){
+                decode();
+            },100);
+
+
+            // jQuery('#scrollio,#generator').removeClass('edit-mode');
+
+
+        });
+
+        //Clipboard management
+        var clipboard = new ClipboardJS('button[name="copy-link"]');
+        clipboard.on('success', function(e) {
+            console.log(e);
+            e.clearSelection();
+        });
+    </script>
+</body>
+
+</html>
