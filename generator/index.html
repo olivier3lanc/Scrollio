@@ -20,7 +20,7 @@
     <header id="topbar" class="edit-mode">
         <h1>Scrollio generator</h1>
         <nav>
-            <button name="generate">generate</button>
+            <button name="generate">generate</button> <button name="copy-link">copy link</button>
         </nav>
     </header>
 
@@ -31,7 +31,6 @@
             <span class="total"></span>
         </span>
         <button name="next">></button>
-        <button name="copy-link">copy link</button>
         <button name="edit-mode">fs</button>
     </nav>
 
@@ -82,11 +81,7 @@
 
         var decode = function() {
             var decodedString = window.atob(scrollioHash);
-            console.log(decodedString);
-
             var objRecognized = JSON.parse(decodedString);
-            console.log(objRecognized);
-
             if(typeof objRecognized == 'object'){
                 console.log(Object.keys(objRecognized).length);
                 //Destroy instance
@@ -119,11 +114,7 @@
                         }
                     });
                 }
-                console.log('custom params');
-                console.log(generatorParameters);
-
                 jQuery.fn.scrollio(generatorParameters);
-
                 updateEdits();
                 updateListeners();
             }
@@ -145,16 +136,8 @@
             jQuery('#scrollio .item>*:first-child').each(function(index){
                 var jQ_html = jQuery(this).clone();
                 jQ_html.find('.word').eq(-1).remove();
-                // jQ_html.find('.separator').eq(-1).remove();
                 var text = jQ_html.text();
-                // var textEllipsis = jQuery.fn.scrollio('get:textEllipsis');
-                // var textEllipsis = currentScrollioParameters.textEllipsis;
-                // var text = jQuery(this).text();
-                // text = text.replace(' '+textEllipsis,'');
                 var pattern = editorPattern(text);
-                // var pattern =   '<div class="item">'+
-                //                     '<textarea>'+text+'</textarea>'+
-                //                 '</div>';
                 //For the first
                 if(index == 0){
                     jQuery('#generator .wrapper').prepend(pattern);
@@ -235,7 +218,7 @@
                         .focus()
                         .select();
                 });
-            jQuery('#generator button[name="remove"]')
+            jQuery('button[name="remove"]')
                 .off()
                 .on('click',function(){
                     jQuery(this).closest('.item').remove();
@@ -247,14 +230,20 @@
         updateEdits();
         updateListeners();
 
-        //Toolbar
-        jQuery('#toolbar button[name="edit-mode"]').on('click',function(){
+        //Buttons
+        //Clipboard management
+        var clipboard = new ClipboardJS('button[name="copy-link"]');
+        clipboard.on('success', function(e) {
+            console.log(e);
+            e.clearSelection();
+        });
+        jQuery('button[name="edit-mode"]').on('click',function(){
             jQuery('#scrollio, #generator, #topbar').toggleClass('edit-mode');
         });
-        jQuery('#toolbar button[name="next"]').on('click',function(){
+        jQuery('button[name="next"]').on('click',function(){
             jQuery.fn.scrollio('do:goToNextItem');
         });
-        jQuery('#toolbar button[name="prev"]').on('click',function(){
+        jQuery('button[name="prev"]').on('click',function(){
             jQuery.fn.scrollio('do:goToPreviousItem');
         });
         jQuery('button[name="add"]').on('click',function(){
@@ -310,12 +299,7 @@
 
         });
 
-        //Clipboard management
-        var clipboard = new ClipboardJS('button[name="copy-link"]');
-        clipboard.on('success', function(e) {
-            console.log(e);
-            e.clearSelection();
-        });
+
     </script>
 </body>
 
