@@ -2,39 +2,44 @@
 * Scrollshow core SCSS - Required
 */
 body {
+    //Loader fallback waiting Scrollio to be loaded
+    &:before {
+        @keyframes loader {
+            0% { transform: rotate(0deg) }
+            100% { transform: rotate(360deg) }
+        }
+        content: '';
+        display: block;
+        position: fixed;
+        width: 20vmin;
+        height: 20vmin;
+        top: calc(50% - 10vmin);
+        left: calc(50% - 10vmin);
+        border-style: dashed;
+        border-width: 3px;
+        border-color: currentColor;
+        animation-name: loader;
+        animation-duration: 8s;
+        animation-iteration-count: infinite;
+        border-radius: 100%;
+        animation-timing-function: linear;
+    }
+    //Make Scrollio appear once initialized by JS
+    &.scrollio-initialized {
+        //Loader fallback waiting Scrollio to be loaded
+        &:before {
+            display: none;
+        }
+        #scrollio {
+            opacity: 1;
+        }
+    }
     #scrollio {
+        opacity: 0;
         overflow: auto;
         height: 100vh;
-        &>.intro {
-            opacity: 0;
-            transition: all 300ms;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            display: table;
-            text-align: center;
-            &>header {
-                display: table-cell;
-                vertical-align: middle;
-            }
-            &.active {
-                opacity: 1;
-            }
-        }
-        &>.overlay {
-            position: fixed;
-            top: -10vh;
-            left: 0;
-            height: 120vh;
-            width: 100%;
-            z-index: 1;
-            opacity: 0.3; //Default: Opacity of the overlay
-            background-color: black; //Default: Color of the overlay
-            transition: all 2000ms; //Default: Transition duration of the overlay
-        }
+        transition: opacity 600ms;
+        //The item itself
         &>.item {
             opacity: 0;
             box-sizing: border-box;
@@ -82,7 +87,39 @@ body {
             }
         }
 
-        //Progress bar
+        //Optional introduction
+        &>.intro {
+            opacity: 0;
+            transition: all 300ms;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: table;
+            text-align: center;
+            &>header {
+                display: table-cell;
+                vertical-align: middle;
+            }
+            &.active {
+                opacity: 1;
+            }
+        }
+        //An optional layer between content and body
+        &>.overlay {
+            position: fixed;
+            top: -10vh;
+            left: 0;
+            height: 120vh;
+            width: 100%;
+            z-index: 1;
+            opacity: 0.3; //Default: Opacity of the overlay
+            background-color: black; //Default: Color of the overlay
+            transition: all 2000ms; //Default: Transition duration of the overlay
+        }
+        //Optional global progress bar
         &>.progress-bar {
             position: fixed;
             top: 0px;
