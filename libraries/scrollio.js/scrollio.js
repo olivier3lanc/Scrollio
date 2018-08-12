@@ -430,10 +430,10 @@
                 jQ_scrollio.append('<div class="progress-bar"></div>');
             }
 
-            //Now Scrollio is initialized, this avoids recalls
-            jQ_body.addClass('scrollio-initialized');
             //Callback Scrollio initialization
             jQ_scrollio.on('init',function(e){
+                //Now Scrollio is initialized, this avoids recalls
+                jQ_body.addClass('scrollio-initialized');
                 //Enable user defined callback
                 g_parameters.onInit(e);
             });
