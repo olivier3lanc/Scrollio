@@ -115,12 +115,12 @@
         }
         //Main Scrollio jQuery element
         var jQ_scrollio = jQuery('#'+g_parameters.id);
+        //Main jQuery objects
+        var jQ_body = jQuery('body');
+        var jQ_windowWidth = window.innerWidth;
+        var jQ_windowHeight = window.innerHeight;
         //Run only if Scrollio not already initialized
-        if(!jQ_scrollio.hasClass('initialized')){
-            //jQuery objects
-            var jQ_body = jQuery('body');
-            var jQ_windowWidth = window.innerWidth;
-            var jQ_windowHeight = window.innerHeight;
+        if(!jQ_body.hasClass('scrollio-initialized')){
             //Update api for current parameters applied
             api.current = g_parameters;
             //Check user parameters
@@ -431,7 +431,7 @@
             }
 
             //Now Scrollio is initialized, this avoids recalls
-            jQ_scrollio.addClass('initialized');
+            jQ_body.addClass('scrollio-initialized');
             //Callback Scrollio initialization
             jQ_scrollio.on('init',function(e){
                 //Enable user defined callback
