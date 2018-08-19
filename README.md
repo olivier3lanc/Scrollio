@@ -11,45 +11,6 @@
 Here is the minimal code to make Scrollio work properly.
 
 ``` html
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- Scrollio core CSS (required) -->
-    <link href="scrollio.min.css" rel="stylesheet">
-</head>
-
-<body>
-    <div id="scrollio">
-        <div class="item">
-            [your content]
-        </div>
-        <div class="item">
-            [your content]
-        </div>
-        <div class="item">
-            [your content]
-        </div>
-        <div class="item">
-            [your content]
-        </div>
-    </div>
-
-    <!-- jQuery (required) -->
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <!-- Scrollio (required) -->
-    <script type="text/javascript" src="scrollio.min.js"></script>
-    <!-- Initialize -->
-    <script type="text/javascript">
-        jQuery.fn.scrollio();
-    </script>
-</body>
-
-</html>
-```
-
-Typical markup with CDN:
-
-``` html
 <html>
 <head>
     <title>My Scrollio</title>
@@ -61,16 +22,19 @@ Typical markup with CDN:
 <body>
     <div id="scrollio">
         <div class="item">
-            <p>Any html content 1</p>
+            <h2>My heading 1</h2>
+            <p class="scrolltrack">Markup to be scrolled is set by the scrolltrack CSS class name.</p>
         </div>
         <div class="item">
-            <p>Any html content 2</p>
+            <p class="scrolltrack">Markup to be scrolled 2</p>
         </div>
         <div class="item">
-            <p>Any html content 3</p>
+            <h2 class="scrolltrack">Markup to be scrolled 3</h2>
+            <p>Another independant markup</p>
         </div>
         <div class="item">
-            <p>Any html content 4</p>
+            <h2>My heading 4</h2>
+            <p class="scrolltrack">Markup to be scrolled 4</p>
         </div>
     </div>
 
@@ -89,43 +53,142 @@ Typical markup with CDN:
 
 ## Options
 
-Here are all the options and callbacks available in Scrollio.
+Here are all the options with their default values available in Scrollio.
 
 ```html
 <script type="text/javascript">
     jQuery.fn.scrollio({
-        scrollRange:        2000,
-        keepActive:         true,
-        textEllipsis:       '...',
-        fontSize:           7,
-        intro:              false,
-        introTitle:         '',
-        introDescription:   '',
-        progressBar:        true,
-        overlay:            true,
-        onInit:             function(e){
+        //Amount of pixels scrolled per item
+        scrollRange:            2000,
+        //Once scrolled, letters keep active CSS class
+        keepActive:             true,
+        //String displayed at the end of each text to scroll
+        textEllipsis:           '...',
+        //Web safe font name or Google Font name
+        fontFamily:             'Ubuntu',
+        //Font weight (applicable only for Google Fonts)
+        fontWeight:             'Bold',
+        //Each letter is under the previous
+        fontOverlapUnder:       true,
+        //Display the progress bar
+        progressBar:            true,
+        //Display overlay between items and body background
+        overlay:                true,
+        //Responsive font size in pixels for Extra-Large devices
+        fontSizeXL:             84,
+        //Responsive font size in pixels for Large devices
+        fontSizeLG:             56,
+        //Responsive font size in pixels for Medium devices
+        fontSizeMD:             36,
+        //Responsive font size in pixels for Small devices
+        fontSizeSM:             24,
+        //Responsive font size in pixels for Extra-Small devices
+        fontSizeXS:             18,
+        //Responsive break point in pixels between large and extra-large
+        breakPointLG_XL:        1200,
+        //Responsive break point in pixels between medium and large
+        breakPointMD_LG:        992,
+        //Responsive break point in pixels between small and medium
+        breakPointSM_MD:        768,
+        //Responsive break point in pixels between extra-small and small
+        breakPointXS_SM:        575,
+        //@keyframes animations declarations that have to be used into the custom CSS
+        animationsCSS:          {
+            'cursor': {
+                '0%': 'opacity: 0',
+                '100%': 'opacity: 1'
+            }
+        },
+        //CSS overrides of scrolled text BEFORE Scrollio initialization
+        sentenceBeforeInitCSS:      {
+            'transition': 'transform 1s',
+            'transform': 'scale(0)'
+        },
+        //CSS overrides of scrolled text AFTER Scrollio initialization
+        sentenceAfterInitCSS:       {
+            'transform': 'scale(1)'
+        },
+        //CSS overrides of page body
+        bodyCSS:                {
+            'background-color': '#1b4b7d',
+            'color': '#fff',
+            '-webkit-font-smoothing': 'antialiased'
+        },
+        //CSS overrides of Scrollio container
+        scrollioContainerCSS:   {
 
         },
-        onItemChange:       function(e){
+        //CSS overrides of an inactive item
+        itemDefaultCSS:         {
+            'transform': 'translateY(-75%)',
+            'padding': '0em 10vw',
+            'transition': 'all 300ms'
+        },
+        //CSS overrides of an active item
+        itemActiveCSS:          {
+            'transform': 'translateY(-50%)'
+        },
+        //CSS overrides of the whole scrolled text sentence
+        sentenceCSS:            {
+            'line-height': '1.3em'
+        },
+        //CSS overrides of a word
+        wordCSS:                {
+        },
+        //CSS overrides of a letter not scrolled yet
+        letterDefaultCSS:       {
+            'margin-left': '-0.1em',
+            'opacity': '0.5',
+            'transition': 'all 200ms',
+            'text-shadow': '0px 0px 0px rgba(0,0,0,.5)',
+            'transform': 'scale(0.5)'
+        },
+        //CSS overrides of a scrolled or currently scrolled letter
+        letterActiveCSS:        {
+            'color': 'white',
+            'opacity': '1',
+            'text-shadow': '5px 1px 8px rgba(0,0,0,.5)',
+            'transform': 'scale(1)'
+        },
+        //CSS overrides of the currently scrolled letter
+        letterCurrentCSS:       {
+        },
+        //CSS overrides of the cursor included only into currently scrolled letter
+        cursorCSS:              {
+            'top': '0px',
+            'right': '0px',
+            'width': '2px',
+            'height': '100%',
+            'background-color': 'white',
+            'animation-name': 'cursor', //Declared into g_parameters.animationsCSS
+            'animation-duration': '600ms',
+            'animation-iteration-count': 'infinite',
+            'animation-direction': 'alternate'
+        },
+        //CSS overrides of the entire ellipsis word
+        ellipsisWordCSS:     {
 
         },
-        onLetterChange:     function(e){
+        //CSS overrides of an ellipsis character not scrolled yet
+        ellipsisDefaultCSS:     {
 
         },
-        onScroll:           function(e){
+        //CSS overrides of an ellipsis scrolled or currently scrolled
+        ellipsisActiveCSS:      {
 
         },
-        onItemEnd:          function(e){
+        //CSS overrides of the ellipsis currently scrolled character
+        ellipsisCurrentCSS:     {
 
         },
-        onFirstItem:        function(e){
-
+        //CSS overrides of the progress bar
+        progressBarCSS:         {
+            'background-color': 'white'
         },
-        onLastItem:         function(e){
-
-        },
-        onScrollEnd:        function(e){
-
+        //CSS overrides of the overlay layer
+        overlayCSS:             {
+            'opacity': '1',
+            'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
         }
     });
 </script>
@@ -136,15 +199,45 @@ Here are all the options and callbacks available in Scrollio.
 | scrollRange      | `2000`  | Number  | Amount of pixels scrolled per item                                  |
 | keepActive       | `true`  | Boolean | Once scrolled, letters keep active CSS class                        |
 | textEllipsis     | `...`   | String  | String displayed at the end of each text to scroll                  |
-| fontSize:        | `6`     | Number  | From 1 to 7: Font size of the scrolled text (managed by theme CSS)  |
-| intro            | `false` | Boolean | Display intro (document title + description) before first scroll    |
-| introTitle       |         | String  | Display a custom title for the intro. HTML allowed <br>Applicable only if intro: `true`       |
-| introDescription |         | String  | Display a custom description for the intro. HTML allowed <br>Applicable only if intro: `true` |
 | progressBar      | `true`  | Boolean | Display the progress bar                                            |
 | overlay          | `true`  | Boolean | Display overlay between items and body background                   |
 
+
 ## Callbacks
 
+Here are all the callbacks with their own returned data available in Scrollio.
+
+```html
+<script type="text/javascript">
+    jQuery.fn.scrollio({
+        onInit:             function(){
+            //Your stuff here
+        },
+        onItemChange:       function(data){
+            //Your stuff here
+        },
+        onLetterChange:     function(){
+            //Your stuff here
+        },
+        onScroll:           function(data){
+            //Your stuff here
+        },
+        onItemEnd:          function(data){
+            //Your stuff here
+        },
+        onFirstItem:        function(){
+            //Your stuff here
+        },
+        onLastItem:         function(){
+            //Your stuff here
+        },
+        onScrollEnd:        function(){
+            //Your stuff here
+        }
+    });
+</script>
+
+```
 | Callback       | Returns  | Description                                                                            |
 | -------------- | -------- | -------------------------------------------------------------------------------------- |
 | onInit         |          | Fired on Scrollio initialization                                                       |

@@ -2,6 +2,8 @@
 * Scrollshow core SCSS - Required
 */
 body {
+    //Make scrollbars always visible to avoid ugly content move on init
+    overflow: scroll;
     //Loader fallback waiting Scrollio to be loaded
     &:before {
         @keyframes loader {
@@ -23,15 +25,33 @@ body {
         animation-iteration-count: infinite;
         border-radius: 100%;
         animation-timing-function: linear;
+        opacity: 1;
+        pointer-events: none;
+        transition: opacity 300ms;
     }
     //Make Scrollio appear once initialized by JS
     &.scrollio-initialized {
         //Loader fallback waiting Scrollio to be loaded
         &:before {
-            display: none;
+            opacity: 0;
         }
         #scrollio {
             opacity: 1;
+        }
+        &.scrollio-fonts-loaded {
+            #scrollio {
+                &>.item {
+                    &>* {
+                        visibility: visible;
+                    }
+                }
+                //Optional introduction
+                &>.intro {
+                    &.active {
+                        opacity: 1;
+                    }
+                }
+            }
         }
     }
     #scrollio {
@@ -39,6 +59,38 @@ body {
         overflow: auto;
         height: 100vh;
         transition: opacity 600ms;
+        //Words
+        .word {
+            display: inline-block;
+            perspective: 1000px;
+            //Letters
+            .letter {
+                position: relative;
+                //Unread / Inactive letter properties
+                color: lightgrey;
+                &.active {
+                    //Read / Active letter properties
+                    color: black;
+                }
+                &.current {
+                    &:after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        pointer-events: none;
+                    }
+                }
+            }
+            //Text ellipsis
+            &.ellipsis {
+                .letter {
+                    &.active {
+                    }
+                    &.current {
+                    }
+                }
+            }
+        }
         //The item itself
         &>.item {
             opacity: 0;
@@ -61,50 +113,10 @@ body {
                 transition: all 200ms; //Default Transition duration on item enter
                 pointer-events: auto;
             }
-            //Letters
-            &>*:first-child {
-                &>.word {
-                    .letter {
-                        //Unread / Inactive letter properties
-                        color: lightgrey;
-                        &.active {
-                            //Read / Active letter properties
-                            color: black;
-                        }
-                        &.current {
-                        }
-                    }
-                    //Text ellipsis
-                    &.ellipsis {
-                        .letter {
-                            &.active {
-                            }
-                            &.current {
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        //Optional introduction
-        &>.intro {
-            opacity: 0;
-            transition: all 300ms;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            display: table;
-            text-align: center;
-            &>header {
-                display: table-cell;
-                vertical-align: middle;
-            }
-            &.active {
-                opacity: 1;
+            //Children markup inside items
+            &>* {
+                //Before fonts are loaded
+                visibility: hidden;
             }
         }
         //An optional layer between content and body
@@ -145,29 +157,6 @@ body {
                     }
                 }
             }
-        }
-
-        //Font sizes
-        .font-size-1 {
-            font-size: xx-small;
-        }
-        .font-size-2 {
-            font-size: x-small;
-        }
-        .font-size-3 {
-            font-size: small;
-        }
-        .font-size-4 {
-            font-size: medium;
-        }
-        .font-size-5 {
-            font-size: large;
-        }
-        .font-size-6 {
-            font-size: x-large;
-        }
-        .font-size-7 {
-            font-size: xx-large;
         }
     }
 }

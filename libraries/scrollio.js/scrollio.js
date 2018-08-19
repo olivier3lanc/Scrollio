@@ -4,40 +4,156 @@
     jQuery.fn.scrollio = function(options) {
         //Defaults parameters
         var g_parameters = {
-            id:                 'scrollio',       //ID if the main Scrollio wrapper
-            scrollRange:        2000,               //Amount of pixels per item
-            keepActive:         true,               //Once scrolled, letters keep active
-            textEllipsis:       '...',              //String displayed at the end of each text to scroll
-            fontSize:           6,                  //1-7: Font size of the scrolled text (managed by theme CSS)
-            intro:              false,              //Enable/disable intro (document title + description)
-            introTitle:         '',                 //Display a custom title for the intro
-            introDescription:   '',                 //Display a custom description for the intro
-            progressBar:        true,               //Enable/disable progress bar
-            overlay:            true,               //Enable/disable overlay between items and body background
-            onInit:             function(e){        //Callback on Scrollio initialization
+            //ID if the main Scrollio wrapper
+            id:                     'scrollio',
+            //Amount of pixels scrolled per item
+            scrollRange:            2000,
+            //Once scrolled, letters keep active CSS class
+            keepActive:             true,
+            //String displayed at the end of each text to scroll
+            textEllipsis:           '...',
+            //Web safe font name or Google Font name
+            fontFamily:             'Ubuntu',
+            //Font weight (applicable only for Google Fonts)
+            fontWeight:             'Bold',
+            //Each letter is under the previous
+            fontOverlapUnder:       true,
+            //Display the progress bar
+            progressBar:            true,
+            //Display overlay between items and body background
+            overlay:                true,
+            //Responsive font size in pixels for Extra-Large devices
+            fontSizeXL:             84,
+            //Responsive font size in pixels for Large devices
+            fontSizeLG:             56,
+            //Responsive font size in pixels for Medium devices
+            fontSizeMD:             36,
+            //Responsive font size in pixels for Small devices
+            fontSizeSM:             24,
+            //Responsive font size in pixels for Extra-Small devices
+            fontSizeXS:             18,
+            //Responsive break point in pixels between large and extra-large
+            breakPointLG_XL:        1200,
+            //Responsive break point in pixels between medium and large
+            breakPointMD_LG:        992,
+            //Responsive break point in pixels between small and medium
+            breakPointSM_MD:        768,
+            //Responsive break point in pixels between extra-small and small
+            breakPointXS_SM:        575,
+            //@keyframes animations declarations that have to be used into the custom CSS
+            animationsCSS:          {
+                'cursor': {
+                    '0%': 'opacity: 0',
+                    '100%': 'opacity: 1'
+                }
+            },
+            //CSS overrides of scrolled text BEFORE Scrollio initialization
+            sentenceBeforeInitCSS:      {
+                'transition': 'transform 1s',
+                'transform': 'scale(0)'
+            },
+            //CSS overrides of scrolled text AFTER Scrollio initialization
+            sentenceAfterInitCSS:       {
+                'transform': 'scale(1)'
+            },
+            //CSS overrides of page body
+            bodyCSS:                {
+                'background-color': '#1b4b7d',
+                'color': '#fff',
+                '-webkit-font-smoothing': 'antialiased'
+            },
+            //CSS overrides of Scrollio container
+            scrollioContainerCSS:   {
 
             },
-            onItemChange:       function(e){        //Callback on item change
+            //CSS overrides of an inactive item
+            itemDefaultCSS:         {
+                'transform': 'translateY(-75%)',
+                'padding': '0em 10vw',
+                'transition': 'all 300ms'
+            },
+            //CSS overrides of an active item
+            itemActiveCSS:          {
+                'transform': 'translateY(-50%)'
+            },
+            //CSS overrides of the whole scrolled text sentence
+            sentenceCSS:            {
+                'line-height': '1.3em'
+            },
+            //CSS overrides of a word
+            wordCSS:                {
+            },
+            //CSS overrides of a letter not scrolled yet
+            letterDefaultCSS:       {
+                'margin-left': '-0.1em',
+                'opacity': '0.5',
+                'transition': 'all 200ms',
+                'text-shadow': '0px 0px 0px rgba(0,0,0,.5)',
+                'transform': 'scale(0.5)'
+            },
+            //CSS overrides of a scrolled or currently scrolled letter
+            letterActiveCSS:        {
+                'color': 'white',
+                'opacity': '1',
+                'text-shadow': '5px 1px 8px rgba(0,0,0,.5)',
+                'transform': 'scale(1)'
+            },
+            //CSS overrides of the currently scrolled letter
+            letterCurrentCSS:       {
+            },
+            //CSS overrides of the cursor included only into currently scrolled letter
+            cursorCSS:              {
+                'top': '0px',
+                'right': '0px',
+                'width': '2px',
+                'height': '100%',
+                'background-color': 'white',
+                'animation-name': 'cursor', //Declared into g_parameters.animationsCSS
+                'animation-duration': '600ms',
+                'animation-iteration-count': 'infinite',
+                'animation-direction': 'alternate'
+            },
+            //CSS overrides of the entire ellipsis word
+            ellipsisWordCSS:     {
 
             },
-            onLetterChange:     function(e){        //Callback on letter change
+            //CSS overrides of an ellipsis character not scrolled yet
+            ellipsisDefaultCSS:     {
 
             },
-            onScroll:           function(e){        //Callback on scroll
+            //CSS overrides of an ellipsis scrolled or currently scrolled
+            ellipsisActiveCSS:      {
 
             },
-            onItemEnd:          function(e){        //Callback on item end
+            //CSS overrides of the ellipsis currently scrolled character
+            ellipsisCurrentCSS:     {
 
             },
-            onFirstItem:        function(e){        //Callback on first item
-
+            //CSS overrides of the progress bar
+            progressBarCSS:         {
+                'background-color': 'white'
             },
-            onLastItem:         function(e){        //Callback on last item
-
+            //CSS overrides of the overlay layer
+            overlayCSS:             {
+                'opacity': '1',
+                'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
             },
-            onScrollEnd:        function(e){        //Callback on scroll end
-
-            }
+            //Callback on Scrollio initialization
+            onInit:                 function(e){},
+            //Callback on item change
+            onItemChange:           function(e){},
+            //Callback on letter change
+            onLetterChange:         function(e){},
+            //Callback on scroll
+            onScroll:               function(e){},
+            //Callback on item end
+            onItemEnd:              function(e){},
+            //Callback on first item
+            onFirstItem:            function(e){},
+            //Callback on last item
+            onLastItem:             function(e){},
+            //Callback on scroll end
+            onScrollEnd:            function(e){}
         }
         //Scrollio API through jQuery.fn.scrollio('get:[parameterName]')
         if(typeof options == 'string'){
@@ -182,6 +298,227 @@
             var g_pageDescription = jQuery('head meta[name="description"]').attr('content');
             //Page title
             var g_pageTitle = document.title;
+            //Scrollio style management
+            var g_style = {
+                //List of web safe fonts (source: MDN)
+                webSafeFonts: {
+                    'Arial':            'Arial, Helvetica, sans-serif',
+                    'Helvetica':        'Helvetica, Arial, sans-serif',
+                    'Courier New':      '"Courier New", monospace',
+                    'Georgia':          'Georgia, serif',
+                    'Times New Roman':  '"Times New Roman", serif',
+                    'Trebuchet MS':     '"Trebuchet MS", sans-serif',
+                    'Verdana':          'Verdana, sans-serif',
+                    'serif':            'serif',
+                    'sans-serif':       'sans-serif',
+                    'monospace':        'monospace',
+                    'cursive':          'cursive',
+                    'fantasy':          'fantasy'
+                },
+                //This is the final font family name
+                fontFamily: g_parameters.fontFamily,
+                //Method that builds the URL to the Google Font
+                buildGoogleFontURL: function(){
+                    //Parameter fontFamily considered as Google font
+                    //Convert string to valid gfonts URL syntax
+                    var googleFontFamily = g_parameters.fontFamily.replace(/ /g,'+');
+                    //Check if font weight is not empty
+                    if(g_parameters.fontWeight != ''){
+                        //Add the valid font weight syntax for the URL
+                        googleFontFamily = googleFontFamily + ':' + g_parameters.fontWeight;
+                    }
+                    //Quote the Google font family to be valid when called
+                    g_style.fontFamily = '"'+g_parameters.fontFamily+'"';
+                    //Return the URL
+                    return 'https://fonts.googleapis.com/css?family='+googleFontFamily;
+                },
+                //Method that build the import URL for the CSS
+                buildGoogleFontsImportString: function(){
+                    return '@import url("'+this.buildGoogleFontURL()+'");';
+                },
+                //Method that returns the complete CSS string of the specified theme parameter
+                //@themeParam - {object} A theme parameter key (e.g. g_parameters.overlayCSS)
+                insertCSSof: function(themeParam){
+                    //init Scrollio CSS properties string
+                    var CSSProperties = '';
+                    //Check it is an object
+                    if(typeof themeParam == 'object'){
+                        //If it is the animationsCSS parameter
+                        if(themeParam == g_parameters.animationsCSS){
+                            //Array of animation names
+                            var animationNames = Object.getOwnPropertyNames(themeParam);
+                            //For each animation name
+                            animationNames.forEach(function(animationName){
+                                //Add keyframes string to declare animation
+                                CSSProperties += '@keyframes '+animationName+' {';
+                                    //themeParam of animation timings
+                                    var percentages = Object.getOwnPropertyNames(themeParam[animationName]);
+                                    //For each percentage timing
+                                    percentages.forEach(function(percentage){
+                                        //Add the current timing
+                                        CSSProperties += percentage+' {';
+                                        //Add properties + values
+                                        CSSProperties += themeParam[animationName][percentage]+';';
+                                        //Close animation timing
+                                        CSSProperties += '} ';
+                                    });
+                                //close animation name
+                                CSSProperties += '} ';
+                            });
+                        //Otherwise it is a standard CSS [property]: [value]
+                        }else{
+                            //Array of properties
+                            var properties = Object.getOwnPropertyNames(themeParam);
+                            //For each property
+                            properties.forEach(function(property){
+                                //Check it is a string
+                                if(typeof themeParam[property] == 'string'){
+                                    //Add the CSS property and its value
+                                    CSSProperties += property+': '+themeParam[property]+';';
+                                }
+                            });
+                        }
+                    }
+                    return CSSProperties;
+                },
+                //Method that build the whole custom CSS for Scrollio
+                buildCSS: function(wGoogleFonts){
+                    //Init an empty import string in case of external font resource
+                    var importString = '';
+                    //If Google font, then build the import string
+                    if(wGoogleFonts){
+                        importString = this.buildGoogleFontsImportString();
+                    }
+                    //Build the custom Scrollio style
+                    var style = '<style id="scrollio-style">'+
+                                    importString+
+                                    //Animations
+                                    this.insertCSSof(g_parameters.animationsCSS)+
+                                    //Body
+                                    'body {'+
+                                        this.insertCSSof(g_parameters.bodyCSS)+
+                                    '} '+
+                                    //Scrollio container
+                                    'body #scrollio {'+
+                                        'font-family: '+g_style.fontFamily+';'+
+                                        //Font size for Extra-Large devices
+                                        'font-size: '+g_parameters.fontSizeXL+'px;'+
+                                        this.insertCSSof(g_parameters.scrollioContainerCSS)+
+                                    '} '+
+                                    //Responsive media query for Large devices
+                                    '@media (max-width: '+g_parameters.breakPointLG_XL+'px) {'+
+                                        'body #scrollio {'+
+                                            'font-size: '+g_parameters.fontSizeLG+'px;'+
+                                        '} '+
+                                    '} '+
+                                    //Responsive media query for Medium devices
+                                    '@media (max-width: '+g_parameters.breakPointMD_LG+'px) {'+
+                                        'body #scrollio {'+
+                                            'font-size: '+g_parameters.fontSizeMD+'px;'+
+                                        '} '+
+                                    '} '+
+                                    //Responsive media query for Small devices
+                                    '@media (max-width: '+g_parameters.breakPointSM_MD+'px) {'+
+                                        'body #scrollio {'+
+                                            'font-size: '+g_parameters.fontSizeSM+'px;'+
+                                        '} '+
+                                    '} '+
+                                    //Responsive media query for Extra-Small devices
+                                    '@media (max-width: '+g_parameters.breakPointXS_SM+'px) {'+
+                                        'body #scrollio {'+
+                                            'font-size: '+g_parameters.fontSizeXS+'px;'+
+                                        '} '+
+                                    '} '+
+                                    //Word scrolled
+                                    'body #scrollio .word {'+
+                                        this.insertCSSof(g_parameters.wordCSS)+
+                                    '} '+
+                                    //Letter not scrolled yet (default)
+                                    'body #scrollio .word .letter {'+
+                                        this.insertCSSof(g_parameters.letterDefaultCSS)+
+                                    '} '+
+                                    //Letter scrolled or currently scrolled
+                                    'body #scrollio .word .letter.active {'+
+                                        this.insertCSSof(g_parameters.letterActiveCSS)+
+                                    '} '+
+                                    //Letter currently scrolled
+                                    'body #scrollio .word .letter.current {'+
+                                        this.insertCSSof(g_parameters.letterCurrentCSS)+
+                                    '} '+
+                                    //Cursor available only on the current letter
+                                    'body #scrollio .word .letter.current:after {'+
+                                        this.insertCSSof(g_parameters.cursorCSS)+
+                                    '} '+
+                                    //The whole ellipsis word
+                                    'body #scrollio .word.ellipsis {'+
+                                        this.insertCSSof(g_parameters.ellipsisWordCSS)+
+                                    '} '+
+                                    //Ellipsis letter/character not scrolled yet (default)
+                                    'body #scrollio .word.ellipsis .letter {'+
+                                        this.insertCSSof(g_parameters.ellipsisDefaultCSS)+
+                                    '} '+
+                                    //Ellipsis letter/character scrolled or currently scrolled
+                                    'body #scrollio .word.ellipsis .letter.active {'+
+                                        this.insertCSSof(g_parameters.ellipsisActiveCSS)+
+                                    '} '+
+                                    //Ellipsis letter/character currently scrolled
+                                    'body #scrollio .word.ellipsis .letter.current {'+
+                                        this.insertCSSof(g_parameters.ellipsisCurrentCSS)+
+                                    '} '+
+                                    //Overlay
+                                    'body #scrollio>.overlay {'+
+                                        this.insertCSSof(g_parameters.overlayCSS)+
+                                    '} '+
+                                    //Progress bar
+                                    'body #scrollio>.progress-bar {'+
+                                        this.insertCSSof(g_parameters.progressBarCSS)+
+                                    '} '+
+                                    //Item hidden state
+                                    'body #scrollio>.item {'+
+                                        this.insertCSSof(g_parameters.itemDefaultCSS)+
+                                    '} '+
+                                    //Item visible state
+                                    'body #scrollio>.item.active {'+
+                                        this.insertCSSof(g_parameters.itemActiveCSS)+
+                                    '} '+
+                                    //Item content state BEFORE Scrollio initialization
+                                    'body #scrollio>.item>* {'+
+                                        this.insertCSSof(g_parameters.sentenceBeforeInitCSS)+
+                                    '} '+
+                                    //Item content state AFTER Scrollio initialization
+                                    'body.scrollio-initialized.scrollio-fonts-loaded #scrollio>.item>* {'+
+                                        this.insertCSSof(g_parameters.sentenceAfterInitCSS)+
+                                    '} '+
+                                    //Complete scrolled sentence containing words and letters
+                                    'body #scrollio>.item>.scrolltrack {'+
+                                        this.insertCSSof(g_parameters.sentenceCSS)+
+                                    '} '+
+                                '</style>';
+                    //Include the custom style into the document head
+                    jQuery('head').append(style);
+                }
+            }
+            //Check if fontFamily parameter is a web safe font
+            if(typeof g_style.webSafeFonts[g_parameters.fontFamily] != "undefined"){
+                //Final font family is this web safe font as defined by user
+                g_style.fontFamily = g_style.webSafeFonts[g_parameters.fontFamily];
+                //Build the custom CSS WITHOUT import string
+                g_style.buildCSS();
+                //Add a font ready state CSS class
+                jQ_body.addClass('scrollio-fonts-loaded');
+            }else{
+                //Build the custom CSS WITH import Google font string
+                g_style.buildCSS(true);
+                //Wait for gfont URL loaded
+                jQuery.get(g_style.buildGoogleFontURL(),function(e){
+                    //Once fonts loaded, add a font ready state CSS class
+                    //THAT AVOIDS TO DISPLAY A FALLBACK FONT BEFORE THE GOOGLE FONT
+                    jQ_body.addClass('scrollio-fonts-loaded');
+                }).fail(function(){
+                    //In case of invalid web safe font name or invalid gfont name
+                    alert('invalid web safe font or google font');
+                });
+            }
 
             //Wrap letters
             var wrapLetters = function(selector){
@@ -189,7 +526,7 @@
                     //Wrap every letter of each item title
                     jQ_scrollio.find(selector).each(function(){
                         //First child of the .item is the scroller
-                        var jQ_text = jQuery(this).children().eq(0);
+                        var jQ_text = jQuery(this).find('.scrolltrack').eq(0);
                         //Text content of the element to scroll
                         var text = jQ_text.text();
                         var result = '';
@@ -203,8 +540,12 @@
                             }else{
                                result += '<span class="letter" style="z-index:'+zIndex+';">'+text[i]+'</span>';
                             }
-                            //Decrease z-index;
-                            zIndex--;
+                            //Manage z-index according to fontOverlapMode
+                            if(g_parameters.fontOverlapUnder){
+                                zIndex--;
+                            }else{
+                                zIndex++;
+                            }
                         }
                         result += '</span>'; //End of last word
                         //Ellipsis management
@@ -219,8 +560,12 @@
                             ellipsisLetters +=  '<span class="letter" style="z-index:'+zIndex+';">'+
                                                     ellipsis[i]+
                                                 '</span>';
-                            //Decrease z-index;
-                            zIndex--;
+                            //Manage z-index according to fontOverlapMode
+                            if(g_parameters.fontOverlapUnder){
+                                zIndex--;
+                            }else{
+                                zIndex++;
+                            }
                         }
                         //Insert the whole ellipsis into a .word span
                         var finalEllipsis = '<span class="word ellipsis">'+ellipsisLetters+'</span>';
@@ -334,13 +679,6 @@
                     //Transformations on non current item
                     jQ_inactiveItems.removeClass('active');
 
-                    //If intro enabled, disable it at first mouse scroll
-                    if(g_parameters.intro){
-                        if(g_scrollTopRaw > 0){
-                            jQ_scrollio.children('.intro').removeClass('active');
-                        }
-                    }
-
                     //If progress bar is enabled
                     if(g_parameters.progressBar){
                         g_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
@@ -367,64 +705,6 @@
                 jQ_scrollio.addClass('keep-active');
             }
 
-            //Add CSS class for font size
-            if(typeof g_parameters.fontSize == 'number'){
-                if(g_parameters.fontSize >= 1 && g_parameters.fontSize <= 7){
-                    g_parameters.fontSize = parseInt(g_parameters.fontSize);
-                    var g_fontSizeClass = 'font-size-'+g_parameters.fontSize.toString();
-                    jQ_scrollio.find('.item>*:first-child').addClass(g_fontSizeClass);
-                }else{
-                    console.log('invalid font size: must be a integer from 1 to 7');
-                }
-            }else{
-                console.log('fontSize option must be a number');
-            }
-
-            //If intro, include into DOM
-            if(g_parameters.intro){
-                //If custom intro title
-                if(g_parameters.introTitle != ''){
-                    g_pageTitle = g_parameters.introTitle;
-                }else{
-                    //Fallback if no page title
-                    if(g_pageTitle === undefined || g_pageTitle == '' || g_pageTitle == g_parameters.textEllipsis){
-                        g_pageTitle = 'Scrollio';
-                    }
-                }
-                //If custom intro description
-                if(g_parameters.introDescription != ''){
-                    g_pageDescription = g_parameters.introDescription;
-                }else{
-                    //Fallback if no meta description
-                    if(g_pageDescription === undefined || g_pageDescription == ''){
-                        g_pageDescription = 'Scroll down to discover';
-                    }
-                }
-                //Include into scrollio
-                jQ_scrollio.append(
-                    '<div class="intro">'+
-                        '<header>'+
-                            '<h1 class="font-size-7">'+g_pageTitle+'</h1>'+
-                            '<p class="description font-size-2">'+g_pageDescription+'</p>'+
-                        '</header>'+
-                    '</div>'
-                );
-                //Wrap letters
-                wrapLetters('.intro header');
-
-                //Wait a little to allow transition to be done
-                setTimeout(function(){
-                    //if page is not scrolled at start or refreshed, then display
-                    //Avoids displaying intro if page is refreshed
-                    if(g_previousLetterIndex == -1){
-                        jQ_scrollio.children('.intro').addClass('active');
-                    }
-                },16);
-            //Otherwise, make the first item active
-            }else{
-                jQ_scrollio.children('.item').eq(0).addClass('active');
-            }
-
             //If progress bar, include into DOM
             if(g_parameters.progressBar){
                 jQ_scrollio.append('<div class="progress-bar"></div>');
@@ -436,6 +716,8 @@
                 jQ_body.addClass('scrollio-initialized');
                 //Enable user defined callback
                 g_parameters.onInit(e);
+                //Make the first item visible
+                jQ_scrollio.children('.item:first-child').addClass('active');
             });
             //Trigger event initialized
             var e_init = jQuery.Event('init');

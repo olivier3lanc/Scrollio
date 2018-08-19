@@ -13,7 +13,7 @@
     <!-- Scrollio core -->
     <link href="../build/scrollio.min.css" rel="stylesheet">
     <!-- Scrollio Theme -->
-    <link href="../build/scrollio.theme.venus.min.css" rel="stylesheet">
+    <!-- <link href="../build/scrollio.theme.venus.min.css" rel="stylesheet"> -->
 </head>
 
 <body>
@@ -36,7 +36,7 @@
 
     <div id="scrollio" class="edit-mode">
         <div class="item">
-            <p>My first item</p>
+            <p class="scrolltrack">My first item</p>
         </div>
     </div>
 
@@ -85,7 +85,7 @@
             if(typeof objRecognized == 'object'){
                 console.log(Object.keys(objRecognized).length);
                 //Destroy instance
-                jQuery('#scrollio').remove();
+                jQuery('#scrollio, #scrollio-style').remove();
                 //Build a new one
                 jQuery('body').append('<div id="scrollio" class="edit-mode"></div>');
                 var jQ_scrollio = jQuery('#scrollio');
@@ -256,7 +256,7 @@
             //Reset obj
             obj = { options: {}};
             var index = 0;
-            jQuery('#scrollio').removeClass('initialized');
+            jQuery('body').removeClass('scrollio-initialized scrollio-fonts-loaded');
             jQuery('#generator').find('.item').each(function(){
                 // var index = jQuery(this).index();
                 var text = jQuery(this).find('textarea').val();
