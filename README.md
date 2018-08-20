@@ -9,25 +9,25 @@
 
 Here is the minimal code to make Scrollio work properly.
 
-* Include `<link href="scrollio.min.css" rel="stylesheet">` into the `<head>` of your document.
-* Include the Scrollio markup into your `<body>`. Here is the minimal markup required:
+1. Include `<link href="scrollio.min.css" rel="stylesheet">` into the `<head>` of your document.
+1. Include the Scrollio markup into your `<body>`. Just put your content into `.item` and add class `.scrolltrack` to the HTML tag you wish to scroll. Here is an example of the minimal markup required:
 ``` html
 <div id="scrollio">
     <div class="item">
-        <!-- Any HTML with at least one HTML tag with "scrolltrack" class -->
+        <!-- Your content with one HTML tag with "scrolltrack" class -->
     </div>
     <div class="item">
-        <!-- Any HTML with at least one HTML tag with "scrolltrack" class -->
+        <!-- Your content with one HTML tag with "scrolltrack" class -->
     </div>
     <div class="item">
-        <!-- Any HTML with at least one HTML tag with "scrolltrack" class -->
+        <!-- Your content with one HTML tag with "scrolltrack" class -->
     </div>
     <!-- ... -->
 </div>
 ```
-* Include jQuery `<script type="text/javascript" src="jquery.min.js"></script>`
-* Include Scrollio after jQuery `<script type="text/javascript" src="scrollio.min.js"></script>`
-* Initialize Scrollio:
+1. Include jQuery `<script type="text/javascript" src="jquery.min.js"></script>`
+1. Include Scrollio after jQuery `<script type="text/javascript" src="scrollio.min.js"></script>`
+1. Initialize Scrollio:
 ``` html
 <script type="text/javascript">
     jQuery.fn.scrollio();
@@ -90,7 +90,11 @@ Here are all the options with their default values available in Scrollio.
         keepActive:             true,
         //String displayed at the end of each text to scroll
         textEllipsis:           '...',
-        //Web safe font name or Google Font name
+        //Google Font name
+        //Or Web safe font name:
+        //'Arial','Helvetica','Courier New','Georgia',
+        //'Times New Roman','Verdana','serif','sans-serif',
+        //'monospace','cursive','fantasy'
         fontFamily:             'Ubuntu',
         //Font weight (applicable only for Google Fonts)
         fontWeight:             'Bold',
@@ -227,7 +231,7 @@ Here are all the options with their default values available in Scrollio.
 | scrollRange      | `2000`   | Integer | Amount of pixels scrolled per item                             |
 | keepActive       | `true`   | Boolean | Once scrolled, letters keep active CSS class                   |
 | textEllipsis     | `...`    | String  | String displayed at the end of each text to scroll             |
-| fontFamily       | `Ubuntu` | String  | Web safe font name or Google Font name                         |
+| fontFamily       | `Ubuntu` | String  | Web safe font name or [Google Font](https://fonts.google.com) name. List of web safe font names available: `Arial`,`Helvetica`,`Courier New`,`Georgia`,`Times New Roman`,`Verdana`,`serif`,`sans-serif`,`monospace`,`cursive`,`fantasy`|
 | fontWeight       | `Bold`   | String  | Font weight (applicable only for Google Fonts)                 |
 | fontOverlapUnder | `true`   | Boolean | Each letter is under the previous                              |
 | progressBar      | `true`   | Boolean | Display the progress bar                                       |
@@ -499,6 +503,25 @@ An `active` class it added on the current item.
 </div>
 ```
 
+### Responsive font sizes
+
+Scrollio allows to assign responsive font sizes according to device width:
+* `fontSizeXL` is assigned to devices larger than `breakPointLG_XL`
+* `fontSizeLG` is assigned to devices between `breakPointMD_LG` and `breakPointLG_XL`
+* `fontSizeMD` is assigned to devices between `breakPointSM_MD` and `breakPointMD_LG`
+* `fontSizeSM` is assigned to devices between `breakPointXS_SM` and `breakPointSM_MD`
+* `fontSizeXS` is assigned to devices smaller than `breakPointXS_SM`
+
+```
+-------------------------------------- Device width ------------------------------------
+
+        breakPointXS_SM     breakPointSM_MD     breakPointMD_LG     breakPointLG_XL
+               |                   |                   |                  |
+fontSizeXS     |    fontSizeSM     |    fontSizeMD     |    fontSizeLG    |   fontSizeXL
+               |                   |                   |                  |      
+
+```
+
 ### Text wrapping
 
 For each `.item`, **Scrollio wraps every word and every letter of the first markup found**.
@@ -597,14 +620,3 @@ If `overlay: true` `[boolean]`, an overlay is included into the `<div id="scroll
 </span>
 
 ```
-
-### Font size
-
-`fontSize` option `[number]`. You can adjust the font size of the scrolled text. Scrollio supports 7 font sizes that are managed by the theme.
-* `fontSize: 1` XXSmall font size
-* `fontSize: 2` XSmall font size
-* `fontSize: 3` Small font size
-* `fontSize: 4` Medium font size
-* `fontSize: 5` Large font size
-* `fontSize: 6` XLarge font size
-* `fontSize: 7` XXLarge font size
