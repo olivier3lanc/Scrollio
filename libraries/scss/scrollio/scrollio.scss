@@ -3,7 +3,7 @@
 */
 body {
     //Make scrollbars always visible to avoid ugly content move on init
-    overflow: scroll;
+    overflow-y: scroll;
     //Loader fallback waiting Scrollio to be loaded
     &:before {
         @keyframes loader {
