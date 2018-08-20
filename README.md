@@ -2,37 +2,30 @@
 
 *A full page scroll experience tool for story telling*. Scrollio is a jQuery plugin that uses the scroll to reveal the text content.
 
-* [Demo with only core CSS](https://codepen.io/olivier3lanc/pen/zLBGEL)
+* [Demo](https://codepen.io/olivier3lanc/pen/zLBGEL)
 * [Demo with callbacks](https://codepen.io/olivier3lanc/full/bjBbVP/)
-* [Demo with Venus theme](https://codepen.io/olivier3lanc/full/ajBzGZ)
 
 ## Usage
 
 Here is the minimal code to make Scrollio work properly.
 
 * Include `<link href="scrollio.min.css" rel="stylesheet">` into the `<head>` of your document.
-* Include the Scrollio markup into your `<body>`:
+* Include the Scrollio markup into your `<body>`. Here is the minimal markup required:
 ``` html
-<div id="scrollio"><!-- mandatory -->
-    <div class="item"><!-- mandatory for each item-->
-        <!-- Just add the CSS class "scrolltrack" to the tag you wish to scroll -->
-        <h2>My heading 1</h2>
-        <p class="scrolltrack">Markup to be scrolled is set by the scrolltrack CSS class name.</p>
+<div id="scrollio">
+    <div class="item">
+        <!-- Any HTML with at least one HTML tag with "scrolltrack" class -->
     </div>
-    <div class="item"><!-- mandatory for each item-->
-        <p class="scrolltrack">Markup to be scrolled 2</p>
+    <div class="item">
+        <!-- Any HTML with at least one HTML tag with "scrolltrack" class -->
     </div>
-    <div class="item"><!-- mandatory for each item-->
-        <h2 class="scrolltrack">Markup to be scrolled 3</h2>
-        <p>Another independant markup</p>
+    <div class="item">
+        <!-- Any HTML with at least one HTML tag with "scrolltrack" class -->
     </div>
-    <div class="item"><!-- mandatory for each item-->
-        <h2>My heading 4</h2>
-        <p class="scrolltrack">Markup to be scrolled 4</p>
-    </div>
+    <!-- ... -->
 </div>
 ```
-* Include jQuery `<script type="text/javascript" src="scrollio.min.js"></script>`
+* Include jQuery `<script type="text/javascript" src="jquery.min.js"></script>`
 * Include Scrollio after jQuery `<script type="text/javascript" src="scrollio.min.js"></script>`
 * Initialize Scrollio:
 ``` html
@@ -47,7 +40,7 @@ A full page example with Scrollio:
 <html>
 <head>
     <title>My Scrollio</title>
-    <meta name="description" content="Description of my scrollio">
+    <meta name="description" content="Description of my page with scrollio">
     <!-- Scrollio core CSS -->
     <link href="https://olivier3lanc.github.io/Scrollio/build/scrollio.min.css" rel="stylesheet">
 </head>
