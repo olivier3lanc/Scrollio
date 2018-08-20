@@ -10,6 +10,39 @@
 
 Here is the minimal code to make Scrollio work properly.
 
+* Include `<link href="scrollio.min.css" rel="stylesheet">` into the `<head>` of your document.
+* Include the Scrollio markup into your `<body>`:
+``` html
+<div id="scrollio"><!-- mandatory -->
+    <div class="item"><!-- mandatory for each item-->
+        <!-- Just add the CSS class "scrolltrack" to the tag you wish to scroll -->
+        <h2>My heading 1</h2>
+        <p class="scrolltrack">Markup to be scrolled is set by the scrolltrack CSS class name.</p>
+    </div>
+    <div class="item"><!-- mandatory for each item-->
+        <p class="scrolltrack">Markup to be scrolled 2</p>
+    </div>
+    <div class="item"><!-- mandatory for each item-->
+        <h2 class="scrolltrack">Markup to be scrolled 3</h2>
+        <p>Another independant markup</p>
+    </div>
+    <div class="item"><!-- mandatory for each item-->
+        <h2>My heading 4</h2>
+        <p class="scrolltrack">Markup to be scrolled 4</p>
+    </div>
+</div>
+```
+* Include jQuery `<script type="text/javascript" src="scrollio.min.js"></script>`
+* Include Scrollio after jQuery `<script type="text/javascript" src="scrollio.min.js"></script>`
+* Initialize Scrollio:
+``` html
+<script type="text/javascript">
+    jQuery.fn.scrollio();
+</script>
+```
+
+A full page example with Scrollio:
+
 ``` html
 <html>
 <head>
@@ -51,7 +84,7 @@ Here is the minimal code to make Scrollio work properly.
 </html>
 ```
 
-## Options
+## All options
 
 Here are all the options with their default values available in Scrollio.
 
@@ -192,16 +225,175 @@ Here are all the options with their default values available in Scrollio.
         }
     });
 </script>
-
 ```
-| Option           | Default | Type    | Description                                                         |
-| ---------------- | ------- | ------- | ------------------------------------------------------------------- |
-| scrollRange      | `2000`  | Number  | Amount of pixels scrolled per item                                  |
-| keepActive       | `true`  | Boolean | Once scrolled, letters keep active CSS class                        |
-| textEllipsis     | `...`   | String  | String displayed at the end of each text to scroll                  |
-| progressBar      | `true`  | Boolean | Display the progress bar                                            |
-| overlay          | `true`  | Boolean | Display overlay between items and body background                   |
 
+## Basic options
+
+| Option           | Default  | Type    | Description                                                    |
+| ---------------- | -------- | ------- | -------------------------------------------------------------- |
+| scrollRange      | `2000`   | Integer | Amount of pixels scrolled per item                             |
+| keepActive       | `true`   | Boolean | Once scrolled, letters keep active CSS class                   |
+| textEllipsis     | `...`    | String  | String displayed at the end of each text to scroll             |
+| fontFamily       | `Ubuntu` | String  | Web safe font name or Google Font name                         |
+| fontWeight       | `Bold`   | String  | Font weight (applicable only for Google Fonts)                 |
+| fontOverlapUnder | `true`   | Boolean | Each letter is under the previous                              |
+| progressBar      | `true`   | Boolean | Display the progress bar                                       |
+| overlay          | `true`   | Boolean | Display overlay between items and body background              |
+| fontSizeXL       | `84`     | Integer | Responsive font size in pixels for Extra-Large devices         |
+| fontSizeLG       | `56`     | Integer | Responsive font size in pixels for Large devices               |
+| fontSizeMD       | `36`     | Integer | Responsive font size in pixels for Medium devices              |
+| fontSizeSM       | `24`     | Integer | Responsive font size in pixels for Small devices               |
+| fontSizeXS       | `18`     | Integer | Responsive font size in pixels for Extra-Small devices         |
+| breakPointLG_XL  | `1200`   | Integer | Responsive break point in pixels between large and extra-large |
+| breakPointMD_LG  | `992`    | Integer | Responsive break point in pixels between medium and large      |
+| breakPointSM_MD  | `768`    | Integer | Responsive break point in pixels between small and medium      |
+| breakPointXS_SM  | `575`    | Integer | Responsive break point in pixels between extra-small and small |
+
+## Theme overrides options
+
+Here are advanced options of Scrollio that allows to obtain a high level of customizations. These options are all objects that are important shorthands to the default Scrollio style. **All objects keys and values refer to CSS properties and values.**
+
+You can freely override default CSS of `scrollio.min.css` or add new CSS properties.
+
+* Keyframes animations declarations that have to be used into the custom CSS
+``` js
+//Default values
+animationsCSS: {
+    'cursor': {
+        '0%': 'opacity: 0',
+        '100%': 'opacity: 1'
+    }
+}
+```
+* CSS overrides of scrolled text BEFORE Scrollio initialization
+``` js
+sentenceBeforeInitCSS: {
+    'transition': 'transform 1s',
+    'transform': 'scale(0)'
+}
+```
+* CSS overrides of scrolled text AFTER Scrollio initialization
+``` js
+sentenceAfterInitCSS:       {
+    'transform': 'scale(1)'
+}
+```
+* CSS overrides of page body
+``` js
+bodyCSS: {
+    'background-color': '#1b4b7d',
+    'color': '#fff',
+    '-webkit-font-smoothing': 'antialiased'
+}
+```
+* CSS overrides of Scrollio container
+``` js
+scrollioContainerCSS: {
+    //your css properties
+}
+```
+* CSS overrides of an inactive item
+``` js
+itemDefaultCSS: {
+    'transform': 'translateY(-75%)',
+    'padding': '0em 10vw',
+    'transition': 'all 300ms'
+}
+```
+CSS overrides of an active item
+``` js
+itemActiveCSS: {
+    'transform': 'translateY(-50%)'
+}
+```
+* CSS overrides of the whole scrolled text sentence
+``` js
+sentenceCSS: {
+    'line-height': '1.3em'
+}
+```
+* CSS overrides of a word
+``` js
+wordCSS: {
+    //your css properties
+}
+```
+* CSS overrides of a letter not scrolled yet
+``` js
+letterDefaultCSS: {
+    'margin-left': '-0.1em',
+    'opacity': '0.5',
+    'transition': 'all 200ms',
+    'text-shadow': '0px 0px 0px rgba(0,0,0,.5)',
+    'transform': 'scale(0.5)'
+}
+```
+* CSS overrides of a scrolled or currently scrolled letter
+``` js
+letterActiveCSS: {
+    'color': 'white',
+    'opacity': '1',
+    'text-shadow': '5px 1px 8px rgba(0,0,0,.5)',
+    'transform': 'scale(1)'
+}
+```
+* CSS overrides of the currently scrolled letter
+``` js
+letterCurrentCSS: {
+    //your css properties
+}
+```
+* CSS overrides of the cursor included only into currently scrolled letter
+``` js
+cursorCSS: {
+    'top': '0px',
+    'right': '0px',
+    'width': '2px',
+    'height': '100%',
+    'background-color': 'white',
+    'animation-name': 'cursor', //Declared into animationsCSS
+    'animation-duration': '600ms',
+    'animation-iteration-count': 'infinite',
+    'animation-direction': 'alternate'
+}
+```
+* CSS overrides of the entire ellipsis word
+``` js
+ellipsisWordCSS: {
+    //your css properties
+}
+```
+* CSS overrides of an ellipsis character not scrolled yet
+``` js
+ellipsisDefaultCSS: {
+    //your css properties
+}
+```
+* CSS overrides of an ellipsis scrolled or currently scrolled
+``` js
+ellipsisActiveCSS: {
+    //your css properties
+}
+```
+* CSS overrides of the ellipsis currently scrolled character
+``` js
+ellipsisCurrentCSS: {
+    //your css properties
+}
+```
+* CSS overrides of the progress bar
+``` js
+progressBarCSS: {
+    'background-color': 'white'
+}
+```
+* CSS overrides of the overlay layer
+``` js
+overlayCSS: {
+    'opacity': '1',
+    'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
+}
+```
 
 ## Callbacks
 
@@ -380,63 +572,6 @@ Becomes
 | `<span class="letter active">`         | If `keepActive: true` the letter keeps the `active` class once scrolled. If `keepActive: false` the letter has `active` class only when it is the latest scrolled. |
 | `<span class="letter active current">` | The letter is the latest scrolled           |
 
-### Intro
-
-If `intro: true`, an introduction element is included into the `<div id="scrollio"></div>` that shows up:
-* **Into the first markup of the intro, letters are wrapped just like other items**.
-* By default it displays page title and page description.
-* `introTitle: ''` Replaces page title by your own title.
-* `introDescription: ''` Replaces page description by your own description.
-* `active` class is removed on first scroll and is not set again.
-
-Here is the markup included:
-
-```html
-<div id="scrollio">
-    <div class="intro active">
-        <header>
-            <h1>Page Title or `introTitle` option</h1>
-            <p class="description">Page description or `introDescription` option</p>
-        </header>
-    </div>
-</div>
-```
-
-Renders:
-
-```html
-<div id="scrollio">
-    <div class="intro active"><!-- On first scroll, active class disappears -->
-        <header>
-            <h1>
-                <span class="word">
-                    <span class="letter" style="z-index:1000;">V</span>
-                    <span class="letter" style="z-index:999;">e</span>
-                    <span class="letter" style="z-index:998;">n</span>
-                    <span class="letter" style="z-index:997;">u</span>
-                    <span class="letter" style="z-index:996;">s</span>
-                </span>
-                <span class="separator"> </span>
-                <span class="word">
-                    <span class="letter" style="z-index:994;">t</span>
-                    <span class="letter" style="z-index:993;">h</span>
-                    <span class="letter" style="z-index:992;">e</span>
-                    <span class="letter" style="z-index:991;">m</span>
-                    <span class="letter" style="z-index:990;">e</span>
-                </span>
-                <span class="separator"> </span>
-                <span class="word ellipsis">
-                    <span class="letter" style="z-index:988;">.</span>
-                    <span class="letter" style="z-index:987;">.</span>
-                    <span class="letter" style="z-index:986;">.</span>
-                </span>
-            </h1>
-            <p class="description">Demonstration of Venus theme for Scrollio</p>
-        </header>
-    </div>
-</div>
-```
-
 ### Progress bar
 
 If `progressBar: true` `[boolean]`, a progress bar is included into the `<div id="scrollio"></div>` as follows:
@@ -460,6 +595,15 @@ If `overlay: true` `[boolean]`, an overlay is included into the `<div id="scroll
 ### Text ellipsis
 
 `textEllipsis` option `[string]`. Additional text string is added at the end of each item. By default it is `...`. **This text ellipsis string is wrapped** like other letters.
+
+```html
+<span class="word ellipsis">
+    <span class="letter" style="z-index:985;">.</span>
+    <span class="letter" style="z-index:984;">.</span>
+    <span class="letter" style="z-index:983;">.</span>
+</span>
+
+```
 
 ### Font size
 
