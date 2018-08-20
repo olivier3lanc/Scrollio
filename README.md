@@ -122,6 +122,9 @@ Here are all the options with their default values available in Scrollio.
         breakPointSM_MD:        768,
         //Responsive break point in pixels between extra-small and small
         breakPointXS_SM:        575,
+        //Enable/disable style overrides. Quickly remove all styles overrides
+        //For testing and debug purpose.
+        styleOverrides:         true,
         //@keyframes animations declarations that have to be used into the custom CSS
         animationsCSS:          {
             'cursor': {
@@ -245,6 +248,7 @@ Here are all the options with their default values available in Scrollio.
 | breakPointMD_LG  | `992`    | Integer | Responsive break point in pixels between medium and large      |
 | breakPointSM_MD  | `768`    | Integer | Responsive break point in pixels between small and medium      |
 | breakPointXS_SM  | `575`    | Integer | Responsive break point in pixels between extra-small and small |
+| styleOverrides   | `true`   | Boolean | If false, quickly remove all styles overrides.                 |
 
 ## Theme overrides options
 

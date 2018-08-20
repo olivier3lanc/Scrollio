@@ -12,7 +12,11 @@
             keepActive:             true,
             //String displayed at the end of each text to scroll
             textEllipsis:           '...',
-            //Web safe font name or Google Font name
+            //Google Font name
+            //Or Web safe font name:
+            //'Arial','Helvetica','Courier New','Georgia',
+            //'Times New Roman','Verdana','serif','sans-serif',
+            //'monospace','cursive','fantasy'
             fontFamily:             'Ubuntu',
             //Font weight (applicable only for Google Fonts)
             fontWeight:             'Bold',
@@ -40,6 +44,9 @@
             breakPointSM_MD:        768,
             //Responsive break point in pixels between extra-small and small
             breakPointXS_SM:        575,
+            //Enable/disable style overrides. Quickly remove all styles overrides
+            //For testing and debug purpose.
+            styleOverrides:         true,
             //@keyframes animations declarations that have to be used into the custom CSS
             animationsCSS:          {
                 'cursor': {
@@ -298,7 +305,7 @@
             var g_pageDescription = jQuery('head meta[name="description"]').attr('content');
             //Page title
             var g_pageTitle = document.title;
-            //Scrollio style management
+            //Scrollio style overrides management
             var g_style = {
                 //List of web safe fonts (source: MDN)
                 webSafeFonts: {
@@ -486,7 +493,7 @@
                                         this.insertCSSof(g_parameters.sentenceBeforeInitCSS)+
                                     '} '+
                                     //Item content state AFTER Scrollio initialization
-                                    'body.scrollio-initialized.scrollio-fonts-loaded #scrollio>.item>* {'+
+                                    'body.scrollio-initialized.scrollio-style-loaded #scrollio>.item>* {'+
                                         this.insertCSSof(g_parameters.sentenceAfterInitCSS)+
                                     '} '+
                                     //Complete scrolled sentence containing words and letters
@@ -498,27 +505,35 @@
                     jQuery('head').append(style);
                 }
             }
-            //Check if fontFamily parameter is a web safe font
-            if(typeof g_style.webSafeFonts[g_parameters.fontFamily] != "undefined"){
-                //Final font family is this web safe font as defined by user
-                g_style.fontFamily = g_style.webSafeFonts[g_parameters.fontFamily];
-                //Build the custom CSS WITHOUT import string
-                g_style.buildCSS();
-                //Add a font ready state CSS class
-                jQ_body.addClass('scrollio-fonts-loaded');
+            //Work only if styleOverrides == true
+            if(g_parameters.styleOverrides){
+                //Check if fontFamily parameter is a web safe font
+                if(typeof g_style.webSafeFonts[g_parameters.fontFamily] != "undefined"){
+                    //Final font family is this web safe font as defined by user
+                    g_style.fontFamily = g_style.webSafeFonts[g_parameters.fontFamily];
+                    //Build the custom CSS WITHOUT import string
+                    g_style.buildCSS();
+                    //Add a font ready state CSS class
+                    jQ_body.addClass('scrollio-style-loaded');
+                }else{
+                    //Build the custom CSS WITH import Google font string
+                    g_style.buildCSS(true);
+                    //Wait for gfont URL loaded
+                    jQuery.get(g_style.buildGoogleFontURL(),function(e){
+                        //Once fonts loaded, add a font ready state CSS class
+                        //THAT AVOIDS TO DISPLAY A FALLBACK FONT BEFORE THE GOOGLE FONT
+                        jQ_body.addClass('scrollio-style-loaded');
+                    }).fail(function(){
+                        //In case of invalid web safe font name or invalid gfont name
+                        alert('invalid web safe font or google font');
+                    });
+                }
+            //If styleOverrides == false, no custom style is loaded
+            //Just use the scrollio.css file for style
             }else{
-                //Build the custom CSS WITH import Google font string
-                g_style.buildCSS(true);
-                //Wait for gfont URL loaded
-                jQuery.get(g_style.buildGoogleFontURL(),function(e){
-                    //Once fonts loaded, add a font ready state CSS class
-                    //THAT AVOIDS TO DISPLAY A FALLBACK FONT BEFORE THE GOOGLE FONT
-                    jQ_body.addClass('scrollio-fonts-loaded');
-                }).fail(function(){
-                    //In case of invalid web safe font name or invalid gfont name
-                    alert('invalid web safe font or google font');
-                });
+                jQ_body.addClass('scrollio-style-loaded');
             }
+
 
             //Wrap letters
             var wrapLetters = function(selector){
