@@ -75,13 +75,10 @@
             },
             //CSS overrides of an inactive item
             itemDefaultCSS:         {
-                'transform': 'translateY(-75%)',
-                'padding': '0em 10vw',
-                'transition': 'all 300ms'
+                'padding': '0em 10vw'
             },
             //CSS overrides of an active item
             itemActiveCSS:          {
-                'transform': 'translateY(-50%)'
             },
             //CSS overrides of the whole scrolled text sentence
             sentenceCSS:            {
