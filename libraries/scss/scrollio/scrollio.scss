@@ -25,15 +25,13 @@ body {
         animation-iteration-count: infinite;
         border-radius: 100%;
         animation-timing-function: linear;
-        opacity: 1;
         pointer-events: none;
-        transition: opacity 300ms;
     }
     //Make Scrollio appear once initialized by JS
     &.scrollio-initialized {
         //Loader fallback waiting Scrollio to be loaded
         &:before {
-            opacity: 0;
+            display: none;
         }
         #scrollio {
             opacity: 1;
@@ -66,6 +64,7 @@ body {
             //Letters
             .letter {
                 position: relative;
+                display: inline-block; //Important to apply transforms properly
                 //Unread / Inactive letter properties
                 color: lightgrey;
                 &.active {
@@ -150,7 +149,7 @@ body {
                         &:first-child {
                             .letter {
                                 &:first-child {
-                                    color: black;
+                                    // color: black;
                                 }
                             }
                         }
