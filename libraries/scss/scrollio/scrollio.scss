@@ -92,30 +92,34 @@ body {
         }
         //The item itself
         &>.item {
+            display: flex;
+            align-items: center;
+            align-content: center;
+            flex-wrap: wrap;
+            position: fixed;
+            top: 0%;
+            width: 100%;
+            height: 100%;
             opacity: 0;
             box-sizing: border-box;
             text-align: center;
-            position: fixed;
-            top: 100%;
-            width: 100%;
-            top: 50%;
             transition: all 300ms; //Default: Transition duration on item leave
             will-change: transform, opacity, letter-spacing, text-shadow;
             transition-timing-function: linear;
             perspective: 500px;
-            transform: translateY(-50%); //Default: Transform when inactive
             z-index: 10;
             pointer-events: none;
             &.active {
                 z-index: 100;
                 opacity: 1;
-                transition: all 200ms; //Default Transition duration on item enter
+                // transition: all 1200ms; //Default Transition duration on item enter
                 pointer-events: auto;
             }
             //Children markup inside items
             &>* {
                 //Before fonts are loaded
                 visibility: hidden;
+                width: 100%; //Important for flex
             }
         }
         //An optional layer between content and body
