@@ -255,7 +255,7 @@ You can freely override default CSS of `scrollio.min.css` or add new CSS propert
 
 * Keyframes animations declarations that have to be used into the custom CSS
 ``` js
-//Default values
+//Example
 animationsCSS: {
     'cursor': {
         '0%': 'opacity: 0',
@@ -265,6 +265,7 @@ animationsCSS: {
 ```
 * CSS overrides of scrolled text BEFORE Scrollio initialization
 ``` js
+//Example
 sentenceBeforeInitCSS: {
     'transition': 'transform 1s',
     'transform': 'scale(0)'
@@ -272,12 +273,14 @@ sentenceBeforeInitCSS: {
 ```
 * CSS overrides of scrolled text AFTER Scrollio initialization
 ``` js
+//Example
 sentenceAfterInitCSS:       {
     'transform': 'scale(1)'
 }
 ```
 * CSS overrides of page body
 ``` js
+//Example
 bodyCSS: {
     'background-color': '#1b4b7d',
     'color': '#fff',
@@ -286,12 +289,14 @@ bodyCSS: {
 ```
 * CSS overrides of Scrollio container
 ``` js
+//Example
 scrollioContainerCSS: {
     //your css properties
 }
 ```
 * CSS overrides of an inactive item
 ``` js
+//Example
 itemDefaultCSS: {
     'transform': 'translateY(-75%)',
     'padding': '0em 10vw',
@@ -300,24 +305,28 @@ itemDefaultCSS: {
 ```
 CSS overrides of an active item
 ``` js
+//Example
 itemActiveCSS: {
     'transform': 'translateY(-50%)'
 }
 ```
 * CSS overrides of the whole scrolled text sentence
 ``` js
+//Example
 sentenceCSS: {
     'line-height': '1.3em'
 }
 ```
 * CSS overrides of a word
 ``` js
+//Example
 wordCSS: {
     //your css properties
 }
 ```
 * CSS overrides of a letter not scrolled yet
 ``` js
+//Example
 letterDefaultCSS: {
     'margin-left': '-0.1em',
     'opacity': '0.5',
@@ -328,6 +337,7 @@ letterDefaultCSS: {
 ```
 * CSS overrides of a scrolled or currently scrolled letter
 ``` js
+//Example
 letterActiveCSS: {
     'color': 'white',
     'opacity': '1',
@@ -337,12 +347,14 @@ letterActiveCSS: {
 ```
 * CSS overrides of the currently scrolled letter
 ``` js
+//Example
 letterCurrentCSS: {
     //your css properties
 }
 ```
 * CSS overrides of the cursor included only into currently scrolled letter
 ``` js
+//Example
 cursorCSS: {
     'top': '0px',
     'right': '0px',
@@ -357,18 +369,21 @@ cursorCSS: {
 ```
 * CSS overrides of the entire ellipsis word
 ``` js
+//Example
 ellipsisWordCSS: {
     //your css properties
 }
 ```
 * CSS overrides of an ellipsis character not scrolled yet
 ``` js
+//Example
 ellipsisDefaultCSS: {
     //your css properties
 }
 ```
 * CSS overrides of an ellipsis scrolled or currently scrolled
 ``` js
+//Example
 ellipsisActiveCSS: {
     //your css properties
 }
@@ -381,12 +396,14 @@ ellipsisCurrentCSS: {
 ```
 * CSS overrides of the progress bar
 ``` js
+//Example
 progressBarCSS: {
     'background-color': 'white'
 }
 ```
 * CSS overrides of the overlay layer
 ``` js
+//Example
 overlayCSS: {
     'opacity': '1',
     'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
