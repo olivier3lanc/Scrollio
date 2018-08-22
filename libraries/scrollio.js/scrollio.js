@@ -294,10 +294,6 @@
             var g_previousLetterIndex = -1;
             //Make a flag to trig itemEnd properly, this avoids to trig itemEnd event several times as a result
             var g_okToTrigItemEnd = true;
-            //Page description
-            var g_pageDescription = jQuery('head meta[name="description"]').attr('content');
-            //Page title
-            var g_pageTitle = document.title;
             //Scrollio style overrides management
             var g_style = {
                 //List of web safe fonts (source: MDN)
@@ -596,7 +592,7 @@
                 if(g_scrollTopRaw >= (g_amountOfItems * g_itemScrollRange)){
                     g_scrollTopRaw = g_amountOfItems * g_itemScrollRange - 1;
                     //Trigger event end of scroll
-                    var e_scrollEnd = jQuery.Event('scrollEnd');
+                    jQuery.Event('scrollEnd');
                     jQ_scrollio.trigger({
                         type: 'scrollEnd'
                     });
@@ -631,9 +627,9 @@
                     g_previousLetterIndex = cur_letterIndex;
                     //Create event active item changed for the target item
                     if(!jQ_activeItem.hasClass('active')){
-                        var e_itemChange = jQuery.Event('itemChange');
-                        var e_lastItem = jQuery.Event('lastItem');
-                        var e_firstItem = jQuery.Event('firstItem');
+                        jQuery.Event('itemChange');
+                        jQuery.Event('lastItem');
+                        jQuery.Event('firstItem');
                         jQ_scrollio.trigger({
                             type: 'itemChange',
                             targetIndex: g_index
@@ -654,7 +650,7 @@
                     jQ_activeItem.addClass('active');
 
                     //Create the event for letter state change
-                    var e_letterChange = jQuery.Event('letterChange');
+                    jQuery.Event('letterChange');
                     jQ_scrollio.trigger({
                         type: 'letterChange'
                     });
@@ -700,7 +696,7 @@
                 }
                 //Create item end event
                 if(cur_letterIndex == (cur_amountOfLetters - 1)){
-                    var e_itemEnd = jQuery.Event('itemEnd');
+                    jQuery.Event('itemEnd');
                     jQ_scrollio.trigger({
                         type: 'itemEnd',
                         index: g_index
@@ -728,7 +724,7 @@
                 jQ_scrollio.children('.item:first-child').addClass('active');
             });
             //Trigger event initialized
-            var e_init = jQuery.Event('init');
+            jQuery.Event('init');
             jQ_scrollio.trigger({
                 type: 'init'
             });
@@ -812,7 +808,7 @@
                     var currentItemIndex = e.index;
                     g_parameters.onItemEnd(currentItemIndex);
                     //Make current item a jQuery object
-                    var jQ_currentItem = jQ_scrollio.children('.item').eq(currentItemIndex);
+                    // var jQ_currentItem = jQ_scrollio.children('.item').eq(currentItemIndex);
                     //Now block itemEnd works until next item load
                     //This avoids firing itemEnd several time as a result
                     g_okToTrigItemEnd = false;
