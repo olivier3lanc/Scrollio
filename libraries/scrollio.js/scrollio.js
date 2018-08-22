@@ -154,7 +154,7 @@
             onLastItem:             function(e){},
             //Callback on scroll end
             onScrollEnd:            function(e){}
-        }
+        };
         //Scrollio API through jQuery.fn.scrollio('get:[parameterName]')
         if(typeof options == 'string'){
             var parameter = '';
@@ -184,9 +184,10 @@
                 }
             }else if(options.indexOf('do:') == 0){
                 parameter = options.replace('do:','');
+              	var scrollTarget = 0;
                 if(parameter == 'goToNextItem'){
                     if(api.index < (api.amountOfItems - 1)){
-                        var scrollTarget = (api.index + 1) * g_parameters.scrollRange;
+                        scrollTarget = (api.index + 1) * g_parameters.scrollRange;
                         jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
                     }else{
                         console.log('unable to go to next item, this is the last item');
@@ -194,7 +195,7 @@
                     return;
                 }else if(parameter == 'goToPreviousItem'){
                     if(api.index > 0){
-                        var scrollTarget = (api.index - 1) * g_parameters.scrollRange;
+                        scrollTarget = (api.index - 1) * g_parameters.scrollRange;
                         //One ms per pixel
                         jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
                     }else{
@@ -206,17 +207,17 @@
                     jQuery('body,html').animate({scrollTop:0},api.scrollTop);
                     return;
                 }else if(parameter == 'goToLastItem'){
-                    var scrollTarget = (api.amountOfItems - 1) * g_parameters.scrollRange;
+                    scrollTarget = (api.amountOfItems - 1) * g_parameters.scrollRange;
                     //One ms per pixel
                     jQuery('body,html').animate({scrollTop:scrollTarget},scrollTarget);
                     return;
                 }else if(parameter == 'goToItemStart'){
-                    var scrollTarget = api.index * g_parameters.scrollRange;
+                    scrollTarget = api.index * g_parameters.scrollRange;
                     //One ms per pixel
                     jQuery('body,html').animate({scrollTop:scrollTarget},api.relativeScroll);
                     return;
                 }else if(parameter == 'goToItemEnd'){
-                    var scrollTarget = api.index * g_parameters.scrollRange + g_parameters.scrollRange - 20;
+                    scrollTarget = api.index * g_parameters.scrollRange + g_parameters.scrollRange - 20;
                     //One ms per pixel
                     jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
                     return;
@@ -493,7 +494,7 @@
                     //Include the custom style into the document head
                     jQuery('head').append(style);
                 }
-            }
+            };
             //Work only if styleOverrides == true
             if(g_parameters.styleOverrides){
                 //Check if fontFamily parameter is a web safe font
@@ -560,9 +561,9 @@
                         }
                         var ellipsisLetters = '';
                         //Wrap each ellipsis letters like other letters
-                        for(var i = 0; i < ellipsis.length; i++){
+                        for(var i2 = 0; i2 < ellipsis.length; i2++){
                             ellipsisLetters +=  '<span class="letter" style="z-index:'+zIndex+';">'+
-                                                    ellipsis[i]+
+                                                    ellipsis[i2]+
                                                 '</span>';
                             //Manage z-index according to fontOverlapMode
                             if(g_parameters.fontOverlapUnder){
@@ -578,7 +579,7 @@
                         jQ_text.html(finalResult);
                     });
                 }
-            }
+            };
 
             wrapLetters('.item');
 
@@ -668,9 +669,9 @@
                                 .addClass('active')
                                 .removeClass('current');
                         }
-                        for (var z = cur_letterIndex + 1; z < cur_amountOfLetters; z++) {
+                        for (var z2 = cur_letterIndex + 1; z2 < cur_amountOfLetters; z2++) {
                             jQ_activeItem
-                                .find('.letter:eq('+z+')')
+                                .find('.letter:eq('+z2+')')
                                 .removeClass('active current');
                         }
                     //If keepActive disabled
@@ -702,7 +703,7 @@
                         index: g_index
                     });
                 }
-            }
+            };
 
             //If keepActive, add a class to Scrollio container
             if(g_parameters.keepActive){
@@ -822,5 +823,5 @@
         }else{
             console.log('Scrollio already initialized');
         }
-    }
+    };
 }(jQuery));
