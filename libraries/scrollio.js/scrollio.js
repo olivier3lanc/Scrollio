@@ -1,4 +1,17 @@
 (function(jQuery){
+    //Listen to Scrollio plugins
+    jQuery(document).on('iAmaScrollioPlugin',function(data){
+        console.log('Scrollio plugin detected:'+data.name);
+        jQuery.Event(data.id);
+        jQuery(document).trigger({
+            type: data.id,
+            name: data.name
+        });
+    });
+    //Once page loaded, remove Scrollio plugins listener
+    jQuery(window).on('load',function(){
+        jQuery(document).off('scrollioPlugin');
+    });
     //Include an API object that will be updated each time Scrollio is running
     var api = {};
     jQuery.fn.scrollio = function(options) {
@@ -723,6 +736,7 @@
                 g_parameters.onInit(e);
                 //Make the first item visible
                 jQ_scrollio.children('.item:first-child').addClass('active');
+                //Create the matching event to Scrollio plugin event
             });
             //Trigger event initialized
             jQuery.Event('init');
