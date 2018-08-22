@@ -1,6 +1,6 @@
 (function(jQuery){
     //Include an API object that will be updated each time Scrollio is running
-    api = {};
+    var api = {};
     jQuery.fn.scrollio = function(options) {
         //Defaults parameters
         var g_parameters = {
@@ -56,18 +56,14 @@
             },
             //CSS overrides of scrolled text BEFORE Scrollio initialization
             sentenceBeforeInitCSS:      {
-                'transition': 'transform 1s',
-                'transform': 'scale(0)'
             },
             //CSS overrides of scrolled text AFTER Scrollio initialization
             sentenceAfterInitCSS:       {
-                'transform': 'scale(1)'
             },
             //CSS overrides of page body
             bodyCSS:                {
                 'background-color': '#1b4b7d',
-                'color': '#fff',
-                '-webkit-font-smoothing': 'antialiased'
+                'color': '#fff'
             },
             //CSS overrides of Scrollio container
             scrollioContainerCSS:   {
