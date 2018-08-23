@@ -458,7 +458,7 @@ Here are all the callbacks with their own returned data available in Scrollio.
 
 ## API
 
-### Current parameters applied
+### Get current parameters applied
 
 Through the command `scrollioAPI.defaults.[parameterName]')`, Scrollio API returns the parameters currently in use.
 
@@ -552,7 +552,7 @@ Example:
 ```html
 <div id="scrollio">
     <div class="item">
-        <p>Lorem ipsum dolor</p>
+        <p class="scrolltrack">Lorem ipsum dolor</p>
         <p>Another paragraph</p>
     </div>
 </div>
@@ -565,7 +565,7 @@ Becomes
     <div class="item">...</div>
     <div class="item">
         <!-- Letters wrapping is made on the first html element into the item -->
-        <p>
+        <p class="scrolltrack">
             <span class="word">
                 <span class="letter active" style="z-index:1000;">L</span>
                 <span class="letter active" style="z-index:999;">o</span>
