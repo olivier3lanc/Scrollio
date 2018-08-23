@@ -247,7 +247,7 @@ Here are all the options with their default values available in Scrollio.
 | breakPointXS_SM  | `575`    | Integer | Responsive break point in pixels between extra-small and small |
 | styleOverrides   | `true`   | Boolean | If false, quickly remove all styles overrides.                 |
 
-## Theme overrides options
+## Style overrides options
 
 Here are advanced options of Scrollio that allows to obtain a high level of customizations. These options are all objects that are important shorthands to the default Scrollio style. **All objects keys and values refer to CSS properties and values.**
 
@@ -458,48 +458,51 @@ Here are all the callbacks with their own returned data available in Scrollio.
 
 ## API
 
-### Values and informations with get:
+### Current parameters applied
 
-Through the command `jQuery.fn.scrollio('get:[yourRequestString]')`, Scrollio API allows to get values and informations at any time:
+Through the command `scrollioAPI.defaults.[parameterName]')`, Scrollio API returns the parameters currently in use.
 
-| `[yourRequestString]` | Returns                 | Description                                              |
+Examples:
+
+* `scrollioAPI.defaults.scrollRange` returns the current scroll range parameter value
+* `scrollioAPI.defaults.textEllipsis` returns the current text ellipsis parameter value
+
+### Get relevant values
+
+Through the command `scrollioAPI.[yourRequest]')`, Scrollio API returns values being used in real time:
+
+| `[yourRequest]`       | Returns                 | Description                                              |
 | --------------------- | ----------------------- | -------------------------------------------------------- |
-| `defaults`            | `object`                | Returns all default Scrollio parameters                  |
-| `current`             | `object`                | Returns all current Scrollio parameters applied          |
 | `index`               | `integer`               | Returns the current active item index                    |
 | `relativeScroll`      | `integer`               | Returns the amount of scroll for the current item        |
 | `amountOfItems`       | `integer`               | Returns the amount items in the Scrollio                 |
 | `progressBarCoef`     | `float` between 0 and 1 | Returns the current overall progress of the Scrollio     |
 | `itemProgressCoef`    | `float` between 0 and 1 | Returns the progress of the current item                 |
 | `scrollTop`           | `integer`               | Returns the current amount of scroll from the top        |
-| `api`                 | `object`                | Returns the complete API data                            |
 
-#### Examples
+Examples:
 
-* `jQuery.fn.scrollio('get:defaults')` returns all default Scrollio parameters into an object
-* `jQuery.fn.scrollio('get:textEllipsis')` returns the current text ellipsis value
-* `jQuery.fn.scrollio('get:index')` returns the current item index
-* `jQuery.fn.scrollio('get:itemProgressCoef')` returns the current item progression coefficient
-* `jQuery.fn.scrollio('get:api')` returns the complete API data object
+* `scrollioAPI.index` returns the current item index
+* `scrollioAPI.itemProgressCoef` returns the current item progression coefficient
 
-### Actions with do:
+### Methods
 
-Through the command `jQuery.fn.scrollio('do:[yourRequestString]')`, Scrollio API allows to call actions.
+Through the command `scrollio.[methodName]')`, Scrollio API allows to call actions.
 
-| `[yourRequestString]` | Description                                       |
-| --------------------- | ------------------------------------------------- |
-| `goToNextItem`        | Scroll jump to the beginning of the next item     |
-| `goToPreviousItem`    | Scroll jump to the beginning of the previous item |
-| `goToFirstItem`       | Scroll jump to the beginning of the first item    |
-| `goToLastItem`        | Scroll jump to the beginning of the last item     |
-| `goToItemStart`       | Scroll jump to the beginning of the current item  |
-| `goToItemEnd`         | Scroll jump to the end of the current item        |
+| `[methodName]`          | Description                                       |
+| ----------------------- | ------------------------------------------------- |
+| `goToNextItem()`        | Scroll jump to the beginning of the next item     |
+| `goToPreviousItem()`    | Scroll jump to the beginning of the previous item |
+| `goToFirstItem()`       | Scroll jump to the beginning of the first item    |
+| `goToLastItem()`        | Scroll jump to the beginning of the last item     |
+| `goToItemStart()`       | Scroll jump to the beginning of the current item  |
+| `goToItemEnd()`         | Scroll jump to the end of the current item        |
 
 
-#### Examples
+Examples:
 
-* `jQuery.fn.scrollio('do:goToNextItem')` Scroll jump to the beginning of the next item
-* `jQuery.fn.scrollio('do:goToPreviousItem')` Scroll jump to the beginning of the previous item
+* `scrollioAPI.goToNextItem()` Scroll jump to the beginning of the next item
+* `scrollioAPI.goToPreviousItem()` Scroll jump to the beginning of the previous item
 
 ## How it works
 
