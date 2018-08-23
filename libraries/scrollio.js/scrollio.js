@@ -12,8 +12,54 @@
     jQuery(window).on('load',function(){
         jQuery(document).off('scrollioPlugin');
     });
-    //Include an API object that will be updated each time Scrollio is running
-    var api = {};
+    //Include an API object updated while Scrollio is running
+    window.scrollioAPI = {
+        defaults: {},
+        goToNextItem: function(){
+            if(this.index < (this.amountOfItems - 1)){
+                jQuery('body,html').animate({
+                    scrollTop:(window.scrollioAPI.index + 1) * window.scrollioAPI.defaults .scrollRange
+                },this.defaults.scrollRange);
+            }else{
+                console.log('unable to go to next item, this is the last item');
+            }
+        },
+        goToPreviousItem: function(){
+            if(this.index > 0){
+                //One ms per pixel
+                jQuery('body,html').animate({
+                    scrollTop: (window.scrollioAPI.index - 1) * window.scrollioAPI.defaults.scrollRange
+                },this.defaults.scrollRange);
+            }else{
+                console.log('unable to go to previous item, this is the first item');
+            }
+        },
+        goToFirstItem: function(){
+            //One ms per pixel
+            jQuery('body,html').animate({scrollTop:0},this.scrollTop);
+        },
+        goToLastItem: function(){
+            var scrollTarget = (this.amountOfItems - 1) * this.defaults.scrollRange;
+            //One ms per pixel
+            jQuery('body,html').animate({
+                scrollTop: scrollTarget
+            },scrollTarget);
+        },
+        goToItemStart: function(){
+            var scrollTarget =  this.index * this.defaults.scrollRange;
+            //One ms per pixel
+            jQuery('body,html').animate({
+                scrollTop: scrollTarget
+            },this.relativeScroll);
+        },
+        goToItemEnd: function(){
+            var scrollTarget = this.index * this.defaults.scrollRange + this.defaults.scrollRange - 20;
+            //One ms per pixel
+            jQuery('body,html').animate({
+                scrollTop: scrollTarget
+            },this.defaults.scrollRange);
+        }
+    };
     jQuery.fn.scrollio = function(options) {
         //Defaults parameters
         var g_parameters = {
@@ -168,81 +214,7 @@
             //Callback on scroll end
             onScrollEnd:            function(e){}
         };
-        //Scrollio API through jQuery.fn.scrollio('get:[parameterName]')
-        if(typeof options == 'string'){
-            var parameter = '';
-            if(options.indexOf('get:') == 0){
-                parameter = options.replace('get:','');
-                if(parameter == 'defaults'){
-                    return g_parameters;
-                }else if(parameter == 'current'){
-                    return api.current;
-                }else if(g_parameters[parameter] !== undefined){
-                    return g_parameters[parameter];
-                }else if(parameter == 'index'){
-                    return api.index;
-                }else if(parameter == 'relativeScroll'){
-                    return api.relativeScroll;
-                }else if(parameter == 'amountOfItems'){
-                    return api.amountOfItems;
-                }else if(parameter == 'progressBarCoef'){
-                    return api.progressBarCoef;
-                }else if(parameter == 'itemProgressCoef'){
-                    return api.itemProgressCoef;
-                }else if(parameter == 'api'){
-                    return api;
-                }else{
-                    console.log('not a valid "get:" request');
-                    return false;
-                }
-            }else if(options.indexOf('do:') == 0){
-                parameter = options.replace('do:','');
-              	var scrollTarget = 0;
-                if(parameter == 'goToNextItem'){
-                    if(api.index < (api.amountOfItems - 1)){
-                        scrollTarget = (api.index + 1) * g_parameters.scrollRange;
-                        jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
-                    }else{
-                        console.log('unable to go to next item, this is the last item');
-                    }
-                    return;
-                }else if(parameter == 'goToPreviousItem'){
-                    if(api.index > 0){
-                        scrollTarget = (api.index - 1) * g_parameters.scrollRange;
-                        //One ms per pixel
-                        jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
-                    }else{
-                        console.log('unable to go to previous item, this is the first item');
-                    }
-                    return;
-                }else if(parameter == 'goToFirstItem'){
-                    //One ms per pixel
-                    jQuery('body,html').animate({scrollTop:0},api.scrollTop);
-                    return;
-                }else if(parameter == 'goToLastItem'){
-                    scrollTarget = (api.amountOfItems - 1) * g_parameters.scrollRange;
-                    //One ms per pixel
-                    jQuery('body,html').animate({scrollTop:scrollTarget},scrollTarget);
-                    return;
-                }else if(parameter == 'goToItemStart'){
-                    scrollTarget = api.index * g_parameters.scrollRange;
-                    //One ms per pixel
-                    jQuery('body,html').animate({scrollTop:scrollTarget},api.relativeScroll);
-                    return;
-                }else if(parameter == 'goToItemEnd'){
-                    scrollTarget = api.index * g_parameters.scrollRange + g_parameters.scrollRange - 20;
-                    //One ms per pixel
-                    jQuery('body,html').animate({scrollTop:scrollTarget},g_parameters.scrollRange);
-                    return;
-                }else{
-                    console.log('not a valid "do:" request');
-                    return false;
-                }
-            }else{
-                console.log('not a valid API request');
-                return false;
-            }
-        }
+
         //Main Scrollio jQuery element
         var jQ_scrollio = jQuery('#'+g_parameters.id);
         //Main jQuery objects
@@ -251,8 +223,6 @@
         var jQ_windowHeight = window.innerHeight;
         //Run only if Scrollio not already initialized
         if(!jQ_body.hasClass('scrollio-initialized')){
-            //Update api for current parameters applied
-            api.current = g_parameters;
             //Check user parameters
             if(typeof options == 'object'){
                 //Manage parameters
@@ -261,11 +231,10 @@
                 userProperties.forEach(function(property){
                     if(g_parameters.hasOwnProperty(property)){
                         g_parameters[property] = options[property];
-                        //Update api for current parameters applied
-                        api.current[property] = options[property];
                     }
                 });
             }
+            window.scrollioAPI.defaults = g_parameters;
             //If overlay, include it into DOM
             if(g_parameters.overlay){
                 jQ_scrollio.append('<div class="overlay"></div>');
@@ -273,31 +242,31 @@
             //Current item index
             var g_index = 0;
             //Update API
-            api.index = g_index;
+            window.scrollioAPI.index = g_index;
             //Amount of scroll
             var g_scrollTopRaw = 0;
             //Update API
-            api.scrollTop = g_scrollTopRaw;
+            window.scrollioAPI.scrollTop = g_scrollTopRaw;
             //Amount of item relative scroll
             var g_relativeScroll = 0;
             //Update API
-            api.relativeScroll = g_relativeScroll;
+            window.scrollioAPI.relativeScroll = g_relativeScroll;
             //Amount of items
             var g_amountOfItems = jQ_scrollio.children('.item').length;
             //Update API
-            api.amountOfItems = g_amountOfItems;
+            window.scrollioAPI.amountOfItems = g_amountOfItems;
             //Scroll amount for an item
             var g_itemScrollRange = g_parameters.scrollRange;
             //Item progression coefficient
             var g_progressBarCoef = g_scrollTopRaw / (g_amountOfItems * g_itemScrollRange);
             //Update API
-            api.progressBarCoef = g_progressBarCoef;
+            window.scrollioAPI.progressBarCoef = g_progressBarCoef;
             //Item progress bar width value in pixel
             var g_progressBarValue = g_progressBarCoef * jQ_windowWidth;
             //Between 0 and 1, the progress coef of the current item
             var g_itemProgressCoef = 0;
             //Update API
-            api.itemProgressCoef = g_itemProgressCoef;
+            window.scrollioAPI.itemProgressCoef = g_itemProgressCoef;
             //Scroll amount history
             var g_previousScrollAmount = 0;
             //Scroll speed history
@@ -601,7 +570,7 @@
                 //Update value of the scroll top amount
                 g_scrollTopRaw = jQuery(window).scrollTop();
                 //Update API
-                api.scrollTop = g_scrollTopRaw;
+                window.scrollioAPI.scrollTop = g_scrollTopRaw;
                 //If end of scroll, decrease g_scrollTopRaw to avoid jump
                 if(g_scrollTopRaw >= (g_amountOfItems * g_itemScrollRange)){
                     g_scrollTopRaw = g_amountOfItems * g_itemScrollRange - 1;
@@ -614,11 +583,11 @@
                 //Calculates the displayed item in relation with scroll amount
                 g_index = parseInt(g_scrollTopRaw / g_itemScrollRange);
                 //Update API
-                api.index = g_index;
+                window.scrollioAPI.index = g_index;
                 //Amount of scroll for the current item
                 g_relativeScroll = g_scrollTopRaw - g_itemScrollRange * g_index;
                 //Update API
-                api.relativeScroll = g_relativeScroll;
+                window.scrollioAPI.relativeScroll = g_relativeScroll;
                 //jQuery object of the active item
                 var jQ_activeItem = jQ_scrollio.children('.item:eq('+g_index+')');
                 //jQuery object of the inactive items
@@ -626,7 +595,7 @@
                 //Between 0 and 1, the progress coef of the current item
                 g_itemProgressCoef = g_relativeScroll / g_itemScrollRange;
                 //Update API
-                api.itemProgressCoef = g_itemProgressCoef;
+                window.scrollioAPI.itemProgressCoef = g_itemProgressCoef;
 
                 //LETTERS
                 //How many letters into this item title
@@ -703,7 +672,7 @@
                         g_progressBarValue = g_progressBarCoef * jQ_windowWidth;
                         jQ_scrollio.children('.progress-bar').css('width',g_progressBarValue);
                         //Update API
-                        api.progressBarCoef = g_progressBarCoef;
+                        window.scrollioAPI.progressBarCoef = g_progressBarCoef;
                     }
                     //After all work done, update previous letter index value
                     g_previousLetterIndex = cur_letterIndex;
@@ -736,7 +705,11 @@
                 g_parameters.onInit(e);
                 //Make the first item visible
                 jQ_scrollio.children('.item:first-child').addClass('active');
-                //Create the matching event to Scrollio plugin event
+                //Scrollio plugin init event
+                jQuery.Event('initForScrollio');
+                jQuery(document).trigger({
+                    type: 'initForScrollio'
+                });
             });
             //Trigger event initialized
             jQuery.Event('init');
@@ -775,6 +748,21 @@
                     //Between 0 and 1, the progress coef of the current item
                     itemProgressCoef: g_itemProgressCoef
                 });
+                //Scrollio plugin scroll event
+                jQuery.Event('scrollForScrollio');
+                jQuery(document).trigger({
+                    type: 'scrollForScrollio',
+                    //Returns current item index
+                    index: g_index,
+                    //Returns current amount of scroll for this item only
+                    relativeScroll: g_relativeScroll,
+                    //Returns true if scroll event is down
+                    isScrollDown: scrollDirectionDown,
+                    //Between 0 and 1, the overall progress of the Scrollio
+                    progressBarCoef: g_progressBarCoef,
+                    //Between 0 and 1, the progress coef of the current item
+                    itemProgressCoef: g_itemProgressCoef
+                });
                 //If scrollmove is too high, then beware user
                 if(Math.abs(scrollMove) > 500){
                 }
@@ -799,21 +787,43 @@
                 var targetIndex = e.targetIndex;
                 g_parameters.onItemChange(targetIndex);
                 g_okToTrigItemEnd = true;
+                //Scrollio plugin itemChange event
+                jQuery.Event('itemChangeForScrollio');
+                jQuery(document).trigger({
+                    type: 'itemChangeForScrollio',
+                    //Return the target index
+                    index: targetIndex
+                });
             });
             //Callback current item is the first
             jQ_scrollio.on('firstItem',function(e){
                 //Enable user defined callback
                 g_parameters.onFirstItem(e);
+                //Scrollio plugin firstItem event
+                jQuery.Event('firstItemForScrollio');
+                jQuery(document).trigger({
+                    type: 'firstItemForScrollio'
+                });
             });
             //Callback current item is the last
             jQ_scrollio.on('lastItem',function(e){
                 //Enable user defined callback
                 g_parameters.onLastItem(e);
+                //Scrollio plugin lastItem event
+                jQuery.Event('lastItemForScrollio');
+                jQuery(document).trigger({
+                    type: 'lastItemForScrollio'
+                });
             });
             //Callback on letter change
             jQ_scrollio.on('letterChange',function(e){
                 //Enable user defined callback
                 g_parameters.onLetterChange(e);
+                //Scrollio plugin letterChange event
+                jQuery.Event('letterChangeForScrollio');
+                jQuery(document).trigger({
+                    type: 'letterChangeForScrollio'
+                });
             });
             //Callback item end
             jQ_scrollio.on('itemEnd',function(e){
@@ -821,18 +831,30 @@
                 if(g_okToTrigItemEnd){
                     //Enable user defined callback
                     var currentItemIndex = e.index;
+                    //Return the current index of the ended item
                     g_parameters.onItemEnd(currentItemIndex);
                     //Make current item a jQuery object
                     // var jQ_currentItem = jQ_scrollio.children('.item').eq(currentItemIndex);
                     //Now block itemEnd works until next item load
                     //This avoids firing itemEnd several time as a result
                     g_okToTrigItemEnd = false;
+                    //Scrollio plugin itemEnd event
+                    jQuery.Event('itemEndForScrollio');
+                    jQuery(document).trigger({
+                        type: 'itemEndForScrollio',
+                        index: currentItemIndex
+                    });
                 }
             });
             //Callback scroll end
             jQ_scrollio.on('scrollEnd',function(e){
                 //Enable user defined callback
                 g_parameters.onScrollEnd(e);
+                //Scrollio plugin scrollEnd event
+                jQuery.Event('scrollEndForScrollio');
+                jQuery(document).trigger({
+                    type: 'scrollEndForScrollio'
+                });
             });
         }else{
             console.log('Scrollio already initialized');
