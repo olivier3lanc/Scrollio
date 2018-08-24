@@ -410,6 +410,29 @@ overlayCSS: {
 }
 ```
 
+## Plugins parameters
+
+When a Scrollio plugin is included, it may have its own parameters. To set custom parameters, simply add the plugin ID option key to the options object as follows:
+
+Considering we have a plugin ID named `myPluginID`, just add an option key with the plugin ID containing the plugin parameters you wish to override.
+
+```html
+<!-- jQuery -->
+<script type="text/javascript" src="jquery.min.js"></script>
+<!-- Scrollio -->
+<script type="text/javascript" src="scrollio.min.js"></script>
+<!-- Scrollio plugin -->
+<script type="text/javascript" src="scrollio.plugin.name.min.js"></script>
+<script type="text/javascript">
+    jQuery.fn.scrollio({
+        //Add plugin id just like other options and callbacks for Scrollio
+        myPluginID: {
+            //Available parameters you want to override
+        }
+    });
+</script>
+```
+
 ## Callbacks
 
 Here are all the callbacks with their own returned data available in Scrollio.
@@ -445,6 +468,9 @@ Here are all the callbacks with their own returned data available in Scrollio.
 </script>
 
 ```
+
+Callbacks are dispatched to the main Scrollio jQuery object `jQuery('#scrollio')`
+
 | Callback       | Returns  | Description                                                                            |
 | -------------- | -------- | -------------------------------------------------------------------------------------- |
 | onInit         |          | Fired on Scrollio initialization                                                       |
@@ -454,7 +480,7 @@ Here are all the callbacks with their own returned data available in Scrollio.
 | onItemEnd      | `number` | Fired when user reaches the end of an item, returns the index number of the ended item |
 | onFirstItem    |          | Fired when user reaches the first item                                                 |
 | onLastItem     |          | Fired when user reaches the last item                                                  |
-| onScrollEnd    |          | Fired when user reaches the very end of the scrollio                                 |
+| onScrollEnd    |          | Fired when user reaches the very end of the scrollio                                   |
 
 ## API
 
@@ -503,6 +529,87 @@ Examples:
 
 * `scrollioAPI.goToNextItem()` Scroll jump to the beginning of the next item
 * `scrollioAPI.goToPreviousItem()` Scroll jump to the beginning of the previous item
+
+## Plugins
+
+Plugins allow to add features to Scrollio. You can create your own Scrollio plugin.
+
+```js
+/**
+* Starter Plugin for Scrollio.js
+*/
+
+(function(jQuery){
+    //Check if Scrollio is enabled
+    if(window.scrollioAPI !== undefined){
+        //Plugin definition
+        var scrollioPlugin = {
+            //A unique identifier for the plugin
+            id: 'myFirstPlugin',
+            //The name of the plugin
+            name: 'My First Plugin',
+            //Description of the plugin
+            description: '',
+            //Below you can add as much parameters and methods as you want
+            exampleParamName1: true,
+            exampleMethodName1: function(){
+                //Your code
+            }
+        };
+        //Optionally add parameters and methods
+        //to the Scrollio API:
+        //A scrollio plugin can have its own API stored
+        //into an object inside the scrollioAPI
+        //window.scrollioAPI[scrollioPlugin.id]
+
+        //Wait Scrollio detects this plugin
+        jQuery(document).one(scrollioPlugin.id,function(data){
+            //Now this plugin is installed
+            //
+            //Your code here
+            //
+            //Here are the available listeners for plugin
+            // jQuery(this)
+            //     .on('initForScrollio',function(){
+            //     })
+            //     .on('itemChangeForScrollio',function(data){
+            //     })
+            //     .on('firstItemForScrollio',function(){
+            //     })
+            //     .on('lastItemForScrollio',function(){
+            //     })
+            //     .on('letterChangeForScrollio',function(){
+            //     })
+            //     .on('itemEndForScrollio',function(data){
+            //     })
+            //     .on('scrollEndForScrollio',function(){
+            //     });
+        });
+        jQuery.Event('iAmaScrollioPlugin');
+        jQuery(document).trigger({
+            type: 'iAmaScrollioPlugin',
+            id: scrollioPlugin.id,
+            name: scrollioPlugin.name
+        });
+    }else{
+        console.log('Scrollio is not detected, please install Scrollio');
+    }
+}(jQuery));
+```
+
+Plugins use Scrollio API Events that are dispatched to the `document`
+
+| Events dispatched to `document` | Returns  | Description                                                                            |
+| ------------------------------- | -------- | -------------------------------------------------------------------------------------- |
+| initForScrollio                 |          | Fired on Scrollio initialization                                                       |
+| itemChangeForScrollio           | `number` | Fired on item change, returns the index number of the target item                      |
+| letterChangeForScrollio         |          | Fired on letter change                                                                 |
+| scrollForScrollio               | `object` | Fired on user scroll, returns `object`: <br>`index`: `[number]` Returns the current item index <br>`relativeScroll`: `[number]` Returns the amount of scroll for the current item <br>`isScrollDown`: `[boolean]` Returns true if scroll event is down <br>`progressBarCoef`: `[number]` Between 0 and 1, the overall progress of the Scrollio <br>`itemProgressCoef`: `[number]` Between 0 and 1, the progress of the current item |
+| ItemEndForScrollio              | `number` | Fired when user reaches the end of an item, returns the index number of the ended item |
+| FirstItemForScrollio            |          | Fired when user reaches the first item                                                 |
+| lastItemForScrollio             |          | Fired when user reaches the last item                                                  |
+| scrollEndForScrollio            |          | Fired when user reaches the very end of the scrollio                                   |
+
 
 ## How it works
 
