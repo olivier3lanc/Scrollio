@@ -246,6 +246,7 @@ Here are all the options with their default values available in Scrollio.
 | breakPointSM_MD  | `768`    | Integer | Responsive break point in pixels between small and medium      |
 | breakPointXS_SM  | `575`    | Integer | Responsive break point in pixels between extra-small and small |
 | styleOverrides   | `true`   | Boolean | If false, quickly remove all styles overrides.                 |
+| [pluginID]       |          | Object  | Plugin parameters                                              |
 
 ## Style overrides options
 
@@ -428,6 +429,10 @@ Considering we have a plugin ID named `myPluginID`, just add an option key with 
         //Add plugin id just like other options and callbacks for Scrollio
         myPluginID: {
             //Available parameters you want to override
+            exampleParamName1: false,
+            exampleMethodName1: function(){
+                //your code
+            }
         }
     });
 </script>
