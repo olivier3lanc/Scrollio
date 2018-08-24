@@ -33,6 +33,8 @@
             //
             //Here are the available listeners for plugin
             // jQuery(this)
+            //     .on('scrollForScrollio',function(data){
+            //     })
             //     .on('initForScrollio',function(){
             //     })
             //     .on('itemChangeForScrollio',function(data){
