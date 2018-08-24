@@ -114,10 +114,10 @@
                 }
             },
             //CSS overrides of scrolled text BEFORE Scrollio initialization
-            sentenceBeforeInitCSS:      {
+            sentenceBeforeInitCSS:  {
             },
             //CSS overrides of scrolled text AFTER Scrollio initialization
-            sentenceAfterInitCSS:       {
+            sentenceAfterInitCSS:   {
             },
             //CSS overrides of page body
             bodyCSS:                {
@@ -229,8 +229,27 @@
                 var userProperties = Object.getOwnPropertyNames(options);
                 //Replace each parameter by its new value
                 userProperties.forEach(function(property){
+                    //If it is a valid Scrollio parameter
                     if(g_parameters.hasOwnProperty(property)){
                         g_parameters[property] = options[property];
+                    //Otherwise
+                    }else{
+                        //It may be a plugin id
+                        if(window.scrollioAPI[property] !== undefined){
+                            //Now property is plugin id
+                            var pluginID = property;
+                            //Array of user defined parameters
+                            var userOptionsForPlugin = Object.getOwnPropertyNames(options[pluginID]);
+                            userOptionsForPlugin.forEach(function(param){
+                                if(window.scrollioAPI[pluginID].hasOwnProperty(param)){
+                                    window.scrollioAPI[pluginID][param] = options[pluginID][param];
+                                }else{
+                                    console.log('invalid parameter '+param+' for plugin id: '+pluginID);
+                                }
+                            });
+                        }else{
+                            console.log('invalid Scrollio plugin or not loaded yet');
+                        }
                     }
                 });
             }
