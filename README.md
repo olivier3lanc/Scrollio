@@ -411,33 +411,6 @@ overlayCSS: {
 }
 ```
 
-## Plugins parameters
-
-When a Scrollio plugin is included, it may have its own parameters. To set custom parameters, simply add the plugin ID option key to the options object as follows:
-
-Considering we have a plugin ID named `myPluginID`, just add an option key with the plugin ID containing the plugin parameters you wish to override.
-
-```html
-<!-- jQuery -->
-<script type="text/javascript" src="jquery.min.js"></script>
-<!-- Scrollio -->
-<script type="text/javascript" src="scrollio.min.js"></script>
-<!-- Scrollio plugin -->
-<script type="text/javascript" src="scrollio.plugin.name.min.js"></script>
-<script type="text/javascript">
-    jQuery.fn.scrollio({
-        //Add plugin id just like other options and callbacks for Scrollio
-        myPluginID: {
-            //Available parameters you want to override
-            exampleParamName1: false,
-            exampleMethodName1: function(){
-                //your code
-            }
-        }
-    });
-</script>
-```
-
 ## Callbacks
 
 Here are all the callbacks with their own returned data available in Scrollio.
@@ -539,6 +512,33 @@ Examples:
 
 Plugins allow to add features to Scrollio.
 
+### Plugins parameters
+
+When a Scrollio plugin is included, it may have its own parameters. To set custom parameters, simply add the plugin ID option key to the options object as follows:
+
+Considering we have a plugin ID named `myPluginID`, just add an option key with the plugin ID containing the plugin parameters you wish to override.
+
+```html
+<!-- jQuery -->
+<script type="text/javascript" src="jquery.min.js"></script>
+<!-- Scrollio -->
+<script type="text/javascript" src="scrollio.min.js"></script>
+<!-- Scrollio plugin -->
+<script type="text/javascript" src="scrollio.plugin.name.min.js"></script>
+<script type="text/javascript">
+    jQuery.fn.scrollio({
+        //Add plugin id just like other options and callbacks for Scrollio
+        myPluginID: {
+            //Available parameters you want to override
+            exampleParamName1: false,
+            exampleMethodName1: function(){
+                //your code
+            }
+        }
+    });
+</script>
+```
+
 ### Fullscreen plugin
 
 Add a configurable button command for full screen toggle.
@@ -576,8 +576,6 @@ Add a configurable button command for full screen toggle.
 | position   | `string` | `top`     | Position of the icons (top, bottom)                                                 |
 | alignment  | `string` | `left`    | Alignment of the icons (left, center, right)                                        |
 | padding    | `string` | `1em`     | Space between the icons and the edge of the viewport, any valid CSS value supported |
-
-
 
 
 ### Dynamic background plugin
@@ -649,9 +647,9 @@ You can create your own Scrollio plugin. Here is a blank starter plugin code:
             //A unique identifier for the plugin
             id: 'myFirstPlugin',
             //The name of the plugin
-            name: 'My First Plugin',
+            name: 'My First Plugin Name',
             //Description of the plugin
-            description: '',
+            description: 'What my plugin really does',
             //Below you can add as much parameters and methods as you want
             exampleParamName1: true,
             exampleMethodName1: function(){
@@ -659,19 +657,25 @@ You can create your own Scrollio plugin. Here is a blank starter plugin code:
             }
         };
         //Optionally add parameters and methods
-        //to the Scrollio API:
-        //A scrollio plugin can have its own API stored
-        //into an object inside the scrollioAPI
+        //to the Scrollio API: A scrollio plugin can have its own API stored
+        //into an object inside the scrollioAPI:
         //window.scrollioAPI[scrollioPlugin.id]
+
+        //For example you can include the full plugin definition into the Scrollio API
+        //window.scrollioAPI[scrollioPlugin.id] = scrollioPlugin;
+        //Or a single parameter or method:
+        //window.scrollioAPI[scrollioPlugin.id].mySpecialMethodName = scrollioPlugin.exampleMethodName1;
 
         //Wait Scrollio detects this plugin
         jQuery(document).one(scrollioPlugin.id,function(data){
             //Now this plugin is installed
             //
-            //Your code here
+            //YOUR CODE GOES HERE
             //
             //Here are the available listeners for plugin
             // jQuery(this)
+            //     .on('scrollForScrollio',function(data){
+            //     })
             //     .on('initForScrollio',function(){
             //     })
             //     .on('itemChangeForScrollio',function(data){
@@ -687,6 +691,7 @@ You can create your own Scrollio plugin. Here is a blank starter plugin code:
             //     .on('scrollEndForScrollio',function(){
             //     });
         });
+        //Notify Scrollio there is a plugin to install
         jQuery.Event('iAmaScrollioPlugin');
         jQuery(document).trigger({
             type: 'iAmaScrollioPlugin',
