@@ -537,7 +537,103 @@ Examples:
 
 ## Plugins
 
-Plugins allow to add features to Scrollio. You can create your own Scrollio plugin.
+Plugins allow to add features to Scrollio.
+
+### Fullscreen plugin
+
+Add a configurable button command for full screen toggle.
+
+1. Download [`scrollio.plugin.fullscreen.min.js`](build/plugins/scrollio.plugin.fullscreen.min.js)
+2. Add `scrollio.plugin.fullscreen.min.js` after `scrollio.min.js`.
+
+```html
+<!-- jQuery -->
+<script type="text/javascript" src="jquery.min.js"></script>
+<!-- Scrollio -->
+<script type="text/javascript" src="scrollio.min.js"></script>
+<!-- Scrollio plugin -->
+<script type="text/javascript" src="scrollio.plugin.fullscreen.min.js"></script>
+<script type="text/javascript">
+    jQuery.fn.scrollio({
+        //Optionally override default parameters
+        fullScreenPlugin: {
+            //Color of icons
+            iconsColor: 'white',
+            //Position of the icons (top, bottom)
+            position: 'top',
+            //Alignment of the icons (left, center, right)
+            alignment: 'left',
+            //Space between the icons and the edge of the viewport
+            padding: '1em'
+        }
+    });
+</script>
+```
+
+| Option     | Type     | Default   | Description                                                                         |
+| ---------- | -------- | --------- | ----------------------------------------------------------------------------------- |
+| iconsColor | `string` | `#ffffff` | Color of icons, any valid CSS value supported                                       |
+| position   | `string` | `top`     | Position of the icons (top, bottom)                                                 |
+| alignment  | `string` | `left`    | Alignment of the icons (left, center, right)                                        |
+| padding    | `string` | `1em`     | Space between the icons and the edge of the viewport, any valid CSS value supported |
+
+
+
+
+### Dynamic background plugin
+
+Add animated background images synchronized to scroll amount of Scrollio items.
+
+1. Download [`scrollio.plugin.dynamic.background.min.js`](build/plugins/scrollio.plugin.dynamic.background.min.js)
+2. Add `scrollio.plugin.dynamic.background.min.js` after `scrollio.min.js`.
+3. Add custom attribute `data-dynamic-background="[YOUR_IMAGE_URL]"` to the item you wish to apply the background image. Image URL can be **relative or absolute**
+
+```html
+<div id="scrollio">
+    <div class="item" data-dynamic-background="[YOUR_IMAGE_URL]">
+
+    </div>
+</div>
+<!-- jQuery -->
+<script type="text/javascript" src="jquery.min.js"></script>
+<!-- Scrollio -->
+<script type="text/javascript" src="scrollio.min.js"></script>
+<!-- Scrollio plugin -->
+<script type="text/javascript" src="scrollio.plugin.dynamic.background.min.js"></script>
+<script type="text/javascript">
+    jQuery.fn.scrollio({
+        //Optionally override default parameters
+        dynamicBackground: {
+            //Fade in duration in ms
+            fadeDuration: 1300,
+            //Opacity of the background image
+            opacity: 0.2,
+            //CSS translate unit (px, %, etc)
+            translateUnit: '%',
+            //Horizontal parallax translation amount
+            translateToHorizontal: 0,
+            //Vertical parallax translation amount
+            translateToVertical: 0,
+            //Scale applied when scroll reaches the end of an item
+            scaleTo: 1.1
+        }
+    });
+</script>
+```
+
+| Option                | Type     | Default | Description                                                                           |
+| --------------------- | -------- | ------- | ------------------------------------------------------------------------------------- |
+| fadeDuration          | `number` | `1300`  | Fade in duration in ms                                                                |
+| opacity               | `number` | `0.2`   | Opacity of the background image                                                       |
+| translateUnit         | `string` | `%`     | CSS translate unit (px, %, etc) for `translateToHorizontal` and `translateToVertical` |
+| translateToHorizontal | `number` | `0`     | Horizontal parallax translation amount                                                |
+| translateToVertical   | `number` | `0`     | Vertical parallax translation amount                                                  |
+| scaleTo               | `number` | `1.1`   | Scale applied when scroll reaches the end of an item                                  |
+
+
+### Starter plugin
+
+You can create your own Scrollio plugin. Here is a blank starter plugin code:
 
 ```js
 /**
@@ -607,13 +703,13 @@ Plugins use Scrollio API Events that are dispatched to the `document`
 | Events dispatched to `document` | Returns  | Description                                                                            |
 | ------------------------------- | -------- | -------------------------------------------------------------------------------------- |
 | initForScrollio                 |          | Fired on Scrollio initialization                                                       |
-| itemChangeForScrollio           | `number` | Fired on item change, returns the index number of the target item                      |
+| itemChangeForScrollio           | `object` | Fired on item change, `index`: `[number]` returns the index number of the target item  |
 | letterChangeForScrollio         |          | Fired on letter change                                                                 |
 | scrollForScrollio               | `object` | Fired on user scroll, returns `object`: <br>`index`: `[number]` Returns the current item index <br>`relativeScroll`: `[number]` Returns the amount of scroll for the current item <br>`isScrollDown`: `[boolean]` Returns true if scroll event is down <br>`progressBarCoef`: `[number]` Between 0 and 1, the overall progress of the Scrollio <br>`itemProgressCoef`: `[number]` Between 0 and 1, the progress of the current item |
-| ItemEndForScrollio              | `number` | Fired when user reaches the end of an item, returns the index number of the ended item |
-| FirstItemForScrollio            |          | Fired when user reaches the first item                                                 |
-| lastItemForScrollio             |          | Fired when user reaches the last item                                                  |
-| scrollEndForScrollio            |          | Fired when user reaches the very end of the scrollio                                   |
+| itemEndForScrollio              | `object` | User reaches the end of an item, `index`: `[number]` returns the index number of the ended item |
+| firstItemForScrollio            |          | User reaches the first item                                                            |
+| lastItemForScrollio             |          | User reaches the last item                                                             |
+| scrollEndForScrollio            |          | User reaches the very end of the scrollio                                              |
 
 
 ## How it works
