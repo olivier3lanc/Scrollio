@@ -34,12 +34,12 @@
             //Now this plugin is installed but Scrollio is not initialized yet
             //At this step, user overrides for this plugin are not taken into account
             //
-            //YOUR CODE BEFORE INITIALIZATION
+            //YOUR CODE BEFORE SCROLLIO INITIALIZATION
             //
             jQuery(this).one('initForScrollio',function(){
                 //At this step, user overrides are completed into the scrollioAPI
                 //
-                //YOUR CODE AFTER INITIALIZATION
+                //YOUR CODE AFTER SCROLLIO INITIALIZATION
                 //
             });
 
