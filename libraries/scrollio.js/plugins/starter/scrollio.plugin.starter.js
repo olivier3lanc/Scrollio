@@ -31,10 +31,18 @@
 
         //Wait Scrollio detects this plugin
         jQuery(document).one(scrollioPlugin.id,function(data){
-            //Now this plugin is installed
+            //Now this plugin is installed but Scrollio is not initialized yet
+            //At this step, user overrides for this plugin are not taken into account
             //
-            //YOUR CODE GOES HERE
+            //YOUR CODE BEFORE INITIALIZATION
             //
+            jQuery(this).one('initForScrollio',function(){
+                //At this step, user overrides are completed into the scrollioAPI
+                //
+                //YOUR CODE AFTER INITIALIZATION
+                //
+            });
+
             //Here are the available listeners for plugin
             // jQuery(this)
             //     .on('scrollForScrollio',function(data){
