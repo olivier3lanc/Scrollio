@@ -30,9 +30,9 @@
             padding: '1em'
         };
         //Plugin API
-        var pluginAPI = window.scrollioAPI[scrollioPlugin.id];
+        window.scrollioAPI[scrollioPlugin.id] = scrollioPlugin;
         //Populate pluginAPI with the plugin definition scrollioPlugin
-        pluginAPI = scrollioPlugin;
+        var pluginAPI = window.scrollioAPI[scrollioPlugin.id];
         //Wait Scrollio detects this plugin
         jQuery(document).one(scrollioPlugin.id,function(data){
             //Enter full screen
@@ -72,8 +72,8 @@
                     '<style>'+
                         '[data-scrollio-plugin="'+scrollioPlugin.id+'"] {'+
                             'position: fixed;'+
-                            'top: 20px;'+
-                            'left: 20px;'+
+                            pluginAPI.position+': '+pluginAPI.padding+';'+
+                            pluginAPI.alignment+': '+pluginAPI.padding+';'+
                             'z-index: 1000;'+
                             'cursor: pointer;'+
                             'background-color: transparent;'+
@@ -81,6 +81,7 @@
                             'margin: 0;'+
                             'line-height: 0;'+
                             'border: none;'+
+                            'outline: none;'+
                         '}'+
                         '[data-scrollio-plugin="'+scrollioPlugin.id+'"]>span {'+
                             'display: inline-block;'+
@@ -88,7 +89,7 @@
                             'margin: 0;'+
                         '}'+
                         '[data-scrollio-plugin="'+scrollioPlugin.id+'"]>span>svg {'+
-                            'stroke: '+scrollioPlugin.iconsColor+';'+
+                            'stroke: '+pluginAPI.iconsColor+';'+
                         '}'+
                         '[data-scrollio-plugin="'+scrollioPlugin.id+'"]>.minimize,'+
                         '[data-scrollio-plugin="'+scrollioPlugin.id+'"].isFullScreen>.maximize {'+
@@ -102,8 +103,8 @@
                 //Include the markup into the DOM
                 jQuery('body').append(
                     '<button data-scrollio-plugin="'+scrollioPlugin.id+'">'+
-                        '<span class="minimize">'+scrollioPlugin.icons.minimize+'</span>'+
-                        '<span class="maximize">'+scrollioPlugin.icons.maximize+'</span>'+
+                        '<span class="minimize">'+pluginAPI.icons.minimize+'</span>'+
+                        '<span class="maximize">'+pluginAPI.icons.maximize+'</span>'+
                     '</button>'
                 );
                 //Listen to the click
