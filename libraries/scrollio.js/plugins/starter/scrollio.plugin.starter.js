@@ -10,9 +10,9 @@
             //A unique identifier for the plugin
             id: 'myFirstPlugin',
             //The name of the plugin
-            name: 'My First Plugin',
+            name: 'My First Plugin Name',
             //Description of the plugin
-            description: '',
+            description: 'What my plugin really does',
             //Below you can add as much parameters and methods as you want
             exampleParamName1: true,
             exampleMethodName1: function(){
@@ -20,16 +20,20 @@
             }
         };
         //Optionally add parameters and methods
-        //to the Scrollio API:
-        //A scrollio plugin can have its own API stored
-        //into an object inside the scrollioAPI
+        //to the Scrollio API: A scrollio plugin can have its own API stored
+        //into an object inside the scrollioAPI:
         //window.scrollioAPI[scrollioPlugin.id]
+
+        //For example you can include the full plugin definition into the Scrollio API
+        //window.scrollioAPI[scrollioPlugin.id] = scrollioPlugin;
+        //Or a single parameter or method:
+        //window.scrollioAPI[scrollioPlugin.id].mySpecialMethodName = scrollioPlugin.exampleMethodName1;
 
         //Wait Scrollio detects this plugin
         jQuery(document).one(scrollioPlugin.id,function(data){
             //Now this plugin is installed
             //
-            //Your code here
+            //YOUR CODE GOES HERE
             //
             //Here are the available listeners for plugin
             // jQuery(this)
