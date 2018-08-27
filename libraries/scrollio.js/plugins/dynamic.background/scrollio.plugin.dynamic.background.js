@@ -61,8 +61,8 @@
                 //Detect bg image on each item, then apply background image
                 jQuery('#scrollio>.item[data-dynamic-background]').each(function(){
                     var jQ_theItem = jQuery(this);
-                    //Ckeck data-bg attribute
-                    var imageURL = jQ_theItem.attr('data-bg');
+                    //Ckeck data-dynamic-background attribute
+                    var imageURL = jQ_theItem.attr('data-dynamic-background');
                     //Now check if the URL is valid
                     jQuery.get(imageURL,function(){
                         //If OK, include the media div
