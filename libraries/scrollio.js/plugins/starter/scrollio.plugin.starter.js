@@ -50,6 +50,7 @@
             //     .on('scrollEndForScrollio',function(){
             //     });
         });
+        //Notify Scrollio there is a plugin to install
         jQuery.Event('iAmaScrollioPlugin');
         jQuery(document).trigger({
             type: 'iAmaScrollioPlugin',
