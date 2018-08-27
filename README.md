@@ -518,7 +518,7 @@ Examples:
 
 ### Methods
 
-Through the command `scrollio.[methodName]')`, Scrollio API allows to call actions.
+Through the command `scrollioAPI.[methodName]')`, Scrollio API allows to call actions.
 
 | `[methodName]`          | Description                                       |
 | ----------------------- | ------------------------------------------------- |
@@ -631,7 +631,8 @@ Add animated background images synchronized to scroll amount of Scrollio items.
 | scaleTo               | `number` | `1.1`   | Scale applied when scroll reaches the end of an item                                  |
 
 
-### Starter plugin
+
+### Starter plugin
 
 You can create your own Scrollio plugin. Here is a blank starter plugin code:
 
