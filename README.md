@@ -605,28 +605,51 @@ Add animated background images synchronized to scroll amount of Scrollio items.
             //Fade in duration in ms
             fadeDuration: 1300,
             //Opacity of the background image
-            opacity: 0.2,
+            opacity: 0.7,
             //CSS translate unit (px, %, etc)
-            translateUnit: '%',
-            //Horizontal parallax translation amount
-            translateToHorizontal: 0,
-            //Vertical parallax translation amount
-            translateToVertical: 0,
-            //Scale applied when scroll reaches the end of an item
-            scaleTo: 1.1
+            translateUnit: 'px',
+            //Start item with horizontal translation
+            translateXFrom: -10,
+            //End item with horizontal translation
+            translateXTo: 10,
+            //Start item with vertical translation
+            translateYFrom: -15,
+            //End with vertical translation
+            translateYTo: 15,
+            //Start item from scale amount
+            scaleFrom: 1,
+            //End item with scale amount
+            scaleTo: 1,
+            //Start item from rotateX amount in degrees
+            rotateXFrom: 0,
+            //End item with rotateX amount in degrees
+            rotateXTo: 0,
+            //Start item from rotateY amount in degrees
+            rotateYFrom: 0,
+            //End item with rotateY amount in degrees
+            rotateYTo: 0
         }
     });
 </script>
 ```
 
-| Option                | Type     | Default | Description                                                                           |
-| --------------------- | -------- | ------- | ------------------------------------------------------------------------------------- |
-| fadeDuration          | `number` | `1300`  | Fade in duration in ms                                                                |
-| opacity               | `number` | `0.2`   | Opacity of the background image                                                       |
-| translateUnit         | `string` | `%`     | CSS translate unit (px, %, etc) for `translateToHorizontal` and `translateToVertical` |
-| translateToHorizontal | `number` | `0`     | Horizontal parallax translation amount                                                |
-| translateToVertical   | `number` | `0`     | Vertical parallax translation amount                                                  |
-| scaleTo               | `number` | `1.1`   | Scale applied when scroll reaches the end of an item                                  |
+| Option           | Type    | Default | Description                               |
+| ---------------- | ------- | ------- | ----------------------------------------- |
+| `fadeDuration`   | Integer | `1300`  | Fade in duration in ms                    |
+| `opacity`        | Integer | `0.7`   | Opacity of the background image           |
+| `translateUnit`  | String  | `px`     | CSS translate unit (px, %, etc)           |
+| `translateXFrom` | Integer | `-10`     | Start item with horizontal translation    |
+| `translateXTo`   | Integer | `10`     | End item with horizontal translation      |
+| `translateYFrom` | Integer | `-15`     | Start item with vertical translation      |
+| `translateYTo`   | Integer | `15`     | End with vertical translation             |
+| `scaleFrom`      | Integer | `1`     | Start item from scale amount              |
+| `scaleTo`        | Integer | `1`     | End item with scale amount                |
+| `rotateXFrom`    | Integer | `0`     | Start item from rotateX amount in degrees |
+| `rotateXTo`      | Integer | `0`     | End item with rotateX amount in degrees   |
+| `rotateYFrom`    | Integer | `0`     | Start item from rotateY amount in degrees |
+| `rotateYTo`      | Integer | `0`     | End item with rotateY amount in degrees   |
+
+
 
 
 
