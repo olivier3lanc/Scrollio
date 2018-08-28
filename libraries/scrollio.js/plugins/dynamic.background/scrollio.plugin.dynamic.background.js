@@ -16,15 +16,29 @@
             //Fade in duration in ms
             fadeDuration: 1300,
             //Opacity of the background image
-            opacity: 0.2,
+            opacity: 0.7,
             //CSS translate unit (px, %, etc)
-            translateUnit: '%',
-            //Horizontal parallax amount
-            translateToHorizontal: 0,
-            //Vertical parallax amount
-            translateToVertical: 0,
-            //Scale amount
-            scaleTo: 1.1
+            translateUnit: 'px',
+            //Start item with horizontal translation
+            translateXFrom: -10,
+            //End item with horizontal translation
+            translateXTo: 10,
+            //Start item with vertical translation
+            translateYFrom: -15,
+            //End with vertical translation
+            translateYTo: 15,
+            //Start item from scale amount
+            scaleFrom: 1,
+            //End item with scale amount
+            scaleTo: 1,
+            //Start item from rotateX amount in degrees
+            rotateXFrom: 0,
+            //End item with rotateX amount in degrees
+            rotateXTo: 0,
+            //Start item from rotateY amount in degrees
+            rotateYFrom: 0,
+            //End item with rotateY amount in degrees
+            rotateYTo: 0
         };
         //Optionally add parameters and methods
         //to the Scrollio API:
@@ -44,10 +58,10 @@
                     '<style>'+
                         '#scrollio>.item>.dynamic-background {'+
                             'position: fixed;'+
-                            'top: 0;'+
-                            'left: 0;'+
-                            'width: 100%;'+
-                            'height: 100%;'+
+                            'top: -5%;'+
+                            'left: -5%;'+
+                            'width: 110%;'+
+                            'height: 110%;'+
                             'opacity: 0;'+
                             'transition: '+
                                 'transform 200ms, '+
@@ -94,17 +108,30 @@
                 });
 
                 //If these values are neutral, then don't do unnecessary work
-                if(pluginAPI.ScaleTo == 1 && pluginAPI.translateToHorizontal == 0 && pluginAPI.translateToVertical == 0){
+                if( pluginAPI.scaleFrom == 1 &&
+                    pluginAPI.scaleTo == 1 &&
+                    pluginAPI.translateXFrom == 0 &&
+                    pluginAPI.translateYFrom == 0 &&
+                    pluginAPI.translateXTo == 0 &&
+                    pluginAPI.translateYTo == 0 &&
+                    pluginAPI.rotateXFrom == 0 &&
+                    pluginAPI.rotateYFrom == 0 &&
+                    pluginAPI.rotateXTo == 0 &&
+                    pluginAPI.rotateYTo == 0){
                     //This if OK, don't include listener
                 }else{
                     //For other cases, listen to the item scroll amount
                     jQuery(this).on('scrollForScrollio',function(data){
-                        var translateYValue = parseInt(data.itemProgressCoef * pluginAPI.translateToVertical);
-                        var translateXValue = parseInt(data.itemProgressCoef * pluginAPI.translateToHorizontal);
-                        var scaleValue = 1 + (pluginAPI.scaleTo -  1) * data.itemProgressCoef;
+                        var scaleValue = pluginAPI.scaleFrom + (pluginAPI.scaleTo -  pluginAPI.scaleFrom) * data.itemProgressCoef;
+                        var translateXValue = pluginAPI.translateXFrom + (pluginAPI.translateXTo -  pluginAPI.translateXFrom) * data.itemProgressCoef;
+                        var translateYValue = pluginAPI.translateYFrom + (pluginAPI.translateYTo -  pluginAPI.translateYFrom) * data.itemProgressCoef;
+                        var rotateXValue = pluginAPI.rotateXFrom + (pluginAPI.rotateXTo -  pluginAPI.rotateXFrom) * data.itemProgressCoef;
+                        var rotateYValue = pluginAPI.rotateYFrom + (pluginAPI.rotateYTo -  pluginAPI.rotateYFrom) * data.itemProgressCoef;
+                        var scale = scaleValue.toString();
                         var translateX = translateXValue.toString() + pluginAPI.translateUnit;
                         var translateY = translateYValue.toString() + pluginAPI.translateUnit;
-                        var scale = scaleValue.toString();
+                        var rotateX = rotateXValue.toString();
+                        var rotateY = rotateYValue.toString();
                         pluginAPI
                             .jQ_items
                             .eq(data.index)
@@ -112,7 +139,9 @@
                             .css({
                                 'transform':    'scale('+scale+') '+
                                                 'translateX('+translateX+') '+
-                                                'translateY('+translateY+')'
+                                                'translateY('+translateY+') '+
+                                                'rotateX('+rotateX+'deg) '+
+                                                'rotateY('+rotateY+'deg)'
                             });
                     });
                 }
