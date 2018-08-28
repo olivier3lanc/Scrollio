@@ -120,6 +120,7 @@ body {
                 //Before fonts are loaded
                 visibility: hidden;
                 width: 100%; //Important for flex
+                position: relative;
             }
         }
         //An optional layer between content and body
