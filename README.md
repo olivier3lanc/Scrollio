@@ -606,6 +606,8 @@ Add animated background images synchronized to scroll amount of Scrollio items.
             fadeDuration: 1300,
             //Opacity of the background image
             opacity: 0.7,
+            //CSS perspective in px
+            perspective: 1500,
             //CSS translate unit (px, %, etc)
             translateUnit: 'px',
             //Start item with horizontal translation
@@ -637,11 +639,12 @@ Add animated background images synchronized to scroll amount of Scrollio items.
 | ---------------- | ------- | ------- | ----------------------------------------- |
 | `fadeDuration`   | Integer | `1300`  | Fade in duration in ms                    |
 | `opacity`        | Integer | `0.7`   | Opacity of the background image           |
-| `translateUnit`  | String  | `px`     | CSS translate unit (px, %, etc)           |
-| `translateXFrom` | Integer | `-10`     | Start item with horizontal translation    |
-| `translateXTo`   | Integer | `10`     | End item with horizontal translation      |
-| `translateYFrom` | Integer | `-15`     | Start item with vertical translation      |
-| `translateYTo`   | Integer | `15`     | End with vertical translation             |
+| `perspective`    | Integer | `1500`  | CSS perspective in px                     |
+| `translateUnit`  | String  | `px`    | CSS translate unit (px, %, etc)           |
+| `translateXFrom` | Integer | `-10`   | Start item with horizontal translation    |
+| `translateXTo`   | Integer | `10`    | End item with horizontal translation      |
+| `translateYFrom` | Integer | `-15`   | Start item with vertical translation      |
+| `translateYTo`   | Integer | `15`    | End with vertical translation             |
 | `scaleFrom`      | Integer | `1`     | Start item from scale amount              |
 | `scaleTo`        | Integer | `1`     | End item with scale amount                |
 | `rotateXFrom`    | Integer | `0`     | Start item from rotateX amount in degrees |
