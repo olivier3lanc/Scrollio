@@ -19,6 +19,8 @@
             opacity: 0.7,
             //CSS translate unit (px, %, etc)
             translateUnit: 'px',
+            //CSS perspective in px
+            perspective: 1500,
             //Start item with horizontal translation
             translateXFrom: -10,
             //End item with horizontal translation
@@ -65,12 +67,13 @@
                             'opacity: 0;'+
                             'transition: '+
                                 'transform 200ms, '+
-                                'opacity '+pluginAPI.fadeDuration+'ms;'+
+                                'opacity '+pluginAPI.fadeDuration.toString()+'ms;'+
                             'background-position: center;'+
                             'background-repeat: no-repeat;'+
                             'background-size: cover;'+
+                            'prespective: '+pluginAPI.perspective.toString()+';'+
                         '}'+
-                        '#scrollio>.item>.dynamic-background.active { opacity: '+pluginAPI.opacity+';}'+
+                        '#scrollio>.item>.dynamic-background.active { opacity: '+pluginAPI.opacity.toString()+';}'+
                     '</style>'
                 );
 
