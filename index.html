@@ -4,38 +4,41 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Scrollio demo</title>
-    <meta name="description" content="Demonstration of Venus theme for Scrollio.">
+    <title>Scrollio</title>
+    <meta name="description" content="Main demonstration for Scrollio">
     <!-- Reset CSS -->
     <link href="libraries/normalize/normalize.min.css" rel="stylesheet">
     <!-- Scrollio required stylesheet -->
     <link href="build/scrollio.min.css" rel="stylesheet">
-    <!-- Scrollio optional theme stylesheet -->
-    <!-- <link href="build/scrollio.theme.venus.min.css" rel="stylesheet"> -->
 </head>
-
 <body>
     <div id="scrollio">
         <div class="item">
-            <p class="scrolltrack">What is Scrollio?</p>
-            <p class="test" style="display:none">Yes, tell me.</p>
+            <h1 class="scrolltrack">What is Scrollio?</h1>
         </div>
         <div class="item">
             <p class="scrolltrack">A full page scroll experience tool for story telling</p>
-            <p class="test" style="display:none">A story telling tool.</p>
         </div>
         <div class="item">
-            <p class="scrolltrack">jQuery plugin that uses the scroll to reveal text</p>
-            <!-- <p>Because words matter.</p>
-            <p>Scrollio is highly customizable, you can create your own theme.</p>  -->
+            <p class="scrolltrack">A jQuery plugin that uses the scroll to reveal text and content</p>
         </div>
         <div class="item">
-            <p class="scrolltrack">Make your own!</p>
-            <!-- <p>Scrollio is highly customizable, you can create your own theme.</p> -->
+            <p class="scrolltrack">Responsive and mobile friendly</p>
         </div>
         <div class="item">
-            <p class="scrolltrack">Many callbacks</p>
-            <!-- <p>Enjoy interactions! Scrollio includes useful callbacks to enhance your experiences</p> -->
+            <p class="scrolltrack">Highly customizable</p>
+        </div>
+        <div class="item">
+            <p class="scrolltrack">Google Fonts ready</p>
+        </div>
+        <div class="item">
+            <p class="scrolltrack">Fonts overlap effect</p>
+        </div>
+        <div class="item">
+            <p class="scrolltrack">Dedicated plugins to add special features</p>
+        </div>
+        <div class="item">
+            <p class="scrolltrack">Callbacks to add user interactions</p>
         </div>
         <div class="item">
             <p class="scrolltrack">Create your own Scrollio now!</p>
@@ -43,27 +46,74 @@
         </div>
     </div>
 
-    <a href="https://github.com/olivier3lanc/Scrollio" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: fixed; z-index: 100; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <a href="https://github.com/olivier3lanc/Scrollio" class="github-corner" aria-label="View source on Github" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: fixed; z-index: 100; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
     <!-- jQuery -->
     <script type="text/javascript" src="libraries/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="build/scrollio.min.js"></script>
+    <script type="text/javascript" src="build/plugins/scrollio.plugin.starter.min.js"></script>
+    <script type="text/javascript" src="build/plugins/scrollio.plugin.dynamic.background.min.js"></script>
+    <script type="text/javascript" src="build/plugins/scrollio.plugin.fullscreen.min.js"></script>
+    <script type="text/javascript" src="build/plugins/scrollio.plugin.links.min.js"></script>
     <script type="text/javascript">
+        // window.addEventListener('touchstart', function onFirstTouch() {
+        //   // we could use a class
+        //   // document.body.classList.add('user-is-touching');
+        //   jQuery('body').append('<nav><button>fullscreen</button></nav>');
+        //   jQuery('nav>button').on('click',function(){
+        //       launchIntoFullscreen(document.documentElement);
+        //   });
+        //   // or set some global variable
+        //   // window.USER_IS_TOUCHING = true;
+        //
+        //   // or set your app's state however you normally would
+        //   // myFrameworkOfChoice.dispatchEvent('USER_IS_TOUCHING', true);
+        //
+        //   // we only need to know once that a human touched the screen, so we can stop listening now
+        //   window.removeEventListener('touchstart', onFirstTouch, false);
+        // }, false);
+
         jQuery.fn.scrollio({
-            styleOverrides: false,
+            // styleOverrides: false,
+            // overlay: false,
+            // letterDefaultCSS:       {
+            //     'margin-left': '-0.1em',
+            //     'opacity': '0.5',
+            //     'transition': 'all 300ms',
+            //     'text-shadow': '0px 0px 0px rgba(0,0,0,.5)',
+            //     'transform': 'translateZ(500px) scaleX(0)'
+            // },
+            // letterActiveCSS:        {
+            //     'color': 'white',
+            //     'opacity': '1',
+            //     'text-shadow': '5px 1px 8px rgba(0,0,0,.5)',
+            //     'transform': 'translateZ(0px) scaleX(1)'
+            // },
+            // sentenceCSS:            {
+            //
+            //
+            // },
+            // itemDefaultCSS:         {
+            //     'padding': '0em 10vw'
+            // },
+            // itemActiveCSS:          {
+            // },
+            fullScreenPlugin: {
+                position: 'bottom',
+                alignment: 'right'
+            },
+            onInit: function(){
+            },
             onItemChange: function(targetIndex){
+
+
                 console.log('current index is '+targetIndex);
             },
             onLetterChange: function(targetIndex){
                 console.log('letter has changed');
             },
             onScroll: function(data){
-                console.log(data);
-                if(data.itemProgressCoef > 0.8){
-                    jQuery('.item').eq(data.index).find('p.test').show(300);
-                }else{
-                    jQuery('.item').eq(data.index).find('p.test').hide(300);
-                }
+
             },
             onItemEnd: function(index){
                 console.log('end of '+index);
@@ -79,7 +129,7 @@
                 jQuery('.link-button').addClass('active');
                 jQuery('.link-button[href="#"]').on('click',function(e){
                     e.preventDefault();
-                    jQuery.fn.scrollio('do:goToFirstItem');
+                    scrollioAPI.goToFirstItem();
                 });
             }
         });
