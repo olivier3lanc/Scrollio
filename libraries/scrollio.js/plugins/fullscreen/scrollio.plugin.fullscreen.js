@@ -69,7 +69,7 @@
             jQuery(this).one('initForScrollio',function(){
                 //Button style
                 jQuery('head').append(
-                    '<style>'+
+                    '<style id="scrollio-fullscreen-plugin">'+
                         '[data-scrollio-plugin="'+scrollioPlugin.id+'"] {'+
                             'position: fixed;'+
                             pluginAPI.position+': '+pluginAPI.padding+';'+
