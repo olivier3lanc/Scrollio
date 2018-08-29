@@ -107,13 +107,13 @@ Here are all the options with their default values available in Scrollio.
         //Responsive font size in pixels for Extra-Large devices
         fontSizeXL:             84,
         //Responsive font size in pixels for Large devices
-        fontSizeLG:             56,
+        fontSizeLG:             64,
         //Responsive font size in pixels for Medium devices
-        fontSizeMD:             36,
+        fontSizeMD:             50,
         //Responsive font size in pixels for Small devices
-        fontSizeSM:             24,
+        fontSizeSM:             40,
         //Responsive font size in pixels for Extra-Small devices
-        fontSizeXS:             18,
+        fontSizeXS:             32,
         //Responsive break point in pixels between large and extra-large
         breakPointLG_XL:        1200,
         //Responsive break point in pixels between medium and large
@@ -125,6 +125,31 @@ Here are all the options with their default values available in Scrollio.
         //Enable/disable style overrides. Quickly remove all styles overrides
         //For testing and debug purpose.
         styleOverrides:         true,
+        //Define basic responsive layout to item children for extra large devices
+        //'inherit': Horizontal stacking
+        //'wrap':  Vertical stacking
+        //'wrap-reverse': Reverse order vertical stacking
+        itemContentChildrenXL:  'inherit',
+        //Define basic responsive layout to item children for large devices
+        //'inherit': Horizontal stacking
+        //'wrap':  Vertical stacking
+        //'wrap-reverse': Reverse order vertical stacking
+        itemContentChildrenLG:  'inherit',
+        //Define basic responsive layout to item children for medium devices
+        //'inherit': Horizontal stacking
+        //'wrap':  Vertical stacking
+        //'wrap-reverse': Reverse order vertical stacking
+        itemContentChildrenMD:  'wrap',
+        //Define basic responsive layout to item children for small devices
+        //'inherit': Horizontal stacking
+        //'wrap':  Vertical stacking
+        //'wrap-reverse': Reverse order vertical stacking
+        itemContentChildrenSM:  'wrap',
+        //Define basic responsive layout to item children for extra small devices
+        //'inherit': Horizontal stacking
+        //'wrap':  Vertical stacking
+        //'wrap-reverse': Reverse order vertical stacking
+        itemContentChildrenXS:  'wrap',
         //@keyframes animations declarations that have to be used into the custom CSS
         animationsCSS:          {
             'cursor': {
@@ -226,27 +251,33 @@ Here are all the options with their default values available in Scrollio.
 
 ## Basic options
 
-| Option           | Default  | Type    | Description                                                    |
-| ---------------- | -------- | ------- | -------------------------------------------------------------- |
-| scrollRange      | `2000`   | Integer | Amount of pixels scrolled per item                             |
-| keepActive       | `true`   | Boolean | Once scrolled, letters keep active CSS class                   |
-| textEllipsis     | `...`    | String  | String displayed at the end of each text to scroll             |
-| fontFamily       | `Ubuntu` | String  | Web safe font name or [Google Font](https://fonts.google.com) name. List of web safe font names available: `Arial`,`Helvetica`,`Courier New`,`Georgia`,`Times New Roman`,`Verdana`,`serif`,`sans-serif`,`monospace`,`cursive`,`fantasy`|
-| fontWeight       | `Bold`   | String  | Font weight (applicable only for Google Fonts)                 |
-| fontOverlapUnder | `true`   | Boolean | Each letter is under the previous                              |
-| progressBar      | `true`   | Boolean | Display the progress bar                                       |
-| overlay          | `true`   | Boolean | Display overlay between items and body background              |
-| fontSizeXL       | `84`     | Integer | Responsive font size in pixels for Extra-Large devices         |
-| fontSizeLG       | `56`     | Integer | Responsive font size in pixels for Large devices               |
-| fontSizeMD       | `36`     | Integer | Responsive font size in pixels for Medium devices              |
-| fontSizeSM       | `24`     | Integer | Responsive font size in pixels for Small devices               |
-| fontSizeXS       | `18`     | Integer | Responsive font size in pixels for Extra-Small devices         |
-| breakPointLG_XL  | `1200`   | Integer | Responsive break point in pixels between large and extra-large |
-| breakPointMD_LG  | `992`    | Integer | Responsive break point in pixels between medium and large      |
-| breakPointSM_MD  | `768`    | Integer | Responsive break point in pixels between small and medium      |
-| breakPointXS_SM  | `575`    | Integer | Responsive break point in pixels between extra-small and small |
-| styleOverrides   | `true`   | Boolean | If false, quickly remove all styles overrides.                 |
-| [pluginID]       |          | Object  | Plugin parameters                                              |
+| Option                | Default  | Type    | Description                                                    |
+| --------------------- | -------- | ------- | -------------------------------------------------------------- |
+| scrollRange           | `2000`   | Integer | Amount of pixels scrolled per item                             |
+| keepActive            | `true`   | Boolean | Once scrolled, letters keep active CSS class                   |
+| textEllipsis          | `...`    | String  | String displayed at the end of each text to scroll             |
+| fontFamily            | `Ubuntu` | String  | Web safe font name or [Google Font](https://fonts.google.com) name. List of web safe font names available: `Arial`,`Helvetica`,`Courier New`,`Georgia`,`Times New Roman`,`Verdana`,`serif`,`sans-serif`,`monospace`,`cursive`,`fantasy`|
+| fontWeight            | `Bold`   | String  | Font weight (applicable only for Google Fonts)                 |
+| fontOverlapUnder      | `true`   | Boolean | Each letter is under the previous                              |
+| itemContentChildrenXL | `inherit` | String | Define basic responsive layout to item children for extra large devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
+| itemContentChildrenLG | `inherit` | String | Define basic responsive layout to item children for large devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
+| itemContentChildrenMD | `wrap` | String | Define basic responsive layout to item children for medium devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
+| itemContentChildrenSM | `wrap` | String | Define basic responsive layout to item children for small devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
+| itemContentChildrenXS | `wrap` | String | Define basic responsive layout to item children for small devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
+| progressBar           | `true`   | Boolean | Display the progress bar                                       |
+| overlay               | `true`   | Boolean | Display overlay between items and body background              |
+| fontSizeXL            | `84`     | Integer | Responsive font size in pixels for Extra-Large devices         |
+| fontSizeLG            | `64`     | Integer | Responsive font size in pixels for Large devices               |
+| fontSizeMD            | `50`     | Integer | Responsive font size in pixels for Medium devices              |
+| fontSizeSM            | `40`     | Integer | Responsive font size in pixels for Small devices               |
+| fontSizeXS            | `32`     | Integer | Responsive font size in pixels for Extra-Small devices         |
+| breakPointLG_XL       | `1200`   | Integer | Responsive break point in pixels between large and extra-large |
+| breakPointMD_LG       | `992`    | Integer | Responsive break point in pixels between medium and large      |
+| breakPointSM_MD       | `768`    | Integer | Responsive break point in pixels between small and medium      |
+| breakPointXS_SM       | `575`    | Integer | Responsive break point in pixels between extra-small and small |
+| styleOverrides        | `true`   | Boolean | If false, quickly remove all styles overrides.                 |
+| [pluginID]            |          | Object  | Plugin parameters (see [plugins](#plugins))                    |
+
 
 ## Style overrides options
 

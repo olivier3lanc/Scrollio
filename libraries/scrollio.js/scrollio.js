@@ -88,13 +88,13 @@
             //Responsive font size in pixels for Extra-Large devices
             fontSizeXL:             84,
             //Responsive font size in pixels for Large devices
-            fontSizeLG:             56,
+            fontSizeLG:             64,
             //Responsive font size in pixels for Medium devices
-            fontSizeMD:             36,
+            fontSizeMD:             50,
             //Responsive font size in pixels for Small devices
-            fontSizeSM:             24,
+            fontSizeSM:             40,
             //Responsive font size in pixels for Extra-Small devices
-            fontSizeXS:             18,
+            fontSizeXS:             32,
             //Responsive break point in pixels between large and extra-large
             breakPointLG_XL:        1200,
             //Responsive break point in pixels between medium and large
@@ -106,6 +106,31 @@
             //Enable/disable style overrides. Quickly remove all styles overrides
             //For testing and debug purpose.
             styleOverrides:         true,
+            //Define basic responsive layout to item children for extra large devices
+            //'inherit': Horizontal stacking
+            //'wrap':  Vertical stacking
+            //'wrap-reverse': Reverse order vertical stacking
+            itemContentChildrenXL:  'inherit',
+            //Define basic responsive layout to item children for large devices
+            //'inherit': Horizontal stacking
+            //'wrap':  Vertical stacking
+            //'wrap-reverse': Reverse order vertical stacking
+            itemContentChildrenLG:  'inherit',
+            //Define basic responsive layout to item children for medium devices
+            //'inherit': Horizontal stacking
+            //'wrap':  Vertical stacking
+            //'wrap-reverse': Reverse order vertical stacking
+            itemContentChildrenMD:  'wrap',
+            //Define basic responsive layout to item children for small devices
+            //'inherit': Horizontal stacking
+            //'wrap':  Vertical stacking
+            //'wrap-reverse': Reverse order vertical stacking
+            itemContentChildrenSM:  'wrap',
+            //Define basic responsive layout to item children for extra small devices
+            //'inherit': Horizontal stacking
+            //'wrap':  Vertical stacking
+            //'wrap-reverse': Reverse order vertical stacking
+            itemContentChildrenXS:  'wrap',
             //@keyframes animations declarations that have to be used into the custom CSS
             animationsCSS:          {
                 'cursor': {
@@ -403,30 +428,6 @@
                                         'font-size: '+g_parameters.fontSizeXL+'px;'+
                                         this.insertCSSof(g_parameters.scrollioContainerCSS)+
                                     '} '+
-                                    //Responsive media query for Large devices
-                                    '@media (max-width: '+g_parameters.breakPointLG_XL+'px) {'+
-                                        'body #scrollio {'+
-                                            'font-size: '+g_parameters.fontSizeLG+'px;'+
-                                        '} '+
-                                    '} '+
-                                    //Responsive media query for Medium devices
-                                    '@media (max-width: '+g_parameters.breakPointMD_LG+'px) {'+
-                                        'body #scrollio {'+
-                                            'font-size: '+g_parameters.fontSizeMD+'px;'+
-                                        '} '+
-                                    '} '+
-                                    //Responsive media query for Small devices
-                                    '@media (max-width: '+g_parameters.breakPointSM_MD+'px) {'+
-                                        'body #scrollio {'+
-                                            'font-size: '+g_parameters.fontSizeSM+'px;'+
-                                        '} '+
-                                    '} '+
-                                    //Responsive media query for Extra-Small devices
-                                    '@media (max-width: '+g_parameters.breakPointXS_SM+'px) {'+
-                                        'body #scrollio {'+
-                                            'font-size: '+g_parameters.fontSizeXS+'px;'+
-                                        '} '+
-                                    '} '+
                                     //Word scrolled
                                     'body #scrollio .word {'+
                                         this.insertCSSof(g_parameters.wordCSS)+
@@ -471,9 +472,10 @@
                                     'body #scrollio>.progress-bar {'+
                                         this.insertCSSof(g_parameters.progressBarCSS)+
                                     '} '+
-                                    //Item hidden state
+                                    //Item hidden/default state
                                     'body #scrollio>.item {'+
                                         this.insertCSSof(g_parameters.itemDefaultCSS)+
+                                        'flex-wrap: '+g_parameters.itemContentChildrenXL+';'+
                                     '} '+
                                     //Item visible state
                                     'body #scrollio>.item.active {'+
@@ -490,6 +492,42 @@
                                     //Complete scrolled sentence containing words and letters
                                     'body #scrollio>.item>.scrolltrack {'+
                                         this.insertCSSof(g_parameters.sentenceCSS)+
+                                    '} '+
+                                    //Responsive media query for Large devices
+                                    '@media (max-width: '+g_parameters.breakPointLG_XL+'px) {'+
+                                        'body #scrollio {'+
+                                            'font-size: '+g_parameters.fontSizeLG+'px;'+
+                                        '} '+
+                                        'body #scrollio>.item {'+
+                                            'flex-wrap: '+g_parameters.itemContentChildrenLG+';'+
+                                        '} '+
+                                    '} '+
+                                    //Responsive media query for Medium devices
+                                    '@media (max-width: '+g_parameters.breakPointMD_LG+'px) {'+
+                                        'body #scrollio {'+
+                                            'font-size: '+g_parameters.fontSizeMD+'px;'+
+                                        '} '+
+                                        'body #scrollio>.item {'+
+                                            'flex-wrap: '+g_parameters.itemContentChildrenMD+';'+
+                                        '} '+
+                                    '} '+
+                                    //Responsive media query for Small devices
+                                    '@media (max-width: '+g_parameters.breakPointSM_MD+'px) {'+
+                                        'body #scrollio {'+
+                                            'font-size: '+g_parameters.fontSizeSM+'px;'+
+                                        '} '+
+                                        'body #scrollio>.item {'+
+                                            'flex-wrap: '+g_parameters.itemContentChildrenSM+';'+
+                                        '} '+
+                                    '} '+
+                                    //Responsive media query for Extra-Small devices
+                                    '@media (max-width: '+g_parameters.breakPointXS_SM+'px) {'+
+                                        'body #scrollio {'+
+                                            'font-size: '+g_parameters.fontSizeXS+'px;'+
+                                        '} '+
+                                        'body #scrollio>.item {'+
+                                            'flex-wrap: '+g_parameters.itemContentChildrenXS+';'+
+                                        '} '+
                                     '} '+
                                 '</style>';
                     //Include the custom style into the document head
