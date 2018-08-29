@@ -58,7 +58,7 @@
                 //Include CSS
                 jQuery('head').append(
                     '<style>'+
-                        '#scrollio>.item>.dynamic-background {'+
+                        'body #scrollio>.item>.dynamic-background {'+
                             'position: fixed;'+
                             'top: -5%;'+
                             'left: -5%;'+
@@ -73,7 +73,9 @@
                             'background-size: cover;'+
                             'prespective: '+pluginAPI.perspective.toString()+';'+
                         '}'+
-                        '#scrollio>.item>.dynamic-background.active { opacity: '+pluginAPI.opacity.toString()+';}'+
+                        'body #scrollio>.item>.dynamic-background.active {'+
+                            'opacity: '+pluginAPI.opacity.toString()+';'+
+                        '}'+
                     '</style>'
                 );
 
