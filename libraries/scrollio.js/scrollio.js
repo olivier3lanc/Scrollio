@@ -103,6 +103,9 @@
             breakPointSM_MD:        768,
             //Responsive break point in pixels between extra-small and small
             breakPointXS_SM:        575,
+            //Cross fade duration between items in ms.
+            //itemFadeDuration = 0 optimizes global performances
+            itemFadeDuration:       0,
             //Enable/disable style overrides. Quickly remove all styles overrides
             //For testing and debug purpose.
             styleOverrides:         true,
@@ -412,6 +415,10 @@
                     if(wGoogleFonts){
                         importString = this.buildGoogleFontsImportString();
                     }
+                    //If itemFadeDuration = 0, optimize performances
+                    if(g_parameters.itemFadeDuration == 0){
+                        jQ_scrollio.addClass('performance-mode');
+                    }
                     //Build the custom Scrollio style
                     var style = '<style id="scrollio-style">'+
                                     importString+
@@ -476,6 +483,7 @@
                                     'body #scrollio>.item {'+
                                         this.insertCSSof(g_parameters.itemDefaultCSS)+
                                         'flex-wrap: '+g_parameters.itemContentChildrenXL+';'+
+                                        'transition: all '+g_parameters.itemFadeDuration+'ms;'+
                                     '} '+
                                     //Item visible state
                                     'body #scrollio>.item.active {'+
