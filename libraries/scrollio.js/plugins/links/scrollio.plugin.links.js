@@ -32,10 +32,25 @@
                     '<style>'+
                         'body #scrollio>.item a {'+
                             'color: currentColor;'+
+                            'display: inline-block;'+
+                            'padding: 1em 2em;'+
+                            'font-size: large;'+
+                            'text-transform: uppercase;'+
+                            'text-decoration: none;'+
+                            'letter-spacing: 0.1em;'+
+                            'background-color: darkorange;'+
+                            'border-radius: 3px;'+
+                        '}'+
+                        'body #scrollio>.item a.link-deepskyblue {'+
+                            'background-color: deepskyblue;'+
                         '}'+
                     '</style>'
                 );
             });
+            //lightseagreen
+            //lightskyblue
+            //deepskyblue
+            //darkorange
         });
         jQuery.Event('iAmaScrollioPlugin');
         jQuery(document).trigger({
