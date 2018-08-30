@@ -124,6 +124,9 @@ Here are all the options with their default values available in Scrollio.
         breakPointSM_MD:        768,
         //Responsive break point in pixels between extra-small and small
         breakPointXS_SM:        575,
+        //Cross fade duration between items in ms.
+        //itemFadeDuration = 0 optimizes global performances
+        itemFadeDuration:       0,
         //Enable/disable style overrides. Quickly remove all styles overrides
         //For testing and debug purpose.
         styleOverrides:         true,
@@ -261,11 +264,11 @@ Here are all the options with their default values available in Scrollio.
 | fontFamily            | `Ubuntu` | String  | Web safe font name or [Google Font](https://fonts.google.com) name. List of web safe font names available: `Arial`,`Helvetica`,`Courier New`,`Georgia`,`Times New Roman`,`Verdana`,`serif`,`sans-serif`,`monospace`,`cursive`,`fantasy`|
 | fontWeight            | `Bold`   | String  | Font weight (applicable only for Google Fonts)                 |
 | fontOverlapUnder      | `true`   | Boolean | Each letter is under the previous                              |
-| itemContentChildrenXL | `inherit` | String | Define basic responsive layout to item children for extra large devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
-| itemContentChildrenLG | `inherit` | String | Define basic responsive layout to item children for large devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
-| itemContentChildrenMD | `wrap` | String | Define basic responsive layout to item children for medium devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
-| itemContentChildrenSM | `wrap` | String | Define basic responsive layout to item children for small devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
-| itemContentChildrenXS | `wrap` | String | Define basic responsive layout to item children for small devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking |
+| itemContentChildrenXL | `inherit` | String | Define basic responsive layout to item children for extra large devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
+| itemContentChildrenLG | `inherit` | String | Define basic responsive layout to item children for large devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
+| itemContentChildrenMD | `wrap` | String | Define basic responsive layout to item children for medium devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
+| itemContentChildrenSM | `wrap` | String | Define basic responsive layout to item children for small devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
+| itemContentChildrenXS | `wrap` | String | Define basic responsive layout to item children for small devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
 | progressBar           | `true`   | Boolean | Display the progress bar                                       |
 | overlay               | `true`   | Boolean | Display overlay between items and body background              |
 | fontSizeXL            | `84`     | Integer | Responsive font size in pixels for Extra-Large devices         |
@@ -277,6 +280,7 @@ Here are all the options with their default values available in Scrollio.
 | breakPointMD_LG       | `992`    | Integer | Responsive break point in pixels between medium and large      |
 | breakPointSM_MD       | `768`    | Integer | Responsive break point in pixels between small and medium      |
 | breakPointXS_SM       | `575`    | Integer | Responsive break point in pixels between extra-small and small |
+| itemFadeDuration      | `0`      | Integer | Cross fade duration between items in ms. itemFadeDuration = 0 optimizes global performances |
 | styleOverrides        | `true`   | Boolean | If false, quickly remove all styles overrides.                 |
 | [pluginID]            |          | Object  | Plugin parameters (see [plugins](#plugins))                    |
 
