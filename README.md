@@ -86,6 +86,8 @@ Here are all the options with their default values available in Scrollio.
 ```html
 <script type="text/javascript">
     jQuery.fn.scrollio({
+        //ID if the main Scrollio wrapper
+        id:                     'scrollio',
         //Amount of pixels scrolled per item
         scrollRange:            2000,
         //Once scrolled, letters keep active CSS class
@@ -163,19 +165,15 @@ Here are all the options with their default values available in Scrollio.
             }
         },
         //CSS overrides of scrolled text BEFORE Scrollio initialization
-        sentenceBeforeInitCSS:      {
-            'transition': 'transform 1s',
-            'transform': 'scale(0)'
+        sentenceBeforeInitCSS:  {
         },
         //CSS overrides of scrolled text AFTER Scrollio initialization
-        sentenceAfterInitCSS:       {
-            'transform': 'scale(1)'
+        sentenceAfterInitCSS:   {
         },
         //CSS overrides of page body
         bodyCSS:                {
             'background-color': '#1b4b7d',
-            'color': '#fff',
-            '-webkit-font-smoothing': 'antialiased'
+            'color': '#fff'
         },
         //CSS overrides of Scrollio container
         scrollioContainerCSS:   {
@@ -198,17 +196,16 @@ Here are all the options with their default values available in Scrollio.
         //CSS overrides of a letter not scrolled yet
         letterDefaultCSS:       {
             'margin-left': '-0.1em',
-            'opacity': '0.5',
-            'transition': 'all 200ms',
-            'text-shadow': '0px 0px 0px rgba(0,0,0,.5)',
-            'transform': 'scale(0.5)'
+            'opacity': '0.35',
+            'transition': 'all 300ms',
+            'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
+            'transform': 'translateX(-0.1em)'
         },
         //CSS overrides of a scrolled or currently scrolled letter
         letterActiveCSS:        {
             'color': 'white',
             'opacity': '1',
-            'text-shadow': '5px 1px 8px rgba(0,0,0,.5)',
-            'transform': 'scale(1)'
+            'transform': 'translateX(0em)'
         },
         //CSS overrides of the currently scrolled letter
         letterCurrentCSS:       {
@@ -249,7 +246,7 @@ Here are all the options with their default values available in Scrollio.
         overlayCSS:             {
             'opacity': '1',
             'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
-        },
+        }
     });
 </script>
 ```
