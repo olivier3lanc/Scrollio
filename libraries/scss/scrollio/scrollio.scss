@@ -43,12 +43,6 @@ body {
                         visibility: visible;
                     }
                 }
-                //Optional introduction
-                &>.intro {
-                    &.active {
-                        opacity: 1;
-                    }
-                }
             }
         }
     }
@@ -56,7 +50,7 @@ body {
         opacity: 0;
         overflow: auto;
         height: 100vh;
-        transition: opacity 600ms;
+        // transition: opacity 600ms;
         //Words
         .word {
             display: inline-block;
@@ -103,7 +97,7 @@ body {
             opacity: 0;
             box-sizing: border-box;
             text-align: center;
-            transition: all 300ms; //Default: Transition duration on item leave
+            // transition: all 300ms; //Default: Transition duration on item leave
             will-change: transform, opacity, letter-spacing, text-shadow;
             transition-timing-function: linear;
             perspective: 500px;
@@ -133,7 +127,7 @@ body {
             z-index: 1;
             opacity: 0.3; //Default: Opacity of the overlay
             background-color: black; //Default: Color of the overlay
-            transition: all 2000ms; //Default: Transition duration of the overlay
+            // transition: all 2000ms; //Default: Transition duration of the overlay
         }
         //Optional global progress bar
         &>.progress-bar {
