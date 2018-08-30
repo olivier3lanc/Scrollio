@@ -105,7 +105,7 @@
             breakPointXS_SM:        575,
             //Cross fade duration between items in ms.
             //itemFadeDuration = 0 optimizes global performances
-            itemFadeDuration:       0,
+            itemFadeDuration:       500,
             //Enable/disable style overrides. Quickly remove all styles overrides
             //For testing and debug purpose.
             styleOverrides:         true,
@@ -173,17 +173,16 @@
             //CSS overrides of a letter not scrolled yet
             letterDefaultCSS:       {
                 'margin-left': '-0.1em',
-                'opacity': '0.5',
-                'transition': 'all 200ms',
-                'text-shadow': '0px 0px 0px rgba(0,0,0,.5)',
-                'transform': 'scale(0.5)'
+                'opacity': '0.35',
+                'transition': 'all 300ms',
+                'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
+                'transform': 'translateX(-0.1em)'
             },
             //CSS overrides of a scrolled or currently scrolled letter
             letterActiveCSS:        {
                 'color': 'white',
                 'opacity': '1',
-                'text-shadow': '5px 1px 8px rgba(0,0,0,.5)',
-                'transform': 'scale(1)'
+                'transform': 'translateX(0em)'
             },
             //CSS overrides of the currently scrolled letter
             letterCurrentCSS:       {
@@ -483,7 +482,7 @@
                                     'body #scrollio>.item {'+
                                         this.insertCSSof(g_parameters.itemDefaultCSS)+
                                         'flex-wrap: '+g_parameters.itemContentChildrenXL+';'+
-                                        'transition: all '+g_parameters.itemFadeDuration+'ms;'+
+                                        'transition: opacity '+g_parameters.itemFadeDuration+'ms;'+
                                     '} '+
                                     //Item visible state
                                     'body #scrollio>.item.active {'+
@@ -562,7 +561,7 @@
                         jQ_body.addClass('scrollio-style-loaded');
                     }).fail(function(){
                         //In case of invalid web safe font name or invalid gfont name
-                        alert('invalid web safe font or google font');
+                        console.log('invalid web safe font or google font');
                     });
                 }
             //If styleOverrides == false, no custom style is loaded
