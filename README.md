@@ -126,7 +126,7 @@ Here are all the options with their default values available in Scrollio.
         breakPointXS_SM:        575,
         //Cross fade duration between items in ms.
         //itemFadeDuration = 0 optimizes global performances
-        itemFadeDuration:       0,
+        itemFadeDuration:       500,
         //Enable/disable style overrides. Quickly remove all styles overrides
         //For testing and debug purpose.
         styleOverrides:         true,
@@ -280,7 +280,7 @@ Here are all the options with their default values available in Scrollio.
 | breakPointMD_LG       | `992`    | Integer | Responsive break point in pixels between medium and large      |
 | breakPointSM_MD       | `768`    | Integer | Responsive break point in pixels between small and medium      |
 | breakPointXS_SM       | `575`    | Integer | Responsive break point in pixels between extra-small and small |
-| itemFadeDuration      | `0`      | Integer | Cross fade duration between items in ms. itemFadeDuration = 0 optimizes global performances |
+| itemFadeDuration      | `500`    | Integer | Cross fade duration between items in ms. itemFadeDuration = 0 optimizes global performances |
 | styleOverrides        | `true`   | Boolean | If false, quickly remove all styles overrides.                 |
 | [pluginID]            |          | Object  | Plugin parameters (see [plugins](#plugins))                    |
 
