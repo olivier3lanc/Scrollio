@@ -133,30 +133,35 @@ Here are all the options with their default values available in Scrollio.
         //For testing and debug purpose.
         styleOverrides:         true,
         //Define basic responsive layout to item children for extra large devices
-        //'inherit': Horizontal stacking
-        //'wrap':  Vertical stacking
-        //'wrap-reverse': Reverse order vertical stacking
-        itemContentChildrenXL:  'inherit',
+        //'horizontal': Horizontal stacking
+        //'horizontal-reverse': Reverse order horizontal stacking
+        //'vertical':  Vertical stacking
+        //'vertical-reverse': Reverse order vertical stacking
+        itemContentLayoutXL:  'horizontal',
         //Define basic responsive layout to item children for large devices
-        //'inherit': Horizontal stacking
-        //'wrap':  Vertical stacking
-        //'wrap-reverse': Reverse order vertical stacking
-        itemContentChildrenLG:  'inherit',
+        //'horizontal': Horizontal stacking
+        //'horizontal-reverse': Reverse order horizontal stacking
+        //'vertical':  Vertical stacking
+        //'vertical-reverse': Reverse order vertical stacking
+        itemContentLayoutLG:  'horizontal',
         //Define basic responsive layout to item children for medium devices
-        //'inherit': Horizontal stacking
-        //'wrap':  Vertical stacking
-        //'wrap-reverse': Reverse order vertical stacking
-        itemContentChildrenMD:  'wrap',
+        //'horizontal': Horizontal stacking
+        //'horizontal-reverse': Reverse order horizontal stacking
+        //'vertical':  Vertical stacking
+        //'vertical-reverse': Reverse order vertical stacking
+        itemContentLayoutMD:  'vertical',
         //Define basic responsive layout to item children for small devices
-        //'inherit': Horizontal stacking
-        //'wrap':  Vertical stacking
-        //'wrap-reverse': Reverse order vertical stacking
-        itemContentChildrenSM:  'wrap',
+        //'horizontal': Horizontal stacking
+        //'horizontal-reverse': Reverse order horizontal stacking
+        //'vertical':  Vertical stacking
+        //'vertical-reverse': Reverse order vertical stacking
+        itemContentLayoutSM:  'vertical',
         //Define basic responsive layout to item children for extra small devices
-        //'inherit': Horizontal stacking
-        //'wrap':  Vertical stacking
-        //'wrap-reverse': Reverse order vertical stacking
-        itemContentChildrenXS:  'wrap',
+        //'horizontal': Horizontal stacking
+        //'horizontal-reverse': Reverse order horizontal stacking
+        //'vertical':  Vertical stacking
+        //'vertical-reverse': Reverse order vertical stacking
+        itemContentLayoutXS:  'vertical',
         //@keyframes animations declarations that have to be used into the custom CSS
         animationsCSS:          {
             'cursor': {
@@ -253,33 +258,33 @@ Here are all the options with their default values available in Scrollio.
 
 ## Basic options
 
-| Option                | Default  | Type    | Description                                                    |
-| --------------------- | -------- | ------- | -------------------------------------------------------------- |
-| scrollRange           | `2000`   | Integer | Amount of pixels scrolled per item                             |
-| keepActive            | `true`   | Boolean | Once scrolled, letters keep active CSS class                   |
-| textEllipsis          | `...`    | String  | String displayed at the end of each text to scroll             |
-| fontFamily            | `Ubuntu` | String  | Web safe font name or [Google Font](https://fonts.google.com) name. List of web safe font names available: `Arial`,`Helvetica`,`Courier New`,`Georgia`,`Times New Roman`,`Verdana`,`serif`,`sans-serif`,`monospace`,`cursive`,`fantasy`|
-| fontWeight            | `Bold`   | String  | Font weight (applicable only for Google Fonts)                 |
-| fontOverlapUnder      | `true`   | Boolean | Each letter is under the previous                              |
-| itemContentChildrenXL | `inherit` | String | Define basic responsive layout to item children for extra large devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
-| itemContentChildrenLG | `inherit` | String | Define basic responsive layout to item children for large devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
-| itemContentChildrenMD | `wrap` | String | Define basic responsive layout to item children for medium devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
-| itemContentChildrenSM | `wrap` | String | Define basic responsive layout to item children for small devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
-| itemContentChildrenXS | `wrap` | String | Define basic responsive layout to item children for small devices. <br> `inherit`: Horizontal stacking <br>`wrap`: Vertical stacking <br>`wrap-reverse`: Reverse order vertical stacking                             |
-| progressBar           | `true`   | Boolean | Display the progress bar                                       |
-| overlay               | `true`   | Boolean | Display overlay between items and body background              |
-| fontSizeXL            | `84`     | Integer | Responsive font size in pixels for Extra-Large devices         |
-| fontSizeLG            | `64`     | Integer | Responsive font size in pixels for Large devices               |
-| fontSizeMD            | `50`     | Integer | Responsive font size in pixels for Medium devices              |
-| fontSizeSM            | `40`     | Integer | Responsive font size in pixels for Small devices               |
-| fontSizeXS            | `32`     | Integer | Responsive font size in pixels for Extra-Small devices         |
-| breakPointLG_XL       | `1200`   | Integer | Responsive break point in pixels between large and extra-large |
-| breakPointMD_LG       | `992`    | Integer | Responsive break point in pixels between medium and large      |
-| breakPointSM_MD       | `768`    | Integer | Responsive break point in pixels between small and medium      |
-| breakPointXS_SM       | `575`    | Integer | Responsive break point in pixels between extra-small and small |
-| itemFadeDuration      | `500`    | Integer | Cross fade duration between items in ms. itemFadeDuration = 0 optimizes global performances |
-| styleOverrides        | `true`   | Boolean | If false, quickly remove all styles overrides.                 |
-| [pluginID]            |          | Object  | Plugin parameters (see [plugins](#plugins))                    |
+| Option                | Default      | Type    | Description                                                    |
+| --------------------- | ------------ | ------- | -------------------------------------------------------------- |
+| scrollRange           | `2000`       | Integer | Amount of pixels scrolled per item                             |
+| keepActive            | `true`       | Boolean | Once scrolled, letters keep active CSS class                   |
+| textEllipsis          | `...`        | String  | String displayed at the end of each text to scroll             |
+| fontFamily            | `Ubuntu`     | String  | Web safe font name or [Google Font](https://fonts.google.com) name. List of web safe font names available: `Arial`,`Helvetica`,`Courier New`,`Georgia`,`Times New Roman`,`Verdana`,`serif`,`sans-serif`,`monospace`,`cursive`,`fantasy`|
+| fontWeight            | `Bold`       | String  | Font weight (applicable only for Google Fonts)                 |
+| fontOverlapUnder      | `true`       | Boolean | Each letter is under the previous                              |
+| itemContentLayoutXL   | `horizontal` | String  | Define basic responsive layout to item children for extra large devices. <br> `horizontal`: Horizontal stacking <br>`horizontal-reverse`: Reverse order horizontal stacking <br>`vertical`: Vertical stacking <br>`vertical-reverse`: Reverse order vertical stacking                                                                                                          |
+| itemContentLayoutLG   | `horizontal` | String  | Define basic responsive layout to item children for large devices. <br> `horizontal`: Horizontal stacking <br>`horizontal-reverse`: Reverse order horizontal stacking <br>`vertical`: Vertical stacking <br>`vertical-reverse`: Reverse order vertical stacking                                                                                                          |
+| itemContentLayoutMD   | `vertical`   | String  | Define basic responsive layout to item children for medium devices.<br> `horizontal`: Horizontal stacking <br>`horizontal-reverse`: Reverse order horizontal stacking <br>`vertical`: Vertical stacking <br>`vertical-reverse`: Reverse order vertical stacking                                                                                                          |
+| itemContentLayoutSM   | `vertical`   | String  | Define basic responsive layout to item children for small devices.<br> `horizontal`: Horizontal stacking <br>`horizontal-reverse`: Reverse order horizontal stacking <br>`vertical`: Vertical stacking <br>`vertical-reverse`: Reverse order vertical stacking                                                                                                          |
+| itemContentLayoutXS   | `vertical`   | String  | Define basic responsive layout to item children for small devices.<br> `horizontal`: Horizontal stacking <br>`horizontal-reverse`: Reverse order horizontal stacking <br>`vertical`: Vertical stacking <br>`vertical-reverse`: Reverse order vertical stacking                                                                                                          |
+| progressBar           | `true`       | Boolean | Display the progress bar                                       |
+| overlay               | `true`       | Boolean | Display overlay between items and body background              |
+| fontSizeXL            | `84`         | Integer | Responsive font size in pixels for Extra-Large devices         |
+| fontSizeLG            | `64`         | Integer | Responsive font size in pixels for Large devices               |
+| fontSizeMD            | `50`         | Integer | Responsive font size in pixels for Medium devices              |
+| fontSizeSM            | `40`         | Integer | Responsive font size in pixels for Small devices               |
+| fontSizeXS            | `32`         | Integer | Responsive font size in pixels for Extra-Small devices         |
+| breakPointLG_XL       | `1200`       | Integer | Responsive break point in pixels between large and extra-large |
+| breakPointMD_LG       | `992`        | Integer | Responsive break point in pixels between medium and large      |
+| breakPointSM_MD       | `768`        | Integer | Responsive break point in pixels between small and medium      |
+| breakPointXS_SM       | `575`        | Integer | Responsive break point in pixels between extra-small and small |
+| itemFadeDuration      | `500`        | Integer | Cross fade duration between items in ms. itemFadeDuration = 0 optimizes global performances |
+| styleOverrides        | `true`       | Boolean | If false, quickly remove all styles overrides.                 |
+| [pluginID]            |              | Object  | Plugin parameters (see [plugins](#plugins))                    |
 
 
 ## Style overrides options

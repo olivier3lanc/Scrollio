@@ -110,30 +110,35 @@
             //For testing and debug purpose.
             styleOverrides:         true,
             //Define basic responsive layout to item children for extra large devices
-            //'inherit': Horizontal stacking
-            //'wrap':  Vertical stacking
-            //'wrap-reverse': Reverse order vertical stacking
-            itemContentChildrenXL:  'inherit',
+            //'horizontal': Horizontal stacking
+            //'horizontal-reverse': Reverse order horizontal stacking
+            //'vertical':  Vertical stacking
+            //'vertical-reverse': Reverse order vertical stacking
+            itemContentLayoutXL:  'horizontal',
             //Define basic responsive layout to item children for large devices
-            //'inherit': Horizontal stacking
-            //'wrap':  Vertical stacking
-            //'wrap-reverse': Reverse order vertical stacking
-            itemContentChildrenLG:  'inherit',
+            //'horizontal': Horizontal stacking
+            //'horizontal-reverse': Reverse order horizontal stacking
+            //'vertical':  Vertical stacking
+            //'vertical-reverse': Reverse order vertical stacking
+            itemContentLayoutLG:  'horizontal',
             //Define basic responsive layout to item children for medium devices
-            //'inherit': Horizontal stacking
-            //'wrap':  Vertical stacking
-            //'wrap-reverse': Reverse order vertical stacking
-            itemContentChildrenMD:  'wrap',
+            //'horizontal': Horizontal stacking
+            //'horizontal-reverse': Reverse order horizontal stacking
+            //'vertical':  Vertical stacking
+            //'vertical-reverse': Reverse order vertical stacking
+            itemContentLayoutMD:  'vertical',
             //Define basic responsive layout to item children for small devices
-            //'inherit': Horizontal stacking
-            //'wrap':  Vertical stacking
-            //'wrap-reverse': Reverse order vertical stacking
-            itemContentChildrenSM:  'wrap',
+            //'horizontal': Horizontal stacking
+            //'horizontal-reverse': Reverse order horizontal stacking
+            //'vertical':  Vertical stacking
+            //'vertical-reverse': Reverse order vertical stacking
+            itemContentLayoutSM:  'vertical',
             //Define basic responsive layout to item children for extra small devices
-            //'inherit': Horizontal stacking
-            //'wrap':  Vertical stacking
-            //'wrap-reverse': Reverse order vertical stacking
-            itemContentChildrenXS:  'wrap',
+            //'horizontal': Horizontal stacking
+            //'horizontal-reverse': Reverse order horizontal stacking
+            //'vertical':  Vertical stacking
+            //'vertical-reverse': Reverse order vertical stacking
+            itemContentLayoutXS:  'vertical',
             //@keyframes animations declarations that have to be used into the custom CSS
             animationsCSS:          {
                 'cursor': {
@@ -414,6 +419,20 @@
                         return false;
                     }
                 },
+                //Flex helper returns the proper flew-warp value
+                //@helperValue - string - The Scrollio itemContentChildren value
+                //@return - string - The proper flex-wrap value
+                flexWrap: function(helperValue){
+                    if(typeof helperValue == 'string'){
+                        var matches = {
+                            horizontal: 'flex-wrap: inherit;',
+                            'horizontal-reverse': 'flex-direction: row-reverse; flex-wrap: inherit;',
+                            vertical: 'flex-wrap: wrap;',
+                            'vertical-reverse': 'flex-wrap: wrap-reverse;'
+                        };
+                        return matches[helperValue];
+                    }
+                },
                 //Method that build the whole custom CSS for Scrollio
                 buildCSS: function(wGoogleFonts){
                     //Init an empty import string in case of external font resource
@@ -489,7 +508,7 @@
                                     //Item hidden/default state
                                     'body #scrollio>.item {'+
                                         this.insertCSSof(g_parameters.itemDefaultCSS)+
-                                        'flex-wrap: '+g_parameters.itemContentChildrenXL+';'+
+                                        this.flexWrap(g_parameters.itemContentLayoutXL)+
                                         'transition: opacity '+g_parameters.itemFadeDuration+'ms;'+
                                     '} '+
                                     //Item visible state
@@ -514,7 +533,7 @@
                                             'font-size: '+g_parameters.fontSizeLG+'px;'+
                                         '} '+
                                         'body #scrollio>.item {'+
-                                            'flex-wrap: '+g_parameters.itemContentChildrenLG+';'+
+                                            this.flexWrap(g_parameters.itemContentLayoutLG)+
                                         '} '+
                                     '} '+
                                     //Responsive media query for Medium devices
@@ -523,7 +542,7 @@
                                             'font-size: '+g_parameters.fontSizeMD+'px;'+
                                         '} '+
                                         'body #scrollio>.item {'+
-                                            'flex-wrap: '+g_parameters.itemContentChildrenMD+';'+
+                                            this.flexWrap(g_parameters.itemContentLayoutMD)+
                                         '} '+
                                     '} '+
                                     //Responsive media query for Small devices
@@ -532,7 +551,7 @@
                                             'font-size: '+g_parameters.fontSizeSM+'px;'+
                                         '} '+
                                         'body #scrollio>.item {'+
-                                            'flex-wrap: '+g_parameters.itemContentChildrenSM+';'+
+                                            this.flexWrap(g_parameters.itemContentLayoutSM)+
                                         '} '+
                                     '} '+
                                     //Responsive media query for Extra-Small devices
@@ -541,7 +560,7 @@
                                             'font-size: '+g_parameters.fontSizeXS+'px;'+
                                         '} '+
                                         'body #scrollio>.item {'+
-                                            'flex-wrap: '+g_parameters.itemContentChildrenXS+';'+
+                                            this.flexWrap(g_parameters.itemContentLayoutXS)+
                                         '} '+
                                     '} '+
                                 '</style>';
