@@ -10,14 +10,26 @@
     <link href="libraries/normalize/normalize.min.css" rel="stylesheet">
     <!-- Scrollio required stylesheet -->
     <link href="build/scrollio.min.css" rel="stylesheet">
+    <!-- demo purpose only -->
+    <style>
+        #scrollio>.item .outro {
+            transition: all 500ms;
+            max-height: 0px;
+            overflow: hidden;
+        }
+        #scrollio>.item .outro.active {
+            max-height: 200px;
+        }
+    </style>
 </head>
 <body>
     <div id="scrollio">
         <div class="item">
             <h1 class="scrolltrack">What is Scrollio?</h1>
         </div>
-        <div class="item">
+        <div class="item" data-dynamic-background="https://picsum.photos/1200/800">
             <p class="scrolltrack">A full page scroll experience tool for story telling</p>
+            <p><img src="https://picsum.photos/1200/800" alt="" width="300" height="200"></p>
         </div>
         <div class="item">
             <p class="scrolltrack">A jQuery plugin that uses the scroll to reveal text and content</p>
@@ -41,8 +53,10 @@
             <p class="scrolltrack">Callbacks to add user interactions</p>
         </div>
         <div class="item">
-            <p class="scrolltrack">Create your own Scrollio now!</p>
-            <p><a href="#" class="link-button primary">Rewind</a> <a href="https://github.com/olivier3lanc/Scrollio" class="link-button" target="_blank">View on Github</a></p>
+            <div>
+                <p class="scrolltrack">Create your own Scrollio now!</p>
+                <p class="outro"><a href="#" class="link-deepskyblue">Rewind</a> <a href="https://github.com/olivier3lanc/Scrollio" target="_blank">View on Github</a></p>
+            </div>
         </div>
     </div>
 
@@ -98,9 +112,13 @@
             // },
             // itemActiveCSS:          {
             // },
+            itemFadeDuration: 600,
             fullScreenPlugin: {
                 position: 'bottom',
                 alignment: 'right'
+            },
+            dynamicBackground: {
+                scaleTo: 1.1
             },
             onInit: function(){
             },
@@ -113,7 +131,13 @@
                 console.log('letter has changed');
             },
             onScroll: function(data){
-
+                var translateImage = data.itemProgressCoef * 40 - 20;
+                jQuery('#scrollio>.item').eq(data.index).find('img').css({
+                    transform: 'translateY('+translateImage+'px)'
+                });
+                jQuery('#scrollio>.item').eq(data.index).find('.scrolltrack').css({
+                    transform: 'translateY(-'+data.itemProgressCoef * 20+'px)'
+                });
             },
             onItemEnd: function(index){
                 console.log('end of '+index);
@@ -126,8 +150,8 @@
             },
             onScrollEnd: function(){
                 console.log('end of scroll');
-                jQuery('.link-button').addClass('active');
-                jQuery('.link-button[href="#"]').on('click',function(e){
+                jQuery('.outro').addClass('active');
+                jQuery('.outro a').on('click',function(e){
                     e.preventDefault();
                     scrollioAPI.goToFirstItem();
                 });
