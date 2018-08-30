@@ -406,6 +406,14 @@
                     }
                     return CSSProperties;
                 },
+                //Check Safari browser
+                isSafari: function(){
+                    if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                },
                 //Method that build the whole custom CSS for Scrollio
                 buildCSS: function(wGoogleFonts){
                     //Init an empty import string in case of external font resource
@@ -415,7 +423,7 @@
                         importString = this.buildGoogleFontsImportString();
                     }
                     //If itemFadeDuration = 0, optimize performances
-                    if(g_parameters.itemFadeDuration == 0){
+                    if(g_parameters.itemFadeDuration == 0 || this.isSafari()){
                         jQ_scrollio.addClass('performance-mode');
                     }
                     //Build the custom Scrollio style
