@@ -1,5 +1,3 @@
-![Scrollio](scrollio.gif)
-
 # Scrollio
 
 *A full page scroll experience tool for story telling*. Scrollio is a jQuery plugin that uses the scroll to reveal the text content.
