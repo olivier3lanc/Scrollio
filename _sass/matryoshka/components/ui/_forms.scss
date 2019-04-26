@@ -1,0 +1,357 @@
+$form-element-container-class:          'form-group';
+$form-element-spacing:                  my-spacing(md);
+$form-element-button-component-class:   'btn';
+$type-text-defaults: (
+    label: (
+        typography:          standard,
+        font-size:           my-font-size(sm2),
+        padding:             my-spacing(xs),
+        text-align:          left,
+        color:               my-color(brand)
+    ),
+    input: (
+        typography:          standard,
+        font-size:           my-font-size(sm2),
+        box-shadow:          none,
+        width:               100%,
+        border:              none,
+        color:               my-color(brand),
+        background-color:    my-color(neutral, light),
+        border-radius:       my-border-radius(0),
+        padding:             my-spacing(xs)
+    )
+);
+$type-text-sizes: (
+    xl: (
+        label: (
+            font-size:      my-font-size(sm),
+            padding:        my-spacing(xs, sm)
+        ),
+        input: (
+            font-size:      my-font-size(sm),
+            padding:        my-spacing(sm, sm),
+            border:         my-border(regulardark)
+        )
+    )
+);
+$type-text-colors: (
+    success: (
+        label: (
+            color:                  my-color(filters, 'green')
+        ),
+        input: (
+            border-style:           solid,
+            border-width:           1px,
+            border-color:           my-color(filters, 'green')
+        )
+    ),
+    warning: (
+        label: (
+            color:                  my-color(filters, 'orange')
+        ),
+        input: (
+            border-style:           solid,
+            border-width:           1px,
+            border-color:           my-color(filters, 'orange')
+        )
+    ),
+    danger: (
+        label: (
+            color:                  my-color(filters, 'red')
+        ),
+        input: (
+            border-style:           solid,
+            border-width:           1px,
+            border-color:           my-color(filters, 'red')
+        )
+    )
+);
+// CHECKBOXES
+$checkbox-label-typography:             caption;
+$checkbox-label-font-size:              my-font-size(sm2);
+$checkbox-label-background-color:       transparent;
+$checkbox-label-color:                  inherit;
+$checkbox-label-padding-right:          my-spacing(sm);
+$checkbox-label-toggle-right-padding:   my-spacing(sm);
+$checkbox-switch-background-color-off:  my-color(neutral, mid);
+$checkbox-switch-background-color-on:   my-color(primary);
+$checkbox-switch-color-off:             my-color(brand, max);
+$checkbox-switch-color-on:              my-color(brand, max);
+$checkbox-switch-border-color-off:      my-color(neutral, mid);
+$checkbox-switch-border-color-on:       my-color(primary);
+$checkbox-switch-border-width:          2;
+$checkbox-switch-width:                 24;
+$checkbox-switch-border-radius:         100;
+$checkbox-transition-duration:          300;
+$checkbox-sizes: (
+    xs: (
+        label-font-size:                my-font-size(xxs),
+        switch-border-width:            2,
+        switch-width:                   16,
+        switch-border-radius:           100
+    ),
+    xl: (
+        label-font-size:                my-font-size(sm),
+        switch-border-width:            2,
+        switch-width:                   32,
+        switch-border-radius:           100
+    )
+);
+
+
+.#{$form-element-container-class} {
+    border: none;
+    padding: 0;
+    position: relative;
+    // margin-top: 3em; //EXPERIMENTAL
+    // &:first-child {
+    //     margin-top: 1em; //EXPERIMENTAL
+    // }
+    &>.#{$form-element-button-component-class},
+    &>input[type="submit"] {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        padding: my-spacing(none);
+        height: 100%;
+        font-size: 1.5em;
+        &+input:not([type="submit"]) {
+            padding-left: 3em;
+            padding-right: 3em;
+        }
+    }
+
+
+    label {
+        display: block;
+        width: 100%;
+        @each $property, $value in map-get($type-text-defaults, label) {
+            @if $property == typography {
+                @include my-typography($value);
+            } @else {
+                #{$property}: $value;
+            }
+        }
+    }
+    &+.form-group {
+        margin-top: $form-element-spacing;
+    }
+    &.mod-toggle {
+        input:not([type="submit"]) {
+            &[type="checkbox"],
+            &[type="radio"] {
+                &+label {
+                    color: $checkbox-switch-background-color-on;
+                    &>span {
+                        transition: all $checkbox-transition-duration+ms;
+                        position: absolute;
+                        color: $checkbox-switch-background-color-off;
+                        left: calc(100% + #{2 * $checkbox-switch-width + $ds-unit});
+                        padding-left: $checkbox-label-toggle-right-padding;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                }
+                &:checked {
+                    &+label {
+                        color: $checkbox-switch-background-color-off;
+                        &>span {
+                            color: $checkbox-switch-background-color-on;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @each $size-name, $data in $type-text-sizes {
+        &.mod-#{$size-name} {
+            &>.#{$form-element-button-component-class},
+            &>input[type="submit"] {
+                font-size: 1.5em;
+                &+input:not([type="submit"]) {
+                    padding-left: 3em;
+                    padding-right: 3em;
+                }
+            }
+            label {
+                @each $property, $value in map-get($data, label) {
+                    @if $property == typography {
+                        @include my-typography($value);
+                    } @else {
+                        #{$property}: $value;
+                    }
+                }
+            }
+            input:not([type="submit"]) {
+                @each $property, $value in map-get($data, input) {
+                    @if $property == typography {
+                        @include my-typography($value);
+                    } @else {
+                        #{$property}: $value;
+                    }
+                }
+            }
+        }
+    }
+    @each $color-name, $data in $type-text-colors {
+        &.mod-#{$color-name} {
+            label {
+                @each $property, $value in map-get($data, label) {
+                    #{$property}: $value;
+                }
+            }
+            input:not([type="submit"]) {
+                @each $property, $value in map-get($data, input) {
+                    #{$property}: $value;
+                }
+            }
+        }
+    }
+    @each $checkbox-size, $data in $checkbox-sizes {
+        &.mod-#{$checkbox-size} {
+            input:not([type="submit"]) {
+                &[type="checkbox"],
+                &[type="radio"] {
+                    &+label {
+                        font-size: map-get($data, label-font-size);
+                        width: calc(100% - #{2 * map-get($data, switch-width) + 2 * map-get($data, switch-border-width) + $ds-unit});
+                        height: map-get($data, switch-width) + 2* map-get($data, switch-border-width) + $ds-unit;
+                        &:after,
+                        &:before {
+                            width: map-get($data, switch-width)+$ds-unit;
+                            height: map-get($data, switch-width)+$ds-unit;
+                            border-radius: map-get($data, switch-border-radius)+$ds-unit;
+                            transform: translateY(-50%) translateX(-#{2 * map-get($data, switch-border-width) + $ds-unit});
+                        }
+
+                        // Track
+                        &:before {
+                            width: 2 * map-get($data, switch-width) + 2 * map-get($data, switch-border-width) + $ds-unit;
+                        }
+                    }
+                }
+            }
+            &.mod-toggle {
+                input:not([type="submit"]) {
+                    &[type="checkbox"],
+                    &[type="radio"] {
+                        &+label {
+                            &>span {
+                                left: calc(100% + #{2 * map-get($data, switch-width)+$ds-unit});
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    input:not([type="submit"]) {
+        &+.#{$form-element-button-component-class} {
+            left: initial;
+            right: 0;
+        }
+        @each $property, $value in map-get($type-text-defaults, input) {
+            @if $property == typography {
+                @include my-typography($value);
+            } @else {
+                #{$property}: $value;
+            }
+        }
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: my-color(brand);
+            opacity: 1;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+            color: my-color(brand);
+            opacity: 1;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+            color: my-color(brand);
+            opacity: 1;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+            color: my-color(brand);
+            opacity: 1;
+        }
+
+        &[type="checkbox"],
+        &[type="radio"] {
+            width: auto;
+            vertical-align: middle;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            &+label {
+                vertical-align: middle;
+                position: relative;
+                // line-height: 1.5em;
+                font-size: $checkbox-label-font-size;
+                color: $checkbox-label-color;
+                background-color: $checkbox-label-background-color;
+                @include my-typography($checkbox-label-typography);
+                width: calc(100% - #{2 * $checkbox-switch-width + 2 * $checkbox-switch-border-width + $ds-unit});
+                min-width: min-content;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                text-align: left;
+                padding: 0 $checkbox-label-padding-right 0 0;
+                transition: all $checkbox-transition-duration+ms;
+                &:after,
+                &:before {
+                    content: '';
+                    background-color: $checkbox-switch-color-off;
+                    display: block;
+                    width: $checkbox-switch-width+$ds-unit;
+                    height: $checkbox-switch-width+$ds-unit;
+                    border-radius: $checkbox-switch-border-radius+$ds-unit;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%) translateX(-#{2 * $checkbox-switch-border-width + $ds-unit});
+                    left: 100%;
+                    transition: all $checkbox-transition-duration+ms;
+                    border-style: solid;
+                    border-color: $checkbox-switch-border-color-off;
+                    border-width: $checkbox-switch-border-width+$ds-unit;
+                }
+
+                // Track
+                &:before {
+                    background-color: $checkbox-switch-background-color-off;
+                    width: 2 * $checkbox-switch-width + 2 * $checkbox-switch-border-width + $ds-unit;
+                }
+            }
+
+            &:checked {
+                &+label {
+                    &:after,
+                    &:before {
+                        background-color: $checkbox-switch-color-on;
+                        border-color: $checkbox-switch-border-color-on;
+                    }
+                    &:after {
+                        transform: translateY(-50%) translateX(calc(100% - #{2 * $checkbox-switch-border-width + $ds-unit}));
+                    }
+                    // Track
+                    &:before {
+                        background-color: $checkbox-switch-background-color-on;
+                    }
+                }
+            }
+        }
+    }
+
+    // textarea {
+    //     box-shadow: none;
+    //     @include my-typography(default);
+    //     border: my-border(main);
+    //     color: my-color(brand, max-rev);
+    //     border-radius: my-border-radius(md);
+    //     width: 100%;
+    //     padding: my-spacing(xxs);
+    // }
+
+}

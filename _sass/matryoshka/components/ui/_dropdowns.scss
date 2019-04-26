@@ -1,0 +1,59 @@
+/**
+* DROPDOWN BORDER RADIUS
+* Set the default border radius
+*/
+$dropdown-default-border-radius: my-border-radius(0);
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    /*
+    * Dropdowns styleModifiers
+    */
+    &.mod-right {
+        .dropdown-menu {
+            right: 0;
+            text-align: left;
+        }
+    }
+    &.mod-top {
+        .dropdown-menu {
+            top: initial;
+            bottom: 80%;
+            &.active {
+                top: initial;
+                bottom: 100%;
+            }
+        }
+    }
+    .dropdown-menu {
+        position: absolute;
+        visibility: hidden;
+        pointer-events: none;
+        transition: all 300ms;
+        opacity: 0;
+        border-radius: $dropdown-default-border-radius;
+        top: 70%;
+        // box-shadow: 3px 3px 20px rgba(black, 0);
+        z-index: 10;
+        &.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            top: 90%;
+            // box-shadow: 3px 3px 20px rgba(black, .3);
+        }
+        &>.btn {
+            white-space: nowrap;
+            border-radius: 0;
+            width: 100%;
+            &:first-child {
+                border-radius: $dropdown-default-border-radius $dropdown-default-border-radius 0 0;
+                // border-top-width: ds-border-width(main)+$ds-unit;
+            }
+            &:last-child {
+                border-radius: 0 0 $dropdown-default-border-radius $dropdown-default-border-radius;
+            }
+        }
+    }
+}

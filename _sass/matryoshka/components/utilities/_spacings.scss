@@ -1,0 +1,73 @@
+/*
+    SPACING UTILITIES
+*/
+$positions-list: (top: 't', right: 'r', bottom: 'b', left: 'l');
+@each $spacing, $value in $ds-spacings {
+    /*
+    *   UTILITIES
+    *   Global margins and paddings
+    */
+    .u-p-#{$spacing} {
+        padding: $value+$ds-unit !important;
+    }
+    .u-m-#{$spacing} {
+        margin: $value+$ds-unit !important;
+    }
+    @each $position, $shorthand in $positions-list {
+        /*
+        *   UTILITIES
+        *   Relative position
+        */
+        .u-#{$position}-#{$spacing} {
+            #{$position}: $value+$ds-unit !important;
+        }
+        /*
+        *   UTILITIES
+        *   Position relative padding
+        */
+        .u-p#{$shorthand}-#{$spacing} {
+            padding-#{$position}: $value+$ds-unit !important;
+        }
+        /*
+        *   UTILITIES
+        *   Position relative margin
+        */
+        .u-m#{$shorthand}-#{$spacing} {
+            margin-#{$position}: $value+$ds-unit !important;
+        }
+    }
+}
+/*
+*   UTILITIES
+*   Position relative paddings and margins
+*/
+@each $spacing, $value in $ds-spacings {
+    @each $screen-size, $v in $ds-screen-sizes {
+        @include my-screen-size($screen-size) {
+            .u-p-#{$spacing}-#{$screen-size},
+            [u-p-#{$spacing}*="#{$screen-size}"] {
+                padding: $value+$ds-unit !important;
+            }
+            .u-m-#{$spacing}-#{$screen-size},
+            [u-m-#{$spacing}*="#{$screen-size}"] {
+                margin: $value+$ds-unit !important;
+            }
+        }
+        @each $position, $shorthand in $positions-list {
+            @include my-screen-size($screen-size) {
+                .u-#{$position}-#{$spacing}-#{$screen-size},
+                [u-#{$position}-#{$spacing}*="#{$screen-size}"] {
+                    #{$position}: $value+$ds-unit !important;
+                }
+                .u-p#{$shorthand}-#{$spacing}-#{$screen-size},
+                [u-p#{$shorthand}-#{$spacing}*="#{$screen-size}"] {
+                    padding-#{$position}: $value+$ds-unit !important;
+                }
+                .u-m#{$shorthand}-#{$spacing}-#{$screen-size},
+                [u-m#{$shorthand}-#{$spacing}*="#{$screen-size}"] {
+                    margin-#{$position}: $value+$ds-unit !important;
+                }
+            }
+        }
+    }
+}

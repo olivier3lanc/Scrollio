@@ -1,0 +1,7 @@
+a {
+    color: my-color(brand);
+    @include my-typography(caption);
+    &:hover {
+        color: my-color(neutral, dark);
+    }
+}

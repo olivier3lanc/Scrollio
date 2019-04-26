@@ -1,0 +1,13 @@
+.my-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .sg-icon {
+        width: 200px;
+        margin-bottom: my-spacing(xl);
+        text-align: center;
+        [class*="icon-"] {
+            font-size: my-font-size(xxl);
+        }
+    }
+}

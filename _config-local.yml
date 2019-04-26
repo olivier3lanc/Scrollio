@@ -1,0 +1,20 @@
+url: "http://testing.bymycar.fr" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/Scrollio/_site" # the subpath of your site, e.g. /blog
+# destination: ../assets # the destination directory e.g. /blog
+# keep_files: [cache]
+title: Scrollio # title of the documentation
+description: >- # Description of the docs. (>- means to ignore newlines until "baseurl:")
+  A full page scroll experience tool for story telling.
+# Text strings to display
+texts:
+    pages: Patterns
+    posts: Change log
+
+# Build settings - Do not edit excepting you do know what you do
+markdown: kramdown
+defaults:
+    -
+        values:
+            layout: "page"
+# plugins:
+#     - jekyll-toc

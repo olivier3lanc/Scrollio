@@ -1,0 +1,21 @@
+/*
+    RESPONSIVE DISPLAY UTILITIES
+*/
+[class*="u-visible"],
+[u-visible],
+.u-none,
+.u-hidden {
+    display: none !important;
+}
+@each $screen-size, $v in $ds-screen-sizes {
+    @include my-screen-size($screen-size) {
+        .u-visible-#{$screen-size},
+        [u-visible*="#{$screen-size}"] {
+            display: initial !important;
+        }
+        .u-hidden-#{$screen-size},
+        [u-hidden*="#{$screen-size}"] {
+            display: none !important;
+        }
+    }
+}

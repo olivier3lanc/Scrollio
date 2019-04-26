@@ -1,0 +1,220 @@
+/*
+    COLORS
+    USAGE FUNCTION
+    Values ready to use for the end-user
+    @param $family - required - the color name defined in $ds-colors
+    @param $contrast - optional - compute the contrasted color from the specified $family color name
+    @returns the specified color name value + optional contrast computing
+*/
+@function my-color($family, $contrast: '') {
+    // If it is a color, return automatic color combinations
+    @if type-of(map-get($ds-colors, $family)) == color {
+        @if $contrast != '' {
+            @return ds-smart-contrast(map-get($ds-contrasts, $contrast), map-get($ds-colors, $family));
+        } @else {
+            @return map-get($ds-colors, $family);
+        }
+    }
+    // If it is a map, it is a user defined color combination
+    @elseif type-of(map-get($ds-colors, $family)) == map {
+        @if $contrast != '' {
+            @return map-get(map-get($ds-colors, $family), $contrast);
+        } @else {
+            @return map-get(map-get($ds-colors, $family), 0);
+        }
+
+    }
+}
+
+/*
+    FONT SIZE
+    USAGE FUNCTION
+    Values ready to use for the end-user
+    @returns the specified font size name value with the design system unit
+    @param $name - the name of the font size specified into config/font-sizes
+*/
+@function my-font-size($name) {
+    @if type-of(map-get($ds-font-sizes, $name)) == null {
+        @return $name;
+    } @else {
+        @return map-get($ds-font-sizes, $name)+$ds-unit;
+    }
+
+}
+
+/*
+    BORDER
+    USAGE FUNCTION
+    Values ready to use for the end-user
+    @returns - the specified shorthand with the design system units
+    @param $name - the name of the border style specified into config/borders
+*/
+@function my-border($name) {
+    @if type-of(map-get($ds-borders, $name)) == null {
+        @return $name;
+    } @else {
+        @return map-get($ds-borders, $name);
+    }
+}
+
+/*
+    BORDER RADIUS
+    USAGE FUNCTION
+    Values ready to use for the end-user
+    @returns - the specified shorthand for border radius with the design system units
+    @param $glob-tlbr-tl   the name of the border radius specified into config/border-radius
+                                According to usage, it can be
+                                    -> global border radius,
+                                    -> top-left + top-right border radius
+                                    -> top-left border radius only
+    @param $trbl-tr          the name of the border radius specified into config/border-radius
+                                According to usage, it can be
+                                    -> top-right border radius
+                                    -> right border radius
+    @param $br         the name of the bottom right border radius specified into config/border-radius
+    @param $bl         the name of the bottom left border radius specified into config/border-radius
+    Examples:
+        my-border-radius(xs) returns 3px;
+        my-border-radius(xs, none) returns 3px 0px;
+        my-border-radius(xs, lg, sm, none) returns 3px 28px 9px 0px;
+*/
+@function my-border-radius($glob-tlbr-tl, $trbl-tr: '', $br: '', $bl: '') {
+    @if ($glob-tlbr-tl != '') and ($trbl-tr != '') and ($br != '') and ($bl != '') {
+        @return unquote(map-get($ds-border-radius, $glob-tlbr-tl)+$ds-unit) unquote(map-get($ds-border-radius, $trbl-tr)+$ds-unit) unquote(map-get($ds-border-radius, $br)+$ds-unit) unquote(map-get($ds-border-radius, $bl)+$ds-unit);
+    } @elseif ($trbl-tr != '') {
+        @return map-get($ds-border-radius, $glob-tlbr-tl)+$ds-unit+' '+map-get($ds-border-radius, $trbl-tr)+$ds-unit;
+    } @else {
+        @return map-get($ds-border-radius, $glob-tlbr-tl)+$ds-unit;
+    }
+}
+
+/*
+    SPACING
+    USAGE FUNCTION
+    Values ready to use for the end-user
+    @returns - the specified shorthand for spacement between elements with the design system units
+    @param $glob-tb-t   the name of the spacing specified into config/spacings
+                                According to usage, it can be
+                                    -> global for the element
+                                    -> top+bottom for the element
+                                    -> left  for the element
+    @param $lr-r        the name of the spacing specified into config/spacings
+                                According to usage, it can be
+                                    -> left+right for the element
+                                    -> right  for the element
+    @param $b           the name of the bottom spacing specified into config/spacings
+    @param $l           the name of the left spacing specified into config/spacings
+    Examples:
+        my-spacing(xs) returns 12px;
+        my-spacing(xs, none) returns 12px 0px;
+        my-spacing(xs, lg, sm, none) returns 12px 28px 14px 0px;
+*/
+@function my-spacing($glob-tb-t, $lr-r: '', $b: '', $l: '') {
+    @if ($glob-tb-t != '') and ($lr-r != '') and ($b != '') and ($l != '') {
+        @return ds-spacing($glob-tb-t)+$ds-unit ds-spacing($lr-r)+$ds-unit ds-spacing($b)+$ds-unit ds-spacing($l)+$ds-unit;
+    }@elseif ($lr-r != '') {
+        @return ds-spacing($glob-tb-t)+$ds-unit ds-spacing($lr-r)+$ds-unit;
+    }@else{
+        @return ds-spacing($glob-tb-t)+$ds-unit;
+    }
+}
+
+/*
+    FONT FAMILY
+    USAGE FUNCTION
+*/
+@function my-font-family($name) {
+    @if type-of(map-get($ds-font-families, $name)) == null {
+        @return $name;
+    } @else {
+        // The following code is needed to get proper Google font weight.
+        // To do so we add the 'font-weight' property with the proper font weight value
+        $fontWeight: map-get(map-get($ds-fonts, $name), weight);
+        $numericWeight: 400;
+        //If string, it is a Google font
+        @if type-of($fontWeight) == string {
+            @if $fontWeight == 'Thin' {
+                $numericWeight: 100;
+            }
+            @elseif $fontWeight == 'Extra-Light' {
+                $numericWeight: 200;
+            }
+            @elseif $fontWeight == 'Light' {
+                $numericWeight: 300;
+            }
+            @elseif $fontWeight == 'Medium' {
+                $numericWeight: 500;
+            }
+            @elseif $fontWeight == 'Semi-Bold' {
+                $numericWeight: 600;
+            }
+            @elseif $fontWeight == 'Bold' {
+                $numericWeight: 700;
+            }
+            @elseif $fontWeight == 'Extra-Bold' {
+                $numericWeight: 800;
+            }
+            @elseif $fontWeight == 'Black' {
+                $numericWeight: 900;
+            }
+        }
+        @return map-get($ds-font-families, $name)+'; font-weight:'+$numericWeight;
+    }
+}
+
+/*
+    BORDER WIDTH
+    DESIGN SYSTEM FUNCTION
+    @return the value of the specified border width name
+    @param $name - the name of the border width specified into config/borders
+*/
+@function my-border-width($name) {
+    @if type-of(map-get($ds-borders-widths, $name)) == null {
+        @return $name;
+    } @else {
+        @return map-get($ds-borders-widths, $name)+$ds-unit;
+    }
+}
+
+/*
+    BORDER STYLE
+    DESIGN SYSTEM FUNCTION
+    @return the value of the specified border style name
+    @param $name - the name of the border style specified into config/borders
+*/
+@function my-border-style($name) {
+    @if type-of(map-get($ds-borders-styles, $name)) == null {
+        @return $name;
+    } @else {
+        @return map-get($ds-borders-styles, $name);
+    }
+}
+
+/*
+    BORDER COLOR
+    DESIGN SYSTEM FUNCTION
+    @return the value of the specified border color name
+    @param $name - the name of the border color specified into config/borders
+*/
+@function my-border-color($name) {
+    @if type-of(map-get($ds-borders-colors, $name)) == null {
+        @return $name;
+    } @else {
+        @if type-of(map-get($ds-colors, map-get($ds-borders-colors, $name))) == null {
+            @return map-get($ds-borders-colors, $name);
+        } @else {
+            @return my-color(map-get($ds-borders-colors, $name));
+        }
+    }
+}
+
+/*
+    BREAK POINT
+    USAGE FUNCTION
+    Values ready to use for the end-user
+    @returns the specified break point name value with the design system unit
+    @param $name - the name of the break point specified into config/screen-sizes
+*/
+// @function my-break-point($name) {
+//     @return map-get($ds-screen-sizes, $name)+$ds-unit;
+// }

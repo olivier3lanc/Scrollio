@@ -1,0 +1,72 @@
+<script type="text/javascript" src="{{ '/js/jquery/jquery-3.3.1.min.js' | relative_url }}"></script>
+<!-- <script type="text/javascript" src="{{ '/js/owl-carousel/owl.carousel.min.js' | relative_url }}"></script> -->
+<script type="text/javascript" src="{{ '/js/in-view/in-view.min.js' | relative_url }}"></script>
+<script type="text/javascript" src="{{ '/js/matryoshka/alerts.js' | relative_url }}"></script>
+<script type="text/javascript" src="{{ '/js/matryoshka/dropdowns.js' | relative_url }}"></script>
+<script type="text/javascript" src="{{ '/js/matryoshka/modals.js' | relative_url }}"></script>
+<script type="text/javascript" src="{{ '/js/matryoshka/tabs.js' | relative_url }}"></script>
+<script type="text/javascript" src="{{ '/js/matryoshka/toggles.js' | relative_url }}"></script>
+<script type="text/javascript" src="{{ '/js/apply-contrast.js' | relative_url }}"></script>
+<script type="text/javascript">
+    // Compute offset in accordance with viewport height
+    // This loads images that are 50% below viewport height
+    var lazyLoading = {
+        // Returns the proper offset
+        getOffset: function() {
+            var windowHeight = jQuery(window).height();
+            var offset = Math.round(windowHeight / -2);
+            return offset;
+        },
+        // @value - number - Apply the offset
+        setOffset: function(value) {
+            inView.offset(value);
+        },
+        start: function() {
+            var offset = lazyLoading.getOffset();
+            lazyLoading.setOffset(offset);
+            inView('.lazy').on('enter', function(el) {
+                // el.style.opacity = 0.5;
+                var jQ_thumb = jQuery(el);
+                var jQ_figure = jQ_thumb.parent();
+
+                var optionalRatio = jQ_figure.attr('data-ratio');
+                if (optionalRatio == 'undefined' || optionalRatio == undefined) {
+                    optionalRatio = 100;
+                }
+                var imgRatio = 100;
+                //Get parent width and height
+                var containerWidth = jQ_figure.width();
+                var containerHeight = jQ_figure.height();
+                if (optionalRatio !== undefined) {
+                    optionalRatio = parseInt(optionalRatio);
+                    imgRatio = optionalRatio / 100;
+                    // Force height
+                    containerWidth = imgRatio * containerWidth;
+                    containerHeight = imgRatio * containerWidth;
+                }
+                // Ceil the width and height
+                containerWidth = Math.ceil(containerWidth);
+                containerHeight = Math.ceil(containerHeight);
+
+                var imgUrl = jQ_thumb.attr('data-src');
+                var imageServerHost = 'https://images.weserv.nl/?url=';
+                var requestUrl = imageServerHost+imgUrl+'&w='+containerWidth+'&h='+containerHeight+'&a=center&t=square';
+
+
+                // console.log(requestUrl);
+                var jQ_img = jQuery('<img src="'+requestUrl+'" class="u-transparent" style="width:'+optionalRatio+'%">');
+                jQ_img.one('load', function() {
+                    jQ_figure.html(jQ_img);
+                    setTimeout(function() {
+                        jQ_img.removeClass('u-transparent');
+                    }, 16);
+                });
+            });
+        }
+    }
+    lazyLoading.start();
+</script>
+
+{% for script in page.scripts %}
+    <script type="text/javascript" src="{{ script | relative_url }}"></script>
+{% endfor %}

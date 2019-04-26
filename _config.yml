@@ -1,0 +1,19 @@
+url: "https://itautomotive-dev.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/aphael-style-guide" # the subpath of your site, e.g. /blog
+# destination: ../mydocs # the destination directory e.g. /blog
+title: Aphael Design System # title of the documentation
+description: >- # Description of the docs. (>- means to ignore newlines until "baseurl:")
+  Here are settings and components for Aphael design system.
+# Text strings to display
+texts:
+    pages: Patterns
+    posts: Change log
+
+# Build settings - Do not edit excepting you do know what you do
+markdown: kramdown
+defaults:
+    -
+        values:
+            layout: "page"
+# plugins:
+#     - jekyll-toc

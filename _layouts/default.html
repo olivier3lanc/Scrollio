@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+{%- include head.html -%}
+
+    <body sg-pt-lg="xs, sm, md">
+        <div class="sg-grid mod-ha-center">
+            <div class="row">
+                <header class="mod-w-3 mod-w-12-sm mod-w-12-xs mod-w-12-md mod-mw-small" role="banner">
+                    {%- include sidebar.html -%}
+                </header>
+                <main class="mod-w-9 mod-w-12-sm mod-w-12-xs mod-w-12-md mod-mw-main sg-p-xl page-content" sg-p-sm="xs, sm, md" sg-pt-xl="xs, sm, md" aria-label="Content">
+                    {{ content }}
+                </main>
+                <aside id="toc-container" sg-visible="lg, xl"></aside>
+            </div>
+            <footer class="row mod-ha-right sg-p-xl" sg-p-sm="xs, sm, md">
+                <div>
+                    {%- include footer.html -%}
+                </div>
+            </footer>
+        </div>
+        {%- include common-js.html -%}
+    </body>
+</html>

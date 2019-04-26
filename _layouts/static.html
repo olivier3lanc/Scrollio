@@ -1,0 +1,33 @@
+---
+layout: page
+---
+{% assign path = '' | append: page.specific_path %}
+{% assign images_filter = '.jpg,.jpeg,.png,.gif,.svg,.ico' %}
+<div class="static-files">
+    {{ content }}
+
+{% for file in site.static_files %}
+    {% if file.path contains path %}
+    <div class="row mod-ha-space-between mod-va-middle sg-bb-solidAndThin sg-mb-lg">
+        <div class="">
+
+            <p>
+                <span class="code-label">{{ file.extname }}</span><br>
+                <code class="tagline">{{ file.name }}</code><br>
+                <span class="sg-fs-xs sg-c-neutral">Last modfied {{ file.modified_time }}</span>
+            </p>
+        </div>
+    {% assign extname_downcase = file.extname | downcase %}
+    {% if images_filter contains extname_downcase %}
+        <div>
+            <p><img src="{{ site.baseurl }}{{ file.path }}" alt="{{ file.basename }}" style="max-width:200px; height:auto"></p>
+        </div>
+    {% endif %}
+        <div>
+            <a href="{{ site.baseurl }}{{ file.path }}" class="btn" download>Download</a>
+        </div>
+    </div>
+
+    {% endif %}
+{% endfor %}
+</div>

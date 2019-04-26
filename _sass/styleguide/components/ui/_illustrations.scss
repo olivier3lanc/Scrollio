@@ -1,0 +1,202 @@
+.sg-pattern {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAIAAABvrngfAAAAMElEQVQImV3LsQ0AMAjEQEP5+6/Kt1BESiI6X+GoKgCQdCKXbecyEN39+43XknIZGKG6FOdlCDEnAAAAAElFTkSuQmCC');
+}
+.sg-screen-size {
+    border-radius: 0;
+    font-size: my-font-size(lg);
+    border-left: my-border(dashed);
+    border-right: my-border(dashed);
+    padding: my-spacing(sm, none);
+    display: inline-block;
+    .current {
+        display: none;
+    }
+    &:before {
+        content: '← ';
+    }
+    &:after {
+        content: ' →';
+    }
+}
+.tag,
+.class-selector {
+    color: fuchsia;
+}
+.var {
+    color: blueviolet;
+}
+.var2 {
+    color: darkred;
+}
+.arg,
+.val {
+    color: darkslateblue;
+}
+.comment {
+    color: gray;
+}
+.markup {
+    color: dodgerblue;
+}
+.sg-text-muted {
+    color: grey;
+}
+.sg-wcag {
+    cursor: help;
+    text-transform: uppercase;
+    position: relative;
+    // overflow: auto;
+    &:after {
+        opacity: 0;
+        pointer-events: none;
+        transition: all 300ms;
+        content: attr(data-title);
+        position: absolute;
+        left: 0%;
+        bottom: 100%;
+        display: block;
+        // min-width: 200px;
+        text-align: center;
+        padding: my-spacing(xs);
+        @include my-typography(default);
+        border-radius: my-border-radius(xs);
+        font-size: my-font-size(xs);
+        text-transform: none;
+        background-color: my-color(neutral, max);
+        box-shadow: 0px 5px 10px 0px rgba(black, .3);
+        z-index: 10;
+    }
+    &:hover {
+        &:after {
+            opacity: 1;
+        }
+    }
+}
+.sg-swatch {
+    border-radius: my-border-radius(lg);
+    box-shadow: 0px -1px 10px 0px rgba(black, .2);
+    width: 312px;
+    height: 128px;
+    display: inline-block;
+    position: relative;
+    &.mod-xl {
+        height: 312px;
+    }
+    &.mod-medium {
+        height: 64px;
+        box-shadow: 20px 10px 20px 0px rgba(black, .2);
+        &:first-child {
+            border-radius: my-border-radius(md, none, none, md);
+        }
+        &+.mod-medium {
+            border-radius: my-border-radius(none);
+            &:last-child {
+                border-radius: my-border-radius(none, md, md, none);
+            }
+        }
+    }
+}
+[data-color-family-preview] {
+    display: flex;
+    margin-bottom: my-spacing(lg);
+    .sg-swatch {
+        width: 100%;
+    }
+}
+.sg-mini-swatch {
+    text-shadow: 0px 0px 3px rgba(black, .2);
+    vertical-align: middle;
+    font-size: my-font-size(lg);
+    &.mod-white {
+        color: my-color(neutral, max);
+    }
+}
+
+
+@each $screen-size, $value in $ds-screen-sizes {
+    @include my-screen-size(#{$screen-size}) {
+        .sg-screen-size {
+            &.#{$screen-size} {
+                .current {
+                    display: inline;
+                }
+            }
+        }
+    }
+}
+
+.sg-font {
+    position: relative;
+    margin-bottom: 0;
+    line-height: 1em;
+    display: inline-block;
+    padding: 1em 1.5em;
+    border: my-border(light);
+    color: my-color(neutral, min);
+    border-radius: my-border-radius(lg);
+    // box-shadow: 0px -5px 10px 0px rgba(black, .2);
+    &.mod-xl {
+        font-size: my-font-size(xl);
+    }
+    &.mod-empty {
+        width: 300px;
+    }
+    &.mod-empty-small {
+        width: 150px;
+    }
+    &.mod-hpadding-xl {
+        padding-left: my-spacing(xl);
+        padding-right: my-spacing(xl);
+        box-shadow: 0px -5px 10px 0px rgba(black, .2);
+    }
+    &+.sg-font {
+        position: relative;
+        left: -2.5em;
+        // z-index: -1;
+    }
+}
+
+.sg-spacing {
+    display: inline-block;
+    margin-right: my-spacing(xs);
+    margin-bottom: my-spacing(xl);
+    text-align: center;
+    .sample {
+        position: relative;
+        display: block;
+        margin: auto;
+        width: 50px;
+        border-top: my-border(dashedAndThin);
+        border-bottom: my-border(dashedAndThin);
+        &:before {
+            content: '';
+            position: absolute;
+            display: block;
+            background-color: my-color(neutral, min);
+            width: 3px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+            transform: translateX(-1px);
+        }
+    }
+}
+.sg-border {
+    display: inline-block;
+    width: 200px;
+    line-height: 0;
+    margin: my-spacing(sm, sm, xs, sm);
+}
+.sg-border-radius {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    border: my-border(main);
+    // border-radius: my-border-radius(mini, md);
+}
+.sg-inline-block {
+    vertical-align: top;
+    display: inline-block;
+    // margin-bottom: my-spacing(xl);
+    margin-right: my-spacing(lg);
+}

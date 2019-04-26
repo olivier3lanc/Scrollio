@@ -1,0 +1,193 @@
+/*
+    CORE
+    Settings and main functionalities
+    Include _core.scss to get all the functions and mixins
+    No CSS declaration is compiled from this file
+    Only core functions, mixins and variables
+    You may include this file in any SASS file, no changes will be made
+    Only core functions
+*/
+@import 'styleguide/core';
+
+/*
+    COMPONENTS
+    Requires _core.scss
+    This file builds components CSS classes from your core settings
+*/
+@import 'styleguide/components';
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    #sidebar {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        max-height: 100vh;
+        overflow: auto;
+        a {
+            &[rel="author"] {
+                &>img {
+                    width: 100%;
+                    height: auto;
+                    color: rgba(my-color(neutral), .3);
+                    font-size: my-font-size(xs);
+                    &+span {
+                        display: none;
+                    }
+                }
+            }
+        }
+        form {
+            text-align: right;
+            input {
+                display: inline-block;
+                width: 100%;
+                max-width: 200px;
+                border-radius: my-border-radius(xs);
+                background-color: my-color(neutral, max);
+                color: my-color(neutral);
+                padding: my-spacing(none, xs);
+                box-shadow: none;
+                border: none;
+                @include my-typography(default);
+                text-align: right;
+            }
+        }
+    }
+    @include my-screen-size(xs, sm, md) {
+        #sidebar {
+            position: fixed;
+            z-index: 1000;
+            width: 100%;
+            background-color: my-color(neutral, light);
+            box-shadow: 0px 0px 20px 0px rgba(black, 0.2);
+        }
+    }
+    .page-content {
+        position: relative;
+        background-color: my-color(neutral, max);
+        box-shadow: -20px 0px 20px 0px rgba(black, .2);
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin-top: 3em;
+            font-weight: normal;
+        }
+        h1 {
+            @include my-typography(lead);
+            font-size: my-font-size(xl);
+            border-bottom: my-border(light);
+            padding-bottom: my-spacing(md);
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+        h2 {
+            @include my-typography(lead);
+            font-size: my-font-size(lg);
+            border-bottom: my-border(solidAndThin);
+            padding-bottom: my-spacing(sm);
+        }
+        h3 {
+            @include my-typography(lead);
+            font-size: my-font-size(md);
+        }
+        h4 {
+            @include my-typography(unleaded);
+            font-size: my-font-size(md);
+        }
+        h5 {
+            @include my-typography(lead);
+            font-size: my-font-size(sm);
+        }
+        h5 {
+            @include my-typography(unleaded);
+            font-size: my-font-size(sm);
+        }
+        a {
+            &:not(.btn) {
+                text-decoration: none;
+                color: my-color(neutral, min);
+                font-weight: bold;
+                display: inline-block;
+                position: relative;
+                transition: all 300ms;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 95%;
+                    left: 0;
+                    display: block;
+                    width: 100%;
+                    height: 2px;
+                    background-color: my-color(neutral, min);
+                    transition: all 300ms;
+                }
+                &:hover {
+                    color: my-color(neutral);
+                    &:after {
+                        top: 0%;
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+        iframe {
+            width: 100%;
+            border: none;
+            height: 300px;
+        }
+        .syntaxit {
+            display: none;
+        }
+        .form-group {
+            label {
+                display: block;
+                font-size: my-font-size(sm);
+            }
+            input {
+                &[type="range"] {
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            &.w200 {
+                max-width: 200px;
+                height: auto;
+                float: left;
+            }
+        }
+        blockquote {
+            border-left: my-border(light);
+            font-style: italic;
+            padding-left: my-spacing(md);
+        }
+        .clearfix {
+            clear: both;
+        }
+    }
+    #toc-container {
+        #toc {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            max-height: 100vh;
+            overflow: auto;
+        }
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+    }
+}

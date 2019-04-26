@@ -1,0 +1,178 @@
+/**
+* BUTTON SIZES
+* Set the different button sizes with vertical and horizontal paddings
+*/
+$btn-sizes: (
+    xs: (
+        padding: my-spacing(xxs) my-spacing(sm),
+        font-size: my-font-size(xs)
+    ),
+    md: (
+        padding: my-spacing(sm) my-spacing(md),
+        font-size: my-font-size(sm)
+    )
+);
+/**
+* BUTTON COLORS
+* Set the different button colors available
+*/
+$btn-colors: (
+    neutral: (
+        bg:                         my-color(neutral, light),
+        text:                       my-color(neutral, dark),
+        border-top:                 my-color(neutral, light),
+        border-right:               my-color(neutral, light),
+        border-bottom:              my-color(neutral, light),
+        border-left:                my-color(neutral, light),
+        hover-bg:                   my-color(neutral, max),
+        hover-text:                 my-color(neutral, dark),
+        hover-border-top:           my-color(neutral, max),
+        hover-border-right:         my-color(neutral, max),
+        hover-border-bottom:        my-color(neutral, max),
+        hover-border-left:          my-color(neutral, max),
+        active-bg:                  my-color(neutral, max),
+        active-text:                my-color(neutral, dark),
+        active-border-top:          my-color(neutral, max),
+        active-border-right:        my-color(neutral, max),
+        active-border-bottom:       my-color(neutral, max),
+        active-border-left:         my-color(neutral, max)
+    ),
+    tab: (
+        bg:                         my-color(neutral, light),
+        text:                       my-color(neutral, dark),
+        border-top:                 transparent,
+        border-right:               transparent,
+        border-bottom:              my-color(neutral),
+        border-left:                transparent,
+        hover-bg:                   my-color(neutral, light),
+        hover-text:                 my-color(neutral, dark),
+        hover-border-top:           transparent,
+        hover-border-right:         transparent,
+        hover-border-bottom:        my-color(neutral, dark),
+        hover-border-left:          transparent,
+        active-bg:                  my-color(neutral, light),
+        active-text:                my-color(neutral, min),
+        active-border-top:          transparent,
+        active-border-right:        transparent,
+        active-border-bottom:       my-color(neutral, min),
+        active-border-left:         transparent
+    )
+);
+$btn-default-size:              md;
+$btn-default-color:             neutral;
+$btn-default-border-style:      solid;
+$btn-default-border-width:      3;
+$btn-default-border-radius:     xs;
+$btn-default-typography:        leadBolder;
+
+button{
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.btn {
+    position: relative;
+    cursor: pointer;
+    transition: all 300ms;
+    display: inline-block;
+    line-height: 1em;
+    text-decoration: none;
+    @if $btn-default-typography != null {
+        @include my-typography($btn-default-typography);
+    }
+    border-style: $btn-default-border-style;
+    border-width: $btn-default-border-width+$ds-unit;
+    border-top-color: map-get(map-get($btn-colors, $btn-default-color), border-top);
+    border-right-color: map-get(map-get($btn-colors, $btn-default-color), border-right);
+    border-bottom-color: map-get(map-get($btn-colors, $btn-default-color), border-bottom);
+    border-left-color: map-get(map-get($btn-colors, $btn-default-color), border-left);
+    border-radius: my-border-radius($btn-default-border-radius);
+    background-color: map-get(map-get($btn-colors, $btn-default-color), bg);
+    color: map-get(map-get($btn-colors, $btn-default-color), text);
+    padding: map-get(map-get($btn-sizes, $btn-default-size), padding);
+    font-size: map-get(map-get($btn-sizes, $btn-default-size), font-size);
+    &:hover {
+        background-color: map-get(map-get($btn-colors, $btn-default-color), hover-bg);
+        color: map-get(map-get($btn-colors, $btn-default-color), hover-text);
+        border-top-color: map-get(map-get($btn-colors, $btn-default-color), hover-border-top);
+        border-right-color: map-get(map-get($btn-colors, $btn-default-color), hover-border-right);
+        border-bottom-color: map-get(map-get($btn-colors, $btn-default-color), hover-border-bottom);
+        border-left-color: map-get(map-get($btn-colors, $btn-default-color), hover-border-left);
+    }
+    &.active {
+        background-color: map-get(map-get($btn-colors, $btn-default-color), active-bg);
+        color: map-get(map-get($btn-colors, $btn-default-color), active-text);
+        border-top-color: map-get(map-get($btn-colors, $btn-default-color), active-border-top);
+        border-right-color: map-get(map-get($btn-colors, $btn-default-color), active-border-right);
+        border-bottom-color: map-get(map-get($btn-colors, $btn-default-color), active-border-bottom);
+        border-left-color: map-get(map-get($btn-colors, $btn-default-color), active-border-left);
+    }
+
+    img,
+    svg,
+    span {
+        vertical-align: middle;
+    }
+    /*
+    * Display type
+    */
+    &.mod-block {
+        display: block;
+        text-align: left;
+        width: 100%; // input submit fix
+    }
+    /*
+    * Colors modifiers
+    * Build all color variations classes
+    */
+    @each $color, $data in $btn-colors {
+        @if $color != $btn-default-color {
+            &.mod-#{$color} {
+                background-color: map-get(map-get($btn-colors, $color), bg);
+                border-top-color: map-get(map-get($btn-colors, $color), border-top);
+                border-right-color: map-get(map-get($btn-colors, $color), border-right);
+                border-bottom-color: map-get(map-get($btn-colors, $color), border-bottom);
+                border-left-color: map-get(map-get($btn-colors, $color), border-left);
+                color: map-get(map-get($btn-colors, $color), text);
+                &:hover {
+                    background-color: map-get(map-get($btn-colors, $color), hover-bg);
+                    border-top-color: map-get(map-get($btn-colors, $color), hover-border-top);
+                    border-right-color: map-get(map-get($btn-colors, $color), hover-border-right);
+                    border-bottom-color: map-get(map-get($btn-colors, $color), hover-border-bottom);
+                    border-left-color: map-get(map-get($btn-colors, $color), hover-border-left);
+                    color: map-get(map-get($btn-colors, $color), hover-text);
+                }
+                &.active {
+                    background-color: map-get(map-get($btn-colors, $color), active-bg);
+                    border-top-color: map-get(map-get($btn-colors, $color), active-border-top);
+                    border-right-color: map-get(map-get($btn-colors, $color), active-border-right);
+                    border-bottom-color: map-get(map-get($btn-colors, $color), active-border-bottom);
+                    border-left-color: map-get(map-get($btn-colors, $color), active-border-left);
+                    color: map-get(map-get($btn-colors, $color), active-text);
+                }
+            }
+        }
+    }
+    /*
+    * Sizes modifiers
+    */
+    @each $size, $data in $btn-sizes {
+        @if $size != $btn-default-size {
+            &.mod-#{$size} {
+                @each $property, $value in $data {
+                    #{$property}: $value;
+                }
+            }
+        }
+    }
+    /*
+        DISABLED
+        Status management
+    */
+    &[disabled],
+    &.disabled {
+        pointer-events: none;
+        opacity: .3;
+    }
+}

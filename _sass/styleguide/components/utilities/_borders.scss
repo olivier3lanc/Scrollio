@@ -1,0 +1,16 @@
+/*
+    BORDERS UTILITIES
+*/
+$positions-list: (top: 't', right: 'r', bottom: 'b', left: 'l');
+@each $border, $value in $ds-borders {
+    // Global border
+    .sg-b-#{$border} {
+        border: $value !important;
+    }
+    @each $position, $shorthand in $positions-list {
+        // Position border
+        .sg-b#{$shorthand}-#{$border} {
+            border-#{$position}: $value !important;
+        }
+    }
+}

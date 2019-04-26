@@ -1,0 +1,56 @@
+/*
+    SPACING UTILITIES
+*/
+$positions-list: (top: 't', right: 'r', bottom: 'b', left: 'l');
+@each $spacing, $value in $ds-spacings {
+    @each $position, $shorthand in $positions-list {
+        /*
+        *   UTILITIES
+        *   Global padding
+        */
+        .sg-p-#{$spacing} {
+            padding: $value+$ds-unit !important;
+        }
+        /*
+        *   UTILITIES
+        *   Global padding
+        */
+        .sg-m-#{$spacing} {
+            margin: $value+$ds-unit !important;
+        }
+        .sg-p#{$shorthand}-#{$spacing} {
+            padding-#{$position}: $value+$ds-unit !important;
+        }
+        .sg-m#{$shorthand}-#{$spacing} {
+            margin-#{$position}: $value+$ds-unit !important;
+        }
+    }
+}
+/*
+*   UTILITIES
+*   Position relative paddings and margins
+*/
+@each $spacing, $value in $ds-spacings {
+    @each $position, $shorthand in $positions-list {
+        @each $screen-size, $v in $ds-screen-sizes {
+            @include my-screen-size($screen-size) {
+                .sg-p-#{$spacing}-#{$screen-size},
+                [sg-p-#{$spacing}*="#{$screen-size}"] {
+                    padding: $value+$ds-unit !important;
+                }
+                .sg-m-#{$spacing}-#{$screen-size},
+                [sg-m-#{$spacing}*="#{$screen-size}"] {
+                    margin: $value+$ds-unit !important;
+                }
+                .sg-p#{$shorthand}-#{$spacing}-#{$screen-size},
+                [sg-p#{$shorthand}-#{$spacing}*="#{$screen-size}"] {
+                    padding-#{$position}: $value+$ds-unit !important;
+                }
+                .sg-m#{$shorthand}-#{$spacing}-#{$screen-size},
+                [sg-m#{$shorthand}-#{$spacing}*="#{$screen-size}"] {
+                    margin-#{$position}: $value+$ds-unit !important;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,78 @@
+
+input {
+    &[type="checkbox"] {
+        &#menutoggle {
+            display: none;
+            &+label {
+                padding: my-spacing(sm);
+                cursor: pointer;
+                &>span {
+                    display: block;
+                    width: 15px;
+                    height: 15px;
+                    position: relative;
+                    &>span {
+                        display: block;
+                        position: absolute;
+                        width: 100%;
+                        height: 4px;
+                        border-radius: my-border-radius(xs);
+                        background-color: my-color(neutral, dark);
+                        transition: all 300ms;
+                        bottom: 0;
+                        &:first-child {
+                            right: calc(50% - 1px);
+                            transform-origin: right;
+                            transform: rotate(45deg);
+                        }
+                        &:last-child {
+                            left: calc(50% - 1px);
+                            transform-origin: left;
+                            transform: rotate(-45deg);
+                        }
+                    }
+                }
+            }
+            @include my-screen-size(xs, sm, md) {
+                &+label {
+                    &+* {
+                        display: none;
+                    }
+                }
+                &:checked {
+                    &+label {
+                        &>span {
+                            &>span {
+                                &:first-child {
+                                    right: -15%;
+                                }
+                                &:last-child {
+                                    left: -15%;
+                                }
+                            }
+                        }
+                        &+* {
+                            display: initial;
+                        }
+                    }
+                }
+            }
+            @include my-screen-size(lg, xl) {
+                &+label {
+                    display: none;
+                    &+* {
+                        display: initial;
+                    }
+                }
+                &:checked {
+                    &+label {
+                        display: none;
+                        &+* {
+                            display: initial;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

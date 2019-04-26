@@ -1,0 +1,23 @@
+/**
+* RESPONSIVE DATA TITLES
+* Add responsive labels to any html tag
+*/
+[data-label] {
+    &:before {
+        content: attr(data-label);
+        @include my-typography(hero);
+        display: block;
+        color: my-color(neutral);
+        margin-bottom: my-spacing(xs);
+        font-size: my-font-size(xs);
+    }
+}
+@each $screen-size, $value in $ds-screen-sizes {
+    @include my-screen-size($screen-size) {
+        [data-label-hidden*="#{$screen-size}"] {
+            &:before {
+                display: none;
+            }
+        }
+    }
+}

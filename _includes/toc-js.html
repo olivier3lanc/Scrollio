@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQ_titles = jQuery('h1:not(.post-title),h2:not(.notoc),h3:not(.notoc),h4:not(.notoc),h5:not(.notoc),h6:not(.notoc)');
+        var jQ_toc = jQuery('#toc-container');
+        // var mainHeight = jQuery(document).height();
+        // var windowHeight = jQuery(window).height();
+        // console.log('main height:', mainHeight);
+        // console.log('window height:', windowHeight);
+        // if (mainHeight > windowHeight) {
+            if(jQ_titles.length > 0){
+                //TOC generation
+                jQ_toc.html(
+                    '<nav id="toc">'+
+                        '<ul>'+
+                            '<li>'+
+                                '<a href="#" class="btn mod-block sg-brtl-none sg-brbl-none active" title="Go to top">'+
+                                    jQuery('h1.post-title').text()+
+                                '</a>'+
+                            '</li>'+
+                        '</ul>'+
+                    '</nav>'
+                );
+                jQ_toc = jQuery('nav#toc').children('ul');
+                jQ_titles.each(function(){
+                    if (jQuery(this).parent().css('display') != 'none' && jQuery(this).closest('.syntaxit').length == 0) {
+                        var text = jQuery(this).text();
+                        // var id = jQuery(this).attr('id');
+                        // var tagName = jQuery(this).prop("tagName");
+                        // var id = "What ever your id is [] {} - &";
+                        var id = text.replace(/\W/g,'_');
+                        jQuery(this).attr('id', id);
+                        jQ_toc.append(
+                            '<li>'+
+                                '<a href="#'+id+'" class="btn mod-xs mod-block sg-brtl-none sg-brbl-none">'+text+'</a>'+
+                            '</li>'
+                        );
+                    }
+
+                });
+            }
+        // }
+    });
+</script>

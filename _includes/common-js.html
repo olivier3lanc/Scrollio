@@ -1,0 +1,134 @@
+<script type="text/javascript" src="{{ '/js/app.js' | relative_url }}"></script>
+<script type="text/javascript" src="{{ '/js/prism/prism.min.js' | relative_url }}"></script>
+<script type="text/javascript" src="{{ '/js/matryoshka/modals.js' | relative_url }}"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        // Icons
+        var jQ_myIcons = jQuery('.my-icons');
+        if(jQ_myIcons.length == 1){
+            jQuery('head').append('<link href="{{ site.url }}{{ site.baseurl }}/fonts/icomoon/style.css" rel="stylesheet">');
+            // var test = JSON.parse('../../js/fonts/selection.json');
+            var icomoon = new XMLHttpRequest();
+            icomoon.open("GET", '{{ site.url }}{{ site.baseurl }}/fonts/icomoon/selection.json', true);
+            icomoon.onload = function() {
+                var listOfIcons = JSON.parse(icomoon.responseText);
+                for (var i = 0; i < listOfIcons.icons.length; i++) {
+                    var name = listOfIcons.icons[i].properties.name;
+                    jQ_myIcons.append(
+                        '<div class="sg-icon">'+
+                            '<p>'+
+                                '<span class="icon-'+name+'"></span>'+
+                            '</p>'+
+                            '<code>'+name+'</code>'+
+                        '</div>'
+                    )
+                }
+            };
+            icomoon.send();
+        }
+        //Manage external links
+        jQuery('main a[href*="http"]').each(function(){
+            // Only if link is not in .syntaxit
+            if (jQuery(this).closest('.syntaxit').length == 0) {
+                var link = jQuery(this).attr('href');
+                //Check if it is an internal link (check if hostname is contained into the link string)
+                if(link.indexOf(window.location.origin) != 0){
+                    jQuery(this)
+                        .after(' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> ')
+                        .attr('target','_blank');
+                }
+            }
+        });
+        var encode = function(str) {
+          var buf = [];
+          for (var i=str.length-1;i>=0;i--) {
+            buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+          }
+          return buf.join('');
+        };
+        // Auto iframe
+        var iframeCounter = 0;
+        jQuery('main .syntaxit').each(function(){
+            var content = jQuery(this).html();
+            var language = jQuery(this).attr('data-language');
+            var optionsStr = '';
+            var optionResizeable = jQuery(this).attr('data-resizeable');
+            if (optionResizeable !== undefined) {
+                optionsStr += ''+
+                    '<div class="form-group">'+
+                        '<label for="iframe-resizeable-'+iframeCounter+'" class="sg-bb-light">Resizer</label>'+
+                        '<input type="range" id="iframe-resizeable-'+iframeCounter+'" value="100" min="1" max="100" data-target="iframe-'+iframeCounter+'">'+
+                    '</div>';
+            }
+            var optionCentered = jQuery(this).attr('data-centered');
+            if (optionCentered === undefined) {
+                optionCentered = false;
+            } else {
+                optionCentered = true;
+            }
+            var optionShowFlexboxItems = jQuery(this).attr('data-show-flexbox-items');
+            if (optionShowFlexboxItems === undefined) {
+                optionShowFlexboxItems = false;
+            } else {
+                optionShowFlexboxItems = true;
+            }
+
+            var sentObject = {
+                options: {
+                    centered: optionCentered,
+                    showFlexboxItems: optionShowFlexboxItems
+                },
+                content: content
+            }
+            var stringifiedSentObject = JSON.stringify(sentObject);
+            var sentObject64 = btoa(stringifiedSentObject);
+            var iframeStr = '<iframe id="iframe-'+iframeCounter+'" src="{{ site.url }}{{ site.baseurl }}/iframe.html#'+sentObject64+'"></iframe>';
+            var trimmed = content.replace(/ /g,'');
+            trimmed = encode(content);
+            jQuery(this).after(
+                optionsStr+
+                iframeStr+
+                '<pre>'+
+                    '<code class="language-'+language+'">'+
+                        trimmed+
+                    '</code>'+
+                '</pre>'                
+            );
+
+            // jQuery(this).after('<pre><code>'+content+'</code></pre>');
+            Prism.highlightAll();
+            iframeCounter++;
+            // console.log(encodeURI(content))
+        });
+        jQuery('input[type="range"]').on('input', function() {
+            var value = jQuery(this).val();
+            var id = jQuery(this).attr('data-target');
+            jQuery('#'+id).css('width', value+'%');
+        });
+
+        //Dynamic load for MathJax
+        if(jQuery('main [type="math/tex"]').length > 0){
+            jQuery.getScript("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+        }
+
+        //Dynamic load for highcharts
+        if (jQuery('table.highchart').length > 0){
+            jQuery.getScript("https://code.highcharts.com/highcharts.js")
+                .done(function( script, textStatus ){
+                    jQuery.getScript('{{ "/js/highcharttable/jquery.highchartTable-min.js" | relative_url }}')
+                        .done(function( script, textStatus ) {
+                            jQuery('table.highchart').each(function(){
+                                if(jQuery(this).attr('data-graph-container-before') === undefined){
+                                    jQuery(this).attr('data-graph-container-before', '1');
+                                }
+                                if(jQuery(this).attr('data-graph-type') === undefined){
+                                    jQuery(this).attr('data-graph-type', 'column');
+                                }
+                                jQuery(this).highchartTable();
+                            });
+                        });
+                });
+        }
+    });
+</script>

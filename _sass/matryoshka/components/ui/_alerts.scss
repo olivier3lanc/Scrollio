@@ -1,0 +1,51 @@
+$alert-colors: (
+    success: (
+        background-color: my-color(success),
+        color: my-color(success, max)
+    ),
+    danger: (
+        background-color: my-color(danger),
+        color: my-color(danger, max)
+    ),
+    warning: (
+        background-color: my-color(warning),
+        color: my-color(warning, max)
+    ),
+    info: (
+        background-color: my-color(info),
+        color: my-color(info, max)
+    )
+);
+$alert-padding: my-spacing(sm);
+$alert-font-size: my-font-size(xs);
+
+.alert {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    &.mod-fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9000;
+    }
+    &>* {
+        margin: 0;
+        list-style: none;
+        padding: $alert-padding;
+        font-size: $alert-font-size;
+        [my-alert-close] {
+            background-color: transparent;
+            color: currentColor;
+        }
+    }
+    @each $name, $data in $alert-colors {
+        &.mod-#{$name} {
+            background-color: map-get($data, 'background-color');
+            color: map-get($data, 'color');
+        }
+
+    }
+}

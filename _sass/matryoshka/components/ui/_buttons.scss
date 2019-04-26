@@ -1,0 +1,492 @@
+/**
+* BUTTON SIZES
+* Set the different button sizes with vertical and horizontal paddings
+*/
+$btn-sizes: (
+    xs: (
+        padding: my-spacing(xxs, xxs),
+        font-size: my-font-size(xs)
+    ),
+    md: (
+        padding: my-spacing(xs, sm),
+        font-size: my-font-size(sm2)
+    ),
+    xl: (
+        padding: my-spacing(sm, md),
+        font-size: my-font-size(sm)
+    )
+);
+/**
+* BUTTON COLORS
+* Set the different button colors available
+*/
+$btn-colors: (
+    brand: (
+        bg:                         my-color(brand),
+        text:                       my-color(brand, max),
+        border-top:                 my-color(brand),
+        border-right:               my-color(brand),
+        border-bottom:              my-color(brand),
+        border-left:                my-color(brand),
+        hover-bg:                   my-color(primary),
+        hover-text:                 my-color(primary, max),
+        hover-border-top:           my-color(primary),
+        hover-border-right:         my-color(primary),
+        hover-border-bottom:        my-color(primary),
+        hover-border-left:          my-color(primary),
+        active-bg:                  my-color(primary),
+        active-text:                my-color(primary, max),
+        active-border-top:          my-color(primary),
+        active-border-right:        my-color(primary),
+        active-border-bottom:       my-color(primary),
+        active-border-left:         my-color(primary)
+    ),
+    primary: (
+        bg:                         my-color(primary),
+        text:                       my-color(primary, max),
+        border-top:                 my-color(primary),
+        border-right:               my-color(primary),
+        border-bottom:              my-color(primary),
+        border-left:                my-color(primary),
+        hover-bg:                   my-color(primary, max),
+        hover-text:                 my-color(primary),
+        hover-border-top:           my-color(primary),
+        hover-border-right:         my-color(primary),
+        hover-border-bottom:        my-color(primary),
+        hover-border-left:          my-color(primary),
+        active-bg:                  my-color(primary, max),
+        active-text:                my-color(primary),
+        active-border-top:          my-color(primary),
+        active-border-right:        my-color(primary),
+        active-border-bottom:       my-color(primary),
+        active-border-left:         my-color(primary)
+    ),
+    secondary: (
+        bg:                         my-color(secondary),
+        text:                       my-color(secondary, max),
+        border-top:                 my-color(secondary),
+        border-right:               my-color(secondary),
+        border-bottom:              my-color(secondary),
+        border-left:                my-color(secondary),
+        hover-bg:                   my-color(secondary, max),
+        hover-text:                 my-color(secondary),
+        hover-border-top:           my-color(secondary),
+        hover-border-right:         my-color(secondary),
+        hover-border-bottom:        my-color(secondary),
+        hover-border-left:          my-color(secondary),
+        active-bg:                  my-color(secondary, max),
+        active-text:                my-color(secondary),
+        active-border-top:          my-color(secondary),
+        active-border-right:        my-color(secondary),
+        active-border-bottom:       my-color(secondary),
+        active-border-left:         my-color(secondary)
+    ),
+    ternary: (
+        bg:                         my-color(ternary),
+        text:                       my-color(ternary, max),
+        border-top:                 my-color(ternary),
+        border-right:               my-color(ternary),
+        border-bottom:              my-color(ternary),
+        border-left:                my-color(ternary),
+        hover-bg:                   my-color(ternary, max),
+        hover-text:                 my-color(ternary),
+        hover-border-top:           my-color(ternary),
+        hover-border-right:         my-color(ternary),
+        hover-border-bottom:        my-color(ternary),
+        hover-border-left:          my-color(ternary),
+        active-bg:                  my-color(ternary, max),
+        active-text:                my-color(ternary),
+        active-border-top:          my-color(ternary),
+        active-border-right:        my-color(ternary),
+        active-border-bottom:       my-color(ternary),
+        active-border-left:         my-color(ternary)
+    ),
+    brand-max: (
+        bg:                         my-color(brand, max),
+        text:                       my-color(brand),
+        border-top:                 my-color(brand, max),
+        border-right:               my-color(brand, max),
+        border-bottom:              my-color(brand, max),
+        border-left:                my-color(brand, max),
+        hover-bg:                   my-color(brand, max),
+        hover-text:                 my-color(neutral, dark),
+        hover-border-top:           my-color(brand, max),
+        hover-border-right:         my-color(brand, max),
+        hover-border-bottom:        my-color(brand, max),
+        hover-border-left:          my-color(brand, max),
+        active-bg:                  my-color(brand, max),
+        active-text:                my-color(neutral, dark),
+        active-border-top:          my-color(brand, max),
+        active-border-right:        my-color(brand, max),
+        active-border-bottom:       my-color(brand, max),
+        active-border-left:         my-color(brand, max)
+    ),
+    light: (
+        bg:                         my-color(neutral, light),
+        text:                       my-color(brand),
+        border-top:                 my-color(neutral, light),
+        border-right:               my-color(neutral, light),
+        border-bottom:              my-color(neutral, light),
+        border-left:                my-color(neutral, light),
+        hover-bg:                   my-color(neutral, light),
+        hover-text:                 my-color(neutral, dark),
+        hover-border-top:           my-color(neutral, light),
+        hover-border-right:         my-color(neutral, light),
+        hover-border-bottom:        my-color(neutral, light),
+        hover-border-left:          my-color(neutral, light),
+        active-bg:                  my-color(neutral, light),
+        active-text:                my-color(primary),
+        active-border-top:          my-color(neutral, light),
+        active-border-right:        my-color(neutral, light),
+        active-border-bottom:       my-color(neutral, light),
+        active-border-left:         my-color(neutral, light)
+    ),
+    tab-two: (
+        bg:                         my-color(neutral, light),
+        text:                       my-color(brand),
+        border-top:                 my-color(neutral, light),
+        border-right:               my-color(neutral, light),
+        border-bottom:              my-color(neutral, light),
+        border-left:                my-color(neutral, light),
+        hover-bg:                   my-color(neutral, midlighter),
+        hover-text:                 my-color(brand),
+        hover-border-top:           my-color(neutral, midlighter),
+        hover-border-right:         my-color(neutral, midlighter),
+        hover-border-bottom:        my-color(neutral, midlighter),
+        hover-border-left:          my-color(neutral, midlighter),
+        active-bg:                  my-color(brand),
+        active-text:                my-color(brand, max),
+        active-border-top:          my-color(brand),
+        active-border-right:        my-color(brand),
+        active-border-bottom:       my-color(brand),
+        active-border-left:         my-color(brand)
+    ),
+    tab: (
+        bg:                         my-color(brand, max),
+        text:                       my-color(brand),
+        border-top:                 my-color(brand, max),
+        border-right:               my-color(brand, max),
+        border-bottom:              my-color(brand, max),
+        border-left:                my-color(brand, max),
+        hover-bg:                   my-color(brand, max),
+        hover-text:                 my-color(primary),
+        hover-border-top:           my-color(brand, max),
+        hover-border-right:         my-color(brand, max),
+        hover-border-bottom:        my-color(brand, max),
+        hover-border-left:          my-color(brand, max),
+        active-bg:                  my-color(brand, max),
+        active-text:                my-color(primary),
+        active-border-top:          my-color(brand, max),
+        active-border-right:        my-color(brand, max),
+        active-border-bottom:       my-color(brand, max),
+        active-border-left:         my-color(brand, max)
+    ),
+    'transparent': (
+        bg:                         transparent,
+        text:                       my-color(brand),
+        border-top:                 transparent,
+        border-right:               transparent,
+        border-bottom:              transparent,
+        border-left:                transparent,
+        hover-bg:                   transparent,
+        hover-text:                 my-color(neutral, mid),
+        hover-border-top:           transparent,
+        hover-border-right:         transparent,
+        hover-border-bottom:        transparent,
+        hover-border-left:          transparent,
+        active-bg:                  transparent,
+        active-text:                my-color(primary),
+        active-border-top:          transparent,
+        active-border-right:        transparent,
+        active-border-bottom:       transparent,
+        active-border-left:         transparent
+    ),
+    transparent-rev: (
+        bg:                         transparent,
+        text:                       my-color(brand, max),
+        border-top:                 transparent,
+        border-right:               transparent,
+        border-bottom:              transparent,
+        border-left:                transparent,
+        hover-bg:                   transparent,
+        hover-text:                 my-color(neutral, mid),
+        hover-border-top:           transparent,
+        hover-border-right:         transparent,
+        hover-border-bottom:        transparent,
+        hover-border-left:          transparent,
+        active-bg:                  transparent,
+        active-text:                my-color(neutral, mid),
+        active-border-top:          transparent,
+        active-border-right:        transparent,
+        active-border-bottom:       transparent,
+        active-border-left:         transparent
+    ),
+    stroke-thin: (
+        bg:                         transparent,
+        text:                       my-color(brand),
+        border-top:                 my-color(brand),
+        border-right:               my-color(brand),
+        border-bottom:              my-color(brand),
+        border-left:                my-color(brand),
+        hover-bg:                   transparent,
+        hover-text:                 my-color(neutral, mid),
+        hover-border-top:           my-color(brand),
+        hover-border-right:         my-color(brand),
+        hover-border-bottom:        my-color(brand),
+        hover-border-left:          my-color(brand),
+        active-bg:                  my-color(brand),
+        active-text:                my-color(brand, max),
+        active-border-top:          my-color(brand),
+        active-border-right:        my-color(brand),
+        active-border-bottom:       my-color(brand),
+        active-border-left:         my-color(brand)
+    )
+);
+$btn-border-widths: (
+    none:                           0px,
+    light:                          1px,
+    heavy:                          3px
+);
+
+$btn-border-radius: (
+    0:                              my-border-radius(0),
+    1:                              my-border-radius(1)
+);
+
+$btn-default-size:                  md;
+$btn-default-color:                 primary;
+$btn-default-border-style:          solid;
+$btn-default-border-width:          heavy;
+$btn-default-border-radius:         0;
+$btn-default-typography:            subheading;
+$btn-default-mod-block-text-align:  center; // spaced | left | center | right
+$btn-default-focus-outline-color:   rgba(my-color(neutral, mid), 0.3);
+$btn-default-focus-outline-width:   1px;
+$btn-default-focus-outline-style:   dashed;
+$btn-default-focus-outline-offset:  -1px;
+
+
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.btn {
+    position: relative;
+    cursor: pointer;
+    transition: all 300ms;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1em;
+    text-decoration: none;
+    overflow: hidden;
+    vertical-align: middle;
+    @if $btn-default-typography != null {
+        @include my-typography($btn-default-typography);
+    }
+    border-style: $btn-default-border-style;
+    border-width: map-get($btn-border-widths, $btn-default-border-width);
+    border-top-color: map-get(map-get($btn-colors, $btn-default-color), border-top);
+    border-right-color: map-get(map-get($btn-colors, $btn-default-color), border-right);
+    border-bottom-color: map-get(map-get($btn-colors, $btn-default-color), border-bottom);
+    border-left-color: map-get(map-get($btn-colors, $btn-default-color), border-left);
+    border-radius: map-get($btn-border-radius, $btn-default-border-radius);
+    background-color: map-get(map-get($btn-colors, $btn-default-color), bg);
+    color: map-get(map-get($btn-colors, $btn-default-color), text);
+    padding: map-get(map-get($btn-sizes, $btn-default-size), padding);
+    font-size: map-get(map-get($btn-sizes, $btn-default-size), font-size);
+    &:focus {
+        outline-color: $btn-default-focus-outline-color;
+        outline-offset: $btn-default-focus-outline-offset;
+        outline-style: $btn-default-focus-outline-style;
+        outline-width: $btn-default-focus-outline-width;
+    }
+    &>[class*="icon-"] {
+        font-size: 1.5em;
+    }
+    // Ribbon
+    &>i {
+        position: absolute;
+        bottom: 40%;
+        left: 0;
+        transform-origin: bottom left;
+        transform: rotate(-45deg);
+        display: block;
+        height: 100%;
+        width: 100%;
+        transition: all 300ms;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 0;
+        font-style: normal;
+        font-size: 0;
+    }
+    &:hover {
+        background-color: map-get(map-get($btn-colors, $btn-default-color), hover-bg);
+        color: map-get(map-get($btn-colors, $btn-default-color), hover-text);
+        border-top-color: map-get(map-get($btn-colors, $btn-default-color), hover-border-top);
+        border-right-color: map-get(map-get($btn-colors, $btn-default-color), hover-border-right);
+        border-bottom-color: map-get(map-get($btn-colors, $btn-default-color), hover-border-bottom);
+        border-left-color: map-get(map-get($btn-colors, $btn-default-color), hover-border-left);
+        &>i {
+            bottom: 0%;
+            transform: rotate(0deg);
+            font-size: inherit;
+        }
+    }
+    &.active {
+        background-color: map-get(map-get($btn-colors, $btn-default-color), active-bg);
+        color: map-get(map-get($btn-colors, $btn-default-color), active-text);
+        border-top-color: map-get(map-get($btn-colors, $btn-default-color), active-border-top);
+        border-right-color: map-get(map-get($btn-colors, $btn-default-color), active-border-right);
+        border-bottom-color: map-get(map-get($btn-colors, $btn-default-color), active-border-bottom);
+        border-left-color: map-get(map-get($btn-colors, $btn-default-color), active-border-left);
+        &>i {
+            bottom: 0%;
+            transform: rotate(0deg);
+            font-size: inherit;
+        }
+    }
+    // Tabulation specific
+    &.mod-tab {
+        overflow: initial;
+        &.active {
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: calc(100% - 5px);
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-width: 5px;
+                border-style: solid;
+                border-color: currentColor transparent transparent transparent;
+            }
+        }
+    }
+
+    img,
+    svg,
+    span {
+        // vertical-align: middle;
+    }
+    &.mod-space-between {
+        justify-content: space-between;
+    }
+    &.mod-center {
+        justify-content: center;
+    }
+    /*
+    * Display type
+    */
+    &[class*="mod-block"] {
+        display: inline-flex;
+        @if $btn-default-mod-block-text-align == center {
+            justify-content: center;
+        }
+        @elseif $btn-default-mod-block-text-align == right {
+            justify-content: flex-end;
+        }
+        @elseif $btn-default-mod-block-text-align == spaced {
+            justify-content: space-between;
+        }
+        @elseif $btn-default-mod-block-text-align == left {
+            justify-content: flex-start;
+        }
+        white-space: nowrap;
+        width: 100%; // input submit fix
+        &.mod-block-spaced {
+            justify-content: space-between;
+        }
+        &.mod-block-center {
+            justify-content: center;
+        }
+        &.mod-block-right {
+            justify-content: flex-end;
+        }
+        &.mod-block-left {
+            justify-content: flex-start;
+        }
+    }
+    /*
+    * Colors modifiers
+    * Build all color variations classes
+    */
+    @each $color, $data in $btn-colors {
+        @if $color != $btn-default-color {
+            &.mod-#{$color} {
+                background-color: map-get(map-get($btn-colors, $color), bg);
+                border-top-color: map-get(map-get($btn-colors, $color), border-top);
+                border-right-color: map-get(map-get($btn-colors, $color), border-right);
+                border-bottom-color: map-get(map-get($btn-colors, $color), border-bottom);
+                border-left-color: map-get(map-get($btn-colors, $color), border-left);
+                color: map-get(map-get($btn-colors, $color), text);
+                &:hover {
+                    background-color: map-get(map-get($btn-colors, $color), hover-bg);
+                    border-top-color: map-get(map-get($btn-colors, $color), hover-border-top);
+                    border-right-color: map-get(map-get($btn-colors, $color), hover-border-right);
+                    border-bottom-color: map-get(map-get($btn-colors, $color), hover-border-bottom);
+                    border-left-color: map-get(map-get($btn-colors, $color), hover-border-left);
+                    color: map-get(map-get($btn-colors, $color), hover-text);
+                }
+                &.active {
+                    background-color: map-get(map-get($btn-colors, $color), active-bg);
+                    border-top-color: map-get(map-get($btn-colors, $color), active-border-top);
+                    border-right-color: map-get(map-get($btn-colors, $color), active-border-right);
+                    border-bottom-color: map-get(map-get($btn-colors, $color), active-border-bottom);
+                    border-left-color: map-get(map-get($btn-colors, $color), active-border-left);
+                    color: map-get(map-get($btn-colors, $color), active-text);
+                }
+            }
+        }
+    }
+    /*
+    * Border radius modifiers
+    * Build all border radius variations classes
+    */
+    @each $border-radius, $data in $btn-border-radius {
+        @if $border-radius != $btn-default-border-radius {
+            &.mod-br-#{$border-radius} {
+                border-radius: $data;
+            }
+        }
+    }
+    /*
+    * Border width modifiers
+    * Build all border variations classes
+    */
+    @each $border-width, $data in $btn-border-widths {
+        @if $border-width != $btn-default-border-width {
+            &.mod-bw-#{$border-width} {
+                border-width: $data;
+            }
+        }
+    }
+    /*
+    * Sizes modifiers
+    */
+    @each $size, $data in $btn-sizes {
+        @if $size != $btn-default-size {
+            &.mod-#{$size} {
+                @each $property, $value in $data {
+                    #{$property}: $value;
+                }
+            }
+        }
+    }
+    /*
+        DISABLED
+        Status management
+    */
+    &[disabled],
+    &.disabled {
+        pointer-events: none;
+        opacity: .3;
+    }
+}

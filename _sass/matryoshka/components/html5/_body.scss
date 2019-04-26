@@ -1,0 +1,9 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    @include my-typography(light);
+    font-size: my-font-size(sm2);
+    color: my-color(brand);
+    background-color: my-color(brand, max);
+}

@@ -1,0 +1,51 @@
+/*
+    COLORS UTILITIES
+*/
+@each $family, $mainColor in $ds-colors {
+    // If it is a color, return automatic color combinations
+
+    @if type-of($mainColor) == color {
+        //Build all main colors as CSS background color utilities
+        .sg-bc-#{$family} {
+            background-color: $mainColor !important;
+        }
+        //Build all main colors as CSS color utilities
+        .sg-c-#{$family} {
+            color: $mainColor !important;
+        }
+        //
+        @each $contrast, $contrastValue in $ds-contrasts {
+            $color: ds-smart-contrast($contrastValue, $mainColor);
+            //Build all contrasted colors from this main color as CSS background color utilities
+            .sg-bc-#{$family}-#{$contrast} {
+                background-color: $color !important;
+            }
+            //Build all colors from this main color as CSS color utilities
+            .sg-c-#{$family}-#{$contrast} {
+                color: $color !important;
+            }
+        }
+    }
+    // If it is a map, it is a user defined color combination
+    @elseif type-of($mainColor) == map {
+        @if type-of(map-get($mainColor, 0)) == color {
+            .sg-bc-#{$family} {
+                background-color: map-get($mainColor, 0) !important;
+            }
+            .sg-c-#{$family} {
+                color: map-get($mainColor, 0) !important;
+            }
+        }
+
+        @each $variant, $value in $mainColor {
+            @if $variant != 0 {
+                .sg-bc-#{$family}-#{$variant} {
+                    background-color: $value !important;
+                }
+                .sg-c-#{$family}-#{$variant} {
+                    color: $value !important;
+                }
+            }
+        }
+    }
+}
