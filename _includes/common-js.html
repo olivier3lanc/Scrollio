@@ -1,13 +1,65 @@
 <script type="text/javascript" src="{{ '/js/app.js' | relative_url }}"></script>
 <script type="text/javascript" src="{{ '/js/prism/prism.min.js' | relative_url }}"></script>
-<script type="text/javascript" src="{{ '/js/matryoshka/modals.js' | relative_url }}"></script>
+<!-- <script type="text/javascript" src="{{ '/js/matryoshka/modals.js' | relative_url }}"></script> -->
+<script type="text/javascript" src="{{ '/js/matryoshka/toggles.js' | relative_url }}"></script>
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
+        // Menu sidebar categories filters
+        var categories = [];
+        jQuery('#pages [data-category]').each(function() {
+            var cat = jQuery(this).attr('data-category'),
+                classes = jQuery(this).attr('class'),
+                href = jQuery(this).attr('href'),
+                title = jQuery(this).text(),
+                link = '<a href="'+href+'" class="'+classes+'">'+title+'</a>';
+            if (cat == '') {
+
+            } else {
+                if (categories.indexOf(cat) == -1) {
+                    categories.push(cat);
+                    jQuery('#pages').append(
+                        '<button class="btn mod-soft mod-xs mod-block sg-ta-right sg-mt-sm sg-fs-xxs" my-toggle="'+cat+'">'+
+                            cat+' ⇂'+
+                        '</button>'+
+                        '<ul class="sg-list mod-reset sg-m-none active" my-toggle-name="'+cat+'">'+
+                            '<li>'+link+'</li>'+
+                        '</ul>'
+                    );
+                } else {
+                    jQuery('#pages [my-toggle-name="'+cat+'"]').append(
+                        '<li>'+link+'</li>'
+                    );
+                }
+                jQuery(this).remove();
+            }
+        });
+        myToggle.update();
+        console.log(categories);
+        // categories.forEach(function(cat) {
+        //
+        //
+        // });
+        // jQuery('#sidebar [data-category]').each(function() {
+        //
+        // });
+        // jQuery('#sidebar .item.categories button').on('click', function() {
+        //     var cat = jQuery(this).text();
+        //     if (cat == 'all') {
+        //         jQuery('#sidebar [data-category]').show();
+        //     } else {
+        //         jQuery('#sidebar [data-category]').hide();
+        //         jQuery('#sidebar [data-category="'+cat+'"]').show();
+        //     }
+        //     jQuery('#sidebar .item.categories button').removeClass('active');
+        //     jQuery(this).addClass('active');
+        // });
+
+
         // Icons
         var jQ_myIcons = jQuery('.my-icons');
         if(jQ_myIcons.length == 1){
-            jQuery('head').append('<link href="{{ site.url }}{{ site.baseurl }}/fonts/icomoon/style.css" rel="stylesheet">');
+            jQuery('head').append('<link href="{{ '/fonts/icomoon/style.css' | relative_url }}" rel="stylesheet">');
             // var test = JSON.parse('../../js/fonts/selection.json');
             var icomoon = new XMLHttpRequest();
             icomoon.open("GET", '{{ site.url }}{{ site.baseurl }}/fonts/icomoon/selection.json', true);
@@ -93,7 +145,7 @@
                     '<code class="language-'+language+'">'+
                         trimmed+
                     '</code>'+
-                '</pre>'                
+                '</pre>'
             );
 
             // jQuery(this).after('<pre><code>'+content+'</code></pre>');

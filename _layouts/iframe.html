@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% assign pagecontent_description = page.content | markdownify | replace: '.', '. ' | replace: '</h2>', ': ' | replace: '</h3>', ': ' | replace: '</h4>', ': ' | strip_html | strip_newlines | replace: '  ', ' ' | truncate: 160 %}
         <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{% if pagecontent_description.size > 10 %}{{ pagecontent_description }}{% else %}{{ site.description }}{% endif %}{% endif %} ">
-        <link rel="stylesheet" href="{{ "/css/normalize.css" | relative_url }}">
-        <link rel="stylesheet" href="{{ "/css/full.css" | relative_url }}">
+        <link rel="stylesheet" href="{{ '/css/normalize.css' | relative_url }}">
+        <link rel="stylesheet" href="{{ '/css/full.css' | relative_url }}">
         <style>
             body {
                 min-height: 100vh;
@@ -67,50 +67,6 @@
                 if (sentObject.options.showFlexboxItems) {
                     document.getElementsByTagName('body')[0].classList.add('show-flexbox-items');
                 }
-                // if (sentObject.options.includejQuery) {
-                //     // console.log('ok');
-                //     var jq = document.createElement('script');
-                //     jq.onload = function () {
-                //         if (sentObject.options.includeAlerts) {
-                //             // console.log('ok');
-                //             var alerts = document.createElement('script');
-                //             alerts.onload = function () {
-                //                 //do stuff with the script
-                //             };
-                //             alerts.src = '{{ "/js/matryoshka/alerts.js" | relative_url }}';
-                //             document.head.appendChild(alerts);
-                //         }
-                //         if (sentObject.options.includeDropdowns) {
-                //             // console.log('ok');
-                //             var dropdowns = document.createElement('script');
-                //             dropdowns.onload = function () {
-                //                 //do stuff with the script
-                //             };
-                //             dropdowns.src = '{{ "/js/matryoshka/dropdowns.js" | relative_url }}';
-                //             document.head.appendChild(dropdowns);
-                //         }
-                //         if (sentObject.options.includeModals) {
-                //             // console.log('ok');
-                //             var modals = document.createElement('script');
-                //             modals.onload = function () {
-                //                 //do stuff with the script
-                //             };
-                //             modals.src = '{{ "/js/matryoshka/modals.js" | relative_url }}';
-                //             document.head.appendChild(modals);
-                //         }
-                //         if (sentObject.options.includeTabs) {
-                //             // console.log('ok');
-                //             var tabs = document.createElement('script');
-                //             tabs.onload = function () {
-                //                 //do stuff with the script
-                //             };
-                //             tabs.src = '{{ "/js/matryoshka/tabs.js" | relative_url }}';
-                //             document.head.appendChild(tabs);
-                //         }
-                //     };
-                //     jq.src = '{{ "/js/jquery/jquery-3.3.1.min.js" | relative_url }}';
-                //     document.head.appendChild(jq);
-                // }
                 var scripts = [];
                 var wrapper = document.getElementById('wrapper');
                 wrapper.innerHTML = sentObject.content;

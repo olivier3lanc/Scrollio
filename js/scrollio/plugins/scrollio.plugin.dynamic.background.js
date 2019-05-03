@@ -88,6 +88,7 @@
                 var jQ_itemsWithDynamicBackground = jQuery('#scrollio>.item[data-dynamic-background]');
                 //Optimization: Work only if there are things to do
                 if(jQ_itemsWithDynamicBackground.length > 0){
+                    console.log('lkmlk');
                     //Detect bg image on each item, then apply background image
                     jQuery('#scrollio>.item[data-dynamic-background]').each(function(){
                         var jQ_theItem = jQuery(this);
