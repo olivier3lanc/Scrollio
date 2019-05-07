@@ -1,9 +1,13 @@
-url: "https://itautomotive-dev.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-baseurl: "/aphael-style-guide" # the subpath of your site, e.g. /blog
-# destination: ../mydocs # the destination directory e.g. /blog
-title: Aphael Design System # title of the documentation
+# Jekyll local config for Design System
+url: "https://olivier3lanc.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/Scrollio" # the subpath of your site, e.g. /blog
+# destination: ../assets # Build relative path destination. The destination directory e.g. /blog
+# keep_files: [cache]
+title: Scrollio # title of the documentation
 description: >- # Description of the docs. (>- means to ignore newlines until "baseurl:")
-  Here are settings and components for Aphael design system.
+  A full page scroll experience tool for story telling..
+logo: file.svg # Image file in design-system/img
+assets_dir: '' # Folder into which where css, js, img, fonts, are placed
 # Text strings to display
 texts:
     pages: Patterns

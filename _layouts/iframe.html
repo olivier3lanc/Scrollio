@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% assign pagecontent_description = page.content | markdownify | replace: '.', '. ' | replace: '</h2>', ': ' | replace: '</h3>', ': ' | replace: '</h4>', ': ' | strip_html | strip_newlines | replace: '  ', ' ' | truncate: 160 %}
         <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{% if pagecontent_description.size > 10 %}{{ pagecontent_description }}{% else %}{{ site.description }}{% endif %}{% endif %} ">
-        <link rel="stylesheet" href="{{ '/css/normalize.css' | relative_url }}">
-        <link rel="stylesheet" href="{{ '/css/full.css' | relative_url }}">
+        <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/css/normalize.css">
+        <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/css/full.css">
         <style>
             body {
                 min-height: 100vh;
@@ -43,12 +43,12 @@
         <div id="wrapper">
             {{ content }}
         </div>
-        <script type="text/javascript" src="{{ '/js/jquery/jquery-3.4.0.min.js' | relative_url }}"></script>
-        <script type="text/javascript" src="{{ '/js/matryoshka/alerts.js' | relative_url }}"></script>
-        <script type="text/javascript" src="{{ '/js/matryoshka/dropdowns.js' | relative_url }}"></script>
-        <script type="text/javascript" src="{{ '/js/matryoshka/modals.js' | relative_url }}"></script>
-        <script type="text/javascript" src="{{ '/js/matryoshka/tabs.js' | relative_url }}"></script>
-        <script type="text/javascript" src="{{ '/js/matryoshka/toggles.js' | relative_url }}"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/jquery/jquery-3.4.0.min.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/alerts.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/dropdowns.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/modals.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/tabs.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/toggles.js"></script>
         <script type="text/javascript">
             var bodyStyle = getComputedStyle(document.querySelector('body'));
             if (bodyStyle.backgroundColor == 'rgba(0, 0, 0, 0)' && bodyStyle.backgroundImage == 'none' && bodyStyle.background == '') {

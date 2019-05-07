@@ -3,15 +3,14 @@
     <ul class="sg-list mod-reset" sg-m-none="xs, sm, md">
         <li class="item">
             <a rel="author" href="{{ '/' | relative_url }}" class="btn sg-fs-lg mod-xs mod-block sg-ta-right" sg-fs-xs="xs, sm, md">
-                <img src="{{ '/img/logo-aphael.svg' | relative_url }}" alt="logo Aphael">
+    {% if site.logo %}
+                <!-- With logo -->
+                <img src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/img/{{ site.logo }}" alt="logo">
                 <span>{{ site.title | escape }}</span>
-                <!-- With logo
-                <img src="{{ "/path/to/logo *svg, *png etc" | relative_url }}" alt="logo name">
+    {% else %}
+                <!-- Without logo -->
                 <span>{{ site.title | escape }}</span>
-                -->
-                <!-- Without logo
-                <span>{{ site.title | escape }}</span>
-                -->
+    {% endif %}
             </a>
         </li>
     </ul>

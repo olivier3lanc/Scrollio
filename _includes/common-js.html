@@ -1,7 +1,6 @@
-<script type="text/javascript" src="{{ '/js/app.js' | relative_url }}"></script>
-<script type="text/javascript" src="{{ '/js/prism/prism.min.js' | relative_url }}"></script>
-<!-- <script type="text/javascript" src="{{ '/js/matryoshka/modals.js' | relative_url }}"></script> -->
-<script type="text/javascript" src="{{ '/js/matryoshka/toggles.js' | relative_url }}"></script>
+<!-- <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/utilities.js"></script> -->
+<script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/prism/prism.min.js"></script>
+<script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/toggles.js"></script>
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
@@ -35,34 +34,14 @@
             }
         });
         myToggle.update();
-        console.log(categories);
-        // categories.forEach(function(cat) {
-        //
-        //
-        // });
-        // jQuery('#sidebar [data-category]').each(function() {
-        //
-        // });
-        // jQuery('#sidebar .item.categories button').on('click', function() {
-        //     var cat = jQuery(this).text();
-        //     if (cat == 'all') {
-        //         jQuery('#sidebar [data-category]').show();
-        //     } else {
-        //         jQuery('#sidebar [data-category]').hide();
-        //         jQuery('#sidebar [data-category="'+cat+'"]').show();
-        //     }
-        //     jQuery('#sidebar .item.categories button').removeClass('active');
-        //     jQuery(this).addClass('active');
-        // });
-
 
         // Icons
         var jQ_myIcons = jQuery('.my-icons');
         if(jQ_myIcons.length == 1){
-            jQuery('head').append('<link href="{{ '/fonts/icomoon/style.css' | relative_url }}" rel="stylesheet">');
+            jQuery('head').append('<link href="{{ '{{ site.assets_dir }}/fonts/icomoon/style.css' | relative_url }}" rel="stylesheet">');
             // var test = JSON.parse('../../js/fonts/selection.json');
             var icomoon = new XMLHttpRequest();
-            icomoon.open("GET", '{{ site.url }}{{ site.baseurl }}/fonts/icomoon/selection.json', true);
+            icomoon.open("GET", '{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/fonts/icomoon/selection.json', true);
             icomoon.onload = function() {
                 var listOfIcons = JSON.parse(icomoon.responseText);
                 for (var i = 0; i < listOfIcons.icons.length; i++) {
@@ -168,7 +147,7 @@
         if (jQuery('table.highchart').length > 0){
             jQuery.getScript("https://code.highcharts.com/highcharts.js")
                 .done(function( script, textStatus ){
-                    jQuery.getScript('{{ "/js/highcharttable/jquery.highchartTable-min.js" | relative_url }}')
+                    jQuery.getScript('{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/highcharttable/jquery.highchartTable-min.js')
                         .done(function( script, textStatus ) {
                             jQuery('table.highchart').each(function(){
                                 if(jQuery(this).attr('data-graph-container-before') === undefined){
@@ -184,3 +163,6 @@
         }
     });
 </script>
+{% for script in page.scripts %}
+    <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/{{ script }}"></script>
+{% endfor %}
