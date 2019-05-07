@@ -24,6 +24,11 @@
         }
 
     }
+    // If unknown color, return the argument
+    @else {
+        @warn 'my-color: Unknown color:'+$family;
+        @return $family;
+    }
 }
 
 /*
@@ -34,10 +39,13 @@
     @param $name - the name of the font size specified into config/font-sizes
 */
 @function my-font-size($name) {
-    @if type-of(map-get($ds-font-sizes, $name)) == null {
-        @return $name;
-    } @else {
+    // If number, it is a known font size
+    @if type-of(map-get($ds-font-sizes, $name)) == number {
         @return map-get($ds-font-sizes, $name)+$ds-unit;
+    }
+    // Otherwise it is a custom value
+    @else {
+        @return $name;
     }
 
 }
@@ -125,40 +133,48 @@
 */
 @function my-font-family($name) {
     @if type-of(map-get($ds-font-families, $name)) == null {
+        @warn 'my-font-family:'+$name+' is not a valid font';
         @return $name;
     } @else {
         // The following code is needed to get proper Google font weight.
         // To do so we add the 'font-weight' property with the proper font weight value
-        $fontWeight: map-get(map-get($ds-fonts, $name), weight);
-        $numericWeight: 400;
-        //If string, it is a Google font
-        @if type-of($fontWeight) == string {
-            @if $fontWeight == 'Thin' {
-                $numericWeight: 100;
+        // @warn type-of(map-get($ds-fonts, $name));
+        @if type-of(map-get($ds-fonts, $name)) != 'null' {
+            $fontWeight: map-get(map-get($ds-fonts, $name), weight);
+            $numericWeight: 400;
+            //If string, it is a Google font
+            @if type-of($fontWeight) == string {
+                @if $fontWeight == 'Thin' {
+                    $numericWeight: 100;
+                }
+                @elseif $fontWeight == 'Extra-Light' {
+                    $numericWeight: 200;
+                }
+                @elseif $fontWeight == 'Light' {
+                    $numericWeight: 300;
+                }
+                @elseif $fontWeight == 'Medium' {
+                    $numericWeight: 500;
+                }
+                @elseif $fontWeight == 'Semi-Bold' {
+                    $numericWeight: 600;
+                }
+                @elseif $fontWeight == 'Bold' {
+                    $numericWeight: 700;
+                }
+                @elseif $fontWeight == 'Extra-Bold' {
+                    $numericWeight: 800;
+                }
+                @elseif $fontWeight == 'Black' {
+                    $numericWeight: 900;
+                }
             }
-            @elseif $fontWeight == 'Extra-Light' {
-                $numericWeight: 200;
-            }
-            @elseif $fontWeight == 'Light' {
-                $numericWeight: 300;
-            }
-            @elseif $fontWeight == 'Medium' {
-                $numericWeight: 500;
-            }
-            @elseif $fontWeight == 'Semi-Bold' {
-                $numericWeight: 600;
-            }
-            @elseif $fontWeight == 'Bold' {
-                $numericWeight: 700;
-            }
-            @elseif $fontWeight == 'Extra-Bold' {
-                $numericWeight: 800;
-            }
-            @elseif $fontWeight == 'Black' {
-                $numericWeight: 900;
-            }
+            @return map-get($ds-font-families, $name)+'; font-weight:'+$numericWeight;
         }
-        @return map-get($ds-font-families, $name)+'; font-weight:'+$numericWeight;
+        @else {
+            @warn 'my-font-family:'+$name+' is not a valid font family name';
+            @return '';
+        }
     }
 }
 

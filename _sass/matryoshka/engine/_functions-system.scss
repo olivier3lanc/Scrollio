@@ -68,32 +68,40 @@
     @param $color - color value - the color value to process
 */
 @function ds-smart-contrast($step, $color) {
-    $color_final: null;
-    $lightness: lightness($color);
-    $luminance: ds-luminance($color);
-    //Accentuated contrast mode
-    @if $step < 0 {
-         @if $luminance > $ds-luminance-threshold {
-            $new_amount: -($step/100) * (100 - ds-strip-units($lightness));
-            $color_final: lighten($color, $new_amount);
+    @if type-of($step) == number and type-of($color) == color {
+        $color_final: null;
+        $lightness: lightness($color);
+        $luminance: ds-luminance($color);
+        //Accentuated contrast mode
+        @if $step < 0 {
+             @if $luminance > $ds-luminance-threshold {
+                $new_amount: -($step/100) * (100 - ds-strip-units($lightness));
+                $color_final: lighten($color, $new_amount);
+            }
+            @else {
+                $new_amount: -($step/100) * ds-strip-units($lightness);
+                $color_final: darken($color, $new_amount);
+            }
         }
+        //Smart contrast mode
         @else {
-            $new_amount: -($step/100) * ds-strip-units($lightness);
-            $color_final: darken($color, $new_amount);
+             @if $luminance > $ds-luminance-threshold {
+                $new_amount: ($step/100) * ds-strip-units($lightness);
+                $color_final: darken($color, $new_amount);
+            }
+            @else {
+                $new_amount: ($step/100) * (100 - ds-strip-units($lightness));
+                $color_final: lighten($color, $new_amount);
+            }
         }
+        @return $color_final;
     }
-    //Smart contrast mode
     @else {
-         @if $luminance > $ds-luminance-threshold {
-            $new_amount: ($step/100) * ds-strip-units($lightness);
-            $color_final: darken($color, $new_amount);
-        }
-        @else {
-            $new_amount: ($step/100) * (100 - ds-strip-units($lightness));
-            $color_final: lighten($color, $new_amount);
-        }
+        @warn 'ds-smart-contrast: $step is not an number or $color is not a valid css color value';
+        @warn 'You may call a color contrast that does not exist';
+        @return '';
     }
-    @return $color_final;
+
 }
 
 @function ds-contrast-ratio($color1, $color2) {

@@ -240,6 +240,46 @@ $btn-colors: (
         active-border-right:        my-color(brand),
         active-border-bottom:       my-color(brand),
         active-border-left:         my-color(brand)
+    ),
+    facebook: (
+        bg:                         #436097,
+        text:                       white,
+        border-top:                 #436097,
+        border-right:               #436097,
+        border-bottom:              #436097,
+        border-left:                #436097,
+        hover-bg:                   #436097,
+        hover-text:                 white,
+        hover-border-top:           #436097,
+        hover-border-right:         #436097,
+        hover-border-bottom:        #436097,
+        hover-border-left:          #436097,
+        active-bg:                  #436097,
+        active-text:                white,
+        active-border-top:          #436097,
+        active-border-right:        #436097,
+        active-border-bottom:       #436097,
+        active-border-left:         #436097
+    ),
+    google: (
+        bg:                         #cd4c43,
+        text:                       white,
+        border-top:                 #cd4c43,
+        border-right:               #cd4c43,
+        border-bottom:              #cd4c43,
+        border-left:                #cd4c43,
+        hover-bg:                   #cd4c43,
+        hover-text:                 white,
+        hover-border-top:           #cd4c43,
+        hover-border-right:         #cd4c43,
+        hover-border-bottom:        #cd4c43,
+        hover-border-left:          #cd4c43,
+        active-bg:                  #cd4c43,
+        active-text:                white,
+        active-border-top:          #cd4c43,
+        active-border-right:        #cd4c43,
+        active-border-bottom:       #cd4c43,
+        active-border-left:         #cd4c43
     )
 );
 $btn-border-widths: (

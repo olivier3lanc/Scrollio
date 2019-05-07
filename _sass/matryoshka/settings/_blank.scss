@@ -1,0 +1,178 @@
+/*
+    USER SETTINGS
+    This file contains all the required paramaters for Matryoshka
+*/
+
+/*
+    UNIT
+    @type SASS string https://sass-lang.com/documentation/file.SASS_REFERENCE.html#strings
+    The unit that will be used by default
+*/
+$ds-unit: px;
+
+/*
+    COLORS
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Define main colors
+    * Enter any name as main color name
+    * yourColorName: CSS color value
+    * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+    * $ds-colors: (
+    *     auto-color-family-name: #1234ef,
+    *     custom-reference-family-name: (
+    *         0:              #12345ef,  // "0" is the reference color
+    *         colorName1:     red,
+    *         colorName2:     hsl(50, 10%, 50%),
+    *         colorName3:     rgba(0, 10, 25, .8)
+    *     ),
+    *     simple-color-group-name: (
+    *         colorName1:     darkred,
+    *         colorName2:     orange,
+    *         colorName3:     yellow
+    *     )
+    * );
+
+    @format [nameOfTheColorFamily]: CSS color or SASS map
+*/
+$ds-colors: (
+    // brand:      #D2BC2F,
+    // primary:    #ED2612,
+    // neutral: (
+    //     0:      #5e5e5e,
+    //     max:    #FFFFFF,
+    //     min:    #000000
+    // )
+);
+
+/*
+    CONTRASTS
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Useful for automatic contrast adjustments
+    Matryoshka automatically computes color combinations
+    from your main colors defined in $ds-colors.
+    The contrasts parameter defines a set of
+    contrasts combinations to apply on each main color.
+    * Enter any name as contrast name
+    * Values must be integer between -100 and +100
+    * Value = 0 returns the same color as input
+    * Value = -100 and value = 100 always return black or white colors
+    * Value = 100 returns WHITE if the input color luminance is below or equal 50%
+    * Value = 100 returns BLACK if the input color luminance is above 50%
+    * Value = -100 returns WHITE if the input color luminance is above 50%
+    * Value = -100 returns BLACK if the input color luminance is below or equal 50%
+    @format [nameOfTheContrast]: [number]
+*/
+$ds-contrasts: (
+    // max: 100
+);
+
+/*
+    LUMINANCE METHOD
+    @type SASS number https://sass-lang.com/documentation/file.SASS_REFERENCE.html#data_types
+    Define the default method used to compute color combinations
+    Possible values:
+    1: Weighted Euclidean Distance in 3D RGB Space http://alienryderflex.com/hsp.html
+    2: W3C recommandation https://www.w3.org/TR/AERT/#color-contrast
+    3: Luma sRGB https://en.wikipedia.org/wiki/Rec._709
+*/
+$ds-luminance-method: 3;
+
+/*
+    LUMINANCE THRESHOLD
+    @type SASS number https://sass-lang.com/documentation/file.SASS_REFERENCE.html#data_types
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Define the luminance threshold between light and dark.
+    Float value between 0 and 1
+*/
+$ds-luminance-threshold: 0.5;
+
+/*
+    SCREEN SIZES
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Enter any amount of break point names and values
+    to build your own screen sizes.
+    Use semantic names, easy to remenber and to use, they are used to name your CSS classes utilities.
+    Always use 'infinite' as value for the largest screen
+    Example
+    $ds-screen-sizes: (
+        mini:   450,
+        large:  960,
+        wide:   infinite // Always 'infinite' for the last
+    );
+    @format [nameOfTheScreenSize]: [number] or 'infinite' for the largest/last
+*/
+$ds-screen-sizes: (
+);
+
+/*
+    FONTS
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Enter the fonts for your project.
+    Example:
+    3 possibilities:
+    * Google Font
+    * Local font
+    * Websafe font
+    @format [customFontFamilyName]: (
+        // settings according to the type
+    )
+*/
+$ds-fonts: (
+);
+
+/*
+    DO NOT EDIT BOOT
+*/
+@import '../engine/boot';
+
+/*
+    FONT SIZES
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Enter the font sizes for your project.
+    @format [nameOfTheFontSize]: [number]
+*/
+$ds-font-sizes: (
+);
+
+/*
+    TYPOGRAPHY
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Enter the typgraphy declarations.
+    You can enter any amount of CSS property.
+    @format [nameOfTheFontSize]: [number]
+    For font-family: Use $ds-fonts names
+    For font-size: Use $ds-font-sizes names
+    For color, background-color: Use $ds-colors names
+*/
+$ds-typography: (
+);
+
+/*
+    SPACINGS
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Enter all the spacings that will be used into your project
+    @format [customNameOfTheFontSize]: [number]
+*/
+$ds-spacings: (
+);
+
+/*
+    BORDERS
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Enter your borders CSS shorthands
+    @format [customBorderName]: CSS border shorthand that contains
+    * my-border-style([borderStyleName])
+    * my-border-width([borderWidthName])
+    * my-border-color([borderColorName])
+*/
+$ds-borders: (
+);
+
+/*
+    BORDER RADIUS
+    @type SASS map https://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+    Enter your border radius amounts
+    @format [customBorderRadiusName]: [number]
+*/
+$ds-border-radius: (
+);

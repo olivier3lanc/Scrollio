@@ -1,40 +1,25 @@
 // This file is dedicated to components
 // Components are elements that output CSS from core
 
-// HTML5 tags
-// @import 'components/html5/normalize';
-@import 'components/html5/body';
-@import 'components/html5/headings';
-@import 'components/html5/inline-elements';
-@import 'components/html5/hr';
+// UTILITIES
+@import 'components/utilities/all';
 
-// // Utility classes
-@import 'components/utilities/colors';
-@import 'components/utilities/spacings';
-@import 'components/utilities/typography';
-@import 'components/utilities/font-sizes';
-@import 'components/utilities/responsive-display';
-@import 'components/utilities/text-alignments';
-@import 'components/utilities/text-transforms';
-@import 'components/utilities/borders';
-@import 'components/utilities/border-radius';
-@import 'components/utilities/misc';
-
-//UI
+// UI
+@import 'components/ui/html5';
 // @import 'components/ui/alerts';
 // @import 'components/ui/badges';
 // @import 'components/ui/breadcrumb';
-@import 'components/ui/buttons';
+// @import 'components/ui/buttons';
 // @import 'components/ui/data-labels';
-@import 'components/ui/dropdowns';
-@import 'components/ui/forms';
-@import 'components/ui/grid';
-@import 'components/ui/icons';
+// @import 'components/ui/dropdowns';
+// @import 'components/ui/forms';
+// @import 'components/ui/grid';
+// @import 'components/ui/icons';
 // @import 'components/ui/lists';
-@import 'components/ui/modals';
-@import 'components/ui/specific';
+// @import 'components/ui/modals';
+// @import 'components/ui/specific';
 // @import 'components/ui/tables';
-@import 'components/ui/tabs';
-@import 'components/ui/toggles';
-@import 'components/ui/loader';
+// @import 'components/ui/tabs';
+// @import 'components/ui/toggles';
+// @import 'components/ui/loader';
 // @import 'components/ui/pagerfanta';

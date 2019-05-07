@@ -1,54 +1,55 @@
 //FONTS MANAGEMENT
-
-@each $item, $property in $ds-fonts {
-    //Font name list to be added to $ds-font-families
-    $temp: ();
-    //Font weight for Google Fonts only
-    $weight: '';
-    //If Local font
-    @if (map-get($property, type) == 'local') {
-        @font-face {
-            font-family: map-get($property,name);
-            src:    url(map-get($property,path)+map-get($property,name)+'.ttf')     format('truetype'),
-                    url(map-get($property,path)+map-get($property,name)+'.woff')    format('woff'),
-                    url(map-get($property,path)+map-get($property,name)+'.svg')     format('svg');
-            font-weight: normal;
-            font-style: normal;
+@if length(map-keys($ds-fonts)) > 0 {
+    @each $item, $property in $ds-fonts {
+        //Font name list to be added to $ds-font-families
+        $temp: ();
+        //Font weight for Google Fonts only
+        $weight: '';
+        //If Local font
+        @if (map-get($property, type) == 'local') {
+            @font-face {
+                font-family: map-get($property,name);
+                src:    url(map-get($property,path)+map-get($property,name)+'.ttf')     format('truetype'),
+                        url(map-get($property,path)+map-get($property,name)+'.woff')    format('woff'),
+                        url(map-get($property,path)+map-get($property,name)+'.svg')     format('svg');
+                font-weight: normal;
+                font-style: normal;
+            }
+            $temp: (
+                #{$item}: unquote('"'+map-get($property, name)+'", '+map-get($property, fallback))
+            );
         }
-        $temp: (
-            #{$item}: unquote('"'+map-get($property, name)+'", '+map-get($property, fallback))
-        );
-    }
-    //If Google Font
-    @if (map-get($property, type) == 'google') {
-        $google_font_base_uri: 'https://fonts.googleapis.com/css?family=';
-        $weightedFontFamilyName: map-get($property, name);
-        @if (map-get($property, weight) != ''){
-            $weight: ':';
-            $weightedFontFamilyName: quote($weightedFontFamilyName+' '+map-get($property, weight));
-        }@else{
-            $weight: '';
+        //If Google Font
+        @if (map-get($property, type) == 'google') {
+            $google_font_base_uri: 'https://fonts.googleapis.com/css?family=';
+            $weightedFontFamilyName: map-get($property, name);
+            @if (map-get($property, weight) != ''){
+                $weight: ':';
+                $weightedFontFamilyName: quote($weightedFontFamilyName+' '+map-get($property, weight));
+            }@else{
+                $weight: '';
+            }
+            @import url($google_font_base_uri+map-get($property, name)+$weight+map-get($property, weight));
+            $temp: (
+                #{$item}: unquote('"'+$weightedFontFamilyName+'", "'+map-get($property, name)+'", '+map-get($property, fallback))
+                // #{$item}: unquote('"'+map-get($property, name)+'", '+map-get($property, fallback))
+            );
         }
-        @import url($google_font_base_uri+map-get($property, name)+$weight+map-get($property, weight));
-        $temp: (
-            #{$item}: unquote('"'+$weightedFontFamilyName+'", "'+map-get($property, name)+'", '+map-get($property, fallback))
-            // #{$item}: unquote('"'+map-get($property, name)+'", '+map-get($property, fallback))
-        );
+        //If no custom font, fallback/system font only
+        @if (map-get($property,type) == 'websafe') {
+            $temp: (
+                #{$item}: unquote(map-get($property,name))
+            );
+        }
+        $ds-font-families: map-merge($ds-font-families,$temp);
     }
-    //If no custom font, fallback/system font only
-    @if (map-get($property,type) == 'websafe') {
-        $temp: (
-            #{$item}: unquote(map-get($property,name))
-        );
-    }
-    $ds-font-families: map-merge($ds-font-families,$temp);
-}
 
-// Screen sizes
-@each $screen-size, $value in $ds-screen-sizes {
-    $index: index(map-keys($ds-screen-sizes), $screen-size);
-    $newmap: (
-        $index: $value
-    );
-    $ds-screens: map-merge($ds-screens, $newmap);
+    // Screen sizes
+    @each $screen-size, $value in $ds-screen-sizes {
+        $index: index(map-keys($ds-screen-sizes), $screen-size);
+        $newmap: (
+            $index: $value
+        );
+        $ds-screens: map-merge($ds-screens, $newmap);
+    }
 }

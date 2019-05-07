@@ -40,6 +40,10 @@
 .u-absolute {
     position: absolute !important;
 }
+.u-sticky {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+}
 .u-absolute-center {
     position: absolute !important;
     top: 50% !important;
@@ -79,14 +83,26 @@
 .u-top-0 {
     top: 0px !important;
 }
+.u-top-50 {
+    top: 50% !important;
+}
 .u-right-0 {
     right: 0px !important;
+}
+.u-right-50 {
+    right: 50% !important;
 }
 .u-bottom-0 {
     bottom: 0px !important;
 }
+.u-bottom-50 {
+    bottom: 50% !important;
+}
 .u-left-0 {
     left: 0px !important;
+}
+.u-left-50 {
+    left: 50% !important;
 }
 .u-overflow-hidden,
 .u-o-hidden {
@@ -129,4 +145,34 @@
 }
 .u-transition {
     transition: all 300ms !important;
+}
+.u-disabled {
+    pointer-events: none !important;
+    opacity: 0.3 !important;
+}
+/*
+    TEXT TRANSFORMS UTILITIES
+*/
+.u-text-ellipsis {
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+}
+.u-text-capitalize {
+    text-transform: capitalize !important;
+}
+.u-text-normal {
+    text-transform: none !important;
+}
+.u-text-break-anywhere {
+    overflow-wrap: anywhere !important;
+}
+.u-text-decoration-none {
+    text-decoration: none !important;
+}
+.u-text-stroke {
+    text-decoration: line-through !important;
+}
+.u-box-shadow-1 {
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
 }
