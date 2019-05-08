@@ -8,82 +8,117 @@
         {% assign pagecontent_description = page.content | markdownify | replace: '.', '. ' | replace: '</h2>', ': ' | replace: '</h3>', ': ' | replace: '</h4>', ': ' | strip_html | strip_newlines | replace: '  ', ' ' | truncate: 160 %}
         <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{% if pagecontent_description.size > 10 %}{{ pagecontent_description }}{% else %}{{ site.description }}{% endif %}{% endif %} ">
         <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/css/normalize.css">
-        <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/css/full.css">
+        <!-- Scrollio required stylesheet -->
+        <link href="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/css/full.css" rel="stylesheet">
+        <!-- demo purpose only -->
         <style>
-            body {
-                min-height: 100vh;
+            #scrollio>.item .outro {
+                transition: all 500ms;
+                max-height: 0px;
+                overflow: hidden;
             }
-            body.pattern:after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                opacity: .1;
-                z-index: -10;
-                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAHElEQVR4AWP4jwOcwQFoo2FUAy4JXAbRRMOoBgCE0rCfubvZNQAAAABJRU5ErkJggg==);
-            }
-            body.show-flexbox-items .grid .row {
-                border: 1px dotted gray;
-            }
-            body.show-flexbox-items .grid .row>* {
-                /* background-color: rgba(0,0,0,.1); */
-                border: 1px solid lightgreen;
-            }
-            body.centered {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
+            #scrollio>.item .outro.active {
+                max-height: 200px;
             }
         </style>
     </head>
     <body>
-        <div id="wrapper">
+        <div id="scrollio">
             {{ content }}
         </div>
         <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/jquery/jquery-3.4.0.min.js"></script>
-        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/alerts.js"></script>
-        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/dropdowns.js"></script>
-        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/modals.js"></script>
-        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/tabs.js"></script>
-        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/matryoshka/toggles.js"></script>
+
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/scrollio.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.dynamic.background.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.fullscreen.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.links.js"></script>
         <script type="text/javascript">
-            var bodyStyle = getComputedStyle(document.querySelector('body'));
-            if (bodyStyle.backgroundColor == 'rgba(0, 0, 0, 0)' && bodyStyle.backgroundImage == 'none' && bodyStyle.background == '') {
-                jQuery('body').addClass('pattern');
-            }
             document.addEventListener("DOMContentLoaded", function(event) {
                 //console.log("DOM fully loaded and parsed");
 
-                var hash = window.location.hash;
-                hash = hash.replace('#', '');
-                var stringifiedSentObject = atob(hash);
+                var fullUrl = window.location.href;
+                hash = fullUrl.split('?');
+                var stringifiedSentObject = atob(hash[1]);
                 var sentObject = JSON.parse(stringifiedSentObject);
-                if (sentObject.options.centered) {
-                    document.getElementsByTagName('body')[0].classList.add('centered');
-                }
-                if (sentObject.options.showFlexboxItems) {
-                    document.getElementsByTagName('body')[0].classList.add('show-flexbox-items');
-                }
-                var scripts = [];
-                var wrapper = document.getElementById('wrapper');
-                wrapper.innerHTML = sentObject.content;
-                var scriptsToExcecute = wrapper.getElementsByTagName('script');
-                for (let cell of scriptsToExcecute) {
-                    // let status = cell.getAttribute('innerHTML');
-                    // console.log(cell.innerHTML);
-                    var script = document.createElement("script");
-                    script.type = "text/javascript";
-                    script.appendChild(document.createTextNode(cell.innerHTML));
-                    document.head.appendChild(script);
-                }
-                myModal.update();
-                myAlert.update();
-                myTab.update();
-                myDropdown.update();
-                myToggle.update();
+                var wrapper = document.getElementById('scrollio');
+                sentObject.content.forEach(function(data) {
+                    jQuery('#scrollio').append(
+                        '<div class="item">'+
+                            '<p class="scrolltrack">'+data+'</p>'+
+                        '</div>'
+                    );
+                });
+                // wrapper.innerHTML = sentObject.content;
+                jQuery.fn.scrollio({
+                    // styleOverrides: false,
+                    // overlay: false,
+                    // letterDefaultCSS:       {
+                    //     'margin-left': '-0.1em',
+                    //     'opacity': '0.5',
+                    //     'transition': 'all 300ms',
+                    //     'text-shadow': '0px 0px 0px rgba(0,0,0,.5)',
+                    //     'transform': 'translateZ(500px) scaleX(0)'
+                    // },
+                    // letterActiveCSS:        {
+                    //     'color': 'white',
+                    //     'opacity': '1',
+                    //     'text-shadow': '5px 1px 8px rgba(0,0,0,.5)',
+                    //     'transform': 'translateZ(0px) scaleX(1)'
+                    // },
+                    // sentenceCSS:            {
+                    //
+                    //
+                    // },
+                    // itemDefaultCSS:         {
+                    //     'padding': '0em 10vw'
+                    // },
+                    // itemActiveCSS:          {
+                    // },
+                    itemFadeDuration: 600,
+                    fullScreenPlugin: {
+                        position: 'bottom',
+                        alignment: 'right'
+                    },
+                    dynamicBackground: {
+                        scaleTo: 1.1
+                    },
+                    onInit: function(){
+                    },
+                    onItemChange: function(targetIndex){
+
+
+                        console.log('current index is '+targetIndex);
+                    },
+                    onLetterChange: function(targetIndex){
+                        console.log('letter has changed');
+                    },
+                    onScroll: function(data){
+                        var translateImage = data.itemProgressCoef * 40 - 20;
+                        jQuery('#scrollio>.item').eq(data.index).find('img').css({
+                            transform: 'translateY('+translateImage+'px)'
+                        });
+                        jQuery('#scrollio>.item').eq(data.index).find('.scrolltrack').css({
+                            transform: 'translateY(-'+data.itemProgressCoef * 20+'px)'
+                        });
+                    },
+                    onItemEnd: function(index){
+                        console.log('end of '+index);
+                    },
+                    onFirstItem: function(){
+                        console.log('first item');
+                    },
+                    onLastItem: function(){
+                        console.log('last item');
+                    },
+                    onScrollEnd: function(){
+                        console.log('end of scroll');
+                        jQuery('.outro').addClass('active');
+                        jQuery('.outro a').on('click',function(e){
+                            e.preventDefault();
+                            scrollioAPI.goToFirstItem();
+                        });
+                    }
+                });
             });
         </script>
 

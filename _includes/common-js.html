@@ -38,7 +38,7 @@
         // Icons
         var jQ_myIcons = jQuery('.my-icons');
         if(jQ_myIcons.length == 1){
-            jQuery('head').append('<link href="{{ '{{ site.assets_dir }}/fonts/icomoon/style.css' | relative_url }}" rel="stylesheet">');
+            jQuery('head').append('<link href="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/fonts/icomoon/style.css" rel="stylesheet">');
             // var test = JSON.parse('../../js/fonts/selection.json');
             var icomoon = new XMLHttpRequest();
             icomoon.open("GET", '{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/fonts/icomoon/selection.json', true);
@@ -80,7 +80,7 @@
         };
         // Auto iframe
         var iframeCounter = 0;
-        jQuery('main .syntaxit').each(function(){
+        jQuery('.syntaxit').each(function(){
             var content = jQuery(this).html();
             var language = jQuery(this).attr('data-language');
             var optionsStr = '';

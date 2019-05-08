@@ -1,3 +1,4 @@
 ---
-layout: template/demo
+title: Generator
+layout: templates/demo
 ---
