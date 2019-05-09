@@ -6,7 +6,7 @@
 var myTab = {
     options: {
         autoHide: false, // Hide trigger if target tab is empty
-        toggleMode: true // Toggle show/hide the tab even if active
+        toggleMode: false // Toggle show/hide the tab even if active
     },
     /**
     * OPEN TAB PANE

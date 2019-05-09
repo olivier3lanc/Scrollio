@@ -30,8 +30,8 @@
 
         <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/scrollio.js"></script>
         <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.dynamic.background.js"></script>
-        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.fullscreen.js"></script>
-        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.links.js"></script>
+        <!-- <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.fullscreen.js"></script>
+        <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.links.js"></script> -->
         <script type="text/javascript">
             document.addEventListener("DOMContentLoaded", function(event) {
                 //console.log("DOM fully loaded and parsed");
@@ -42,12 +42,15 @@
                 var sentObject = JSON.parse(stringifiedSentObject);
                 var wrapper = document.getElementById('scrollio');
                 sentObject.content.forEach(function(data) {
+                    console.log(data.text);
+                    console.log(data.options);
                     jQuery('#scrollio').append(
                         '<div class="item">'+
-                            '<p class="scrolltrack">'+data+'</p>'+
+                            '<p class="scrolltrack">'+data.text+'</p>'+
                         '</div>'
                     );
                 });
+                window.scrollioAPI.dynamicBackground.jQ_items = jQuery('#scrollio>.item');
                 // wrapper.innerHTML = sentObject.content;
                 jQuery.fn.scrollio({
                     // styleOverrides: false,
@@ -80,7 +83,7 @@
                         alignment: 'right'
                     },
                     dynamicBackground: {
-                        scaleTo: 1.1
+                        scaleTo: 1.5
                     },
                     onInit: function(){
                     },

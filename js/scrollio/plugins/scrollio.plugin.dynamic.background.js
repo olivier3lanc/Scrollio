@@ -147,6 +147,7 @@
                             var translateY = translateYValue.toString() + pluginAPI.translateUnit;
                             var rotateX = rotateXValue.toString();
                             var rotateY = rotateYValue.toString();
+                            console.log('transform scale('+scale+') translateX('+translateX+') translateY('+translateY+') rotateX('+rotateX+'deg) rotateY('+rotateY+'deg)');
                             pluginAPI
                                 .jQ_items
                                 .eq(data.index)
