@@ -10,10 +10,12 @@ scripts: ['matryoshka/tabs.js']
 <div id="generator"></div>
 
 <script>
+    jQuery('#mainflex > main').css('max-width', '500px');
     var allOptions = {
         scrollRange:            [2000, 'Amount of pixels scrolled per item'],
-        keepActive:             [false, 'Once scrolled, letters keep active CSS class'],
+        keepActive:             [true, 'Once scrolled, letters keep active CSS class'],
         textEllipsis:           ['...', 'String displayed at the end of each text to scroll'],
+        itemFadeDuration:       [500, 'Cross fade duration between items in ms'],
         fontFamily:             ['Ubuntu', 'Google Font name or web safe font name: Arial, Helvetica, Courier New, Georgia, Times New Roman, Verdana, serif, sans-serif, monospace, cursive, fantasy'],
         fontWeight:             ['Bold', 'Font weight (applicable only for Google Fonts)'],
         fontOverlapUnder:       [true, 'Each letter is under the previous'],
@@ -93,18 +95,34 @@ scripts: ['matryoshka/tabs.js']
             var optionName = jQuery(this).attr('data-option-name');
             var jQ_input = jQuery(this).find('input').eq(0);
             var optionValue = jQ_input.val();
+            // Checkbox case
             if (jQ_input.attr('type') == 'checkbox') {
-                if (jQ_input.prop('checked') != allOptions[optionName][0]) {
-                    // console.log(optionName);
-                    sentObject.options[optionName] = JSON.parse(optionValue);
+                if (optionValue == 'true') {
+                    if (jQ_input.prop('checked')) {
+
+                    } else {
+                        sentObject.options[optionName] = false;
+                    }
                 }
-            } else if(jQ_input.attr('type') == 'number' || jQ_input.attr('type') == 'text') {
+                else if (optionValue == 'false') {
+                    if (jQ_input.prop('checked')) {
+                        sentObject.options[optionName] = true;
+                    } else {
+
+                    }
+                }
+            }
+            // Other types
+            else if(jQ_input.attr('type') == 'number' || jQ_input.attr('type') == 'text') {
                 if (optionValue != allOptions[optionName][0].toString()) {
-                    sentObject.options[optionName] = optionValue;
+                    if (jQ_input.attr('type') == 'number') {
+                        sentObject.options[optionName] = JSON.parse(optionValue);
+                    } else {
+                        sentObject.options[optionName] = optionValue;
+                    }
                 }
             }
         });
-        console.log(sentObject.options);
         var optionsToAdd = [];
         jQuery('#generator .item').each(function() {
             var text = jQuery(this).find('.content textarea').val();
@@ -123,6 +141,7 @@ scripts: ['matryoshka/tabs.js']
             };
             sentObject.content.push(itemContent);
         });
+        console.log('envoyé',sentObject);
         var stringifiedSentObject = JSON.stringify(sentObject);
         var sentObject64 = btoa(stringifiedSentObject);
         var iframeStr = '<iframe src="{{ site.url }}{{ site.baseurl }}/iframe.html?'+sentObject64+'"></iframe>';

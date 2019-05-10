@@ -605,6 +605,10 @@
                     jQ_scrollio.find(selector).each(function(){
                         //First child of the .item is the scroller
                         var jQ_text = jQuery(this).find('.scrolltrack').eq(0);
+                        // Font overlap option
+                        if(g_parameters.fontOverlapUnder){
+                            jQ_text.addClass('overlap');
+                        };
                         //Text content of the element to scroll
                         var text = jQ_text.text();
                         var result = '';

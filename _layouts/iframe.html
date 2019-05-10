@@ -41,9 +41,10 @@
                 var stringifiedSentObject = atob(hash[1]);
                 var sentObject = JSON.parse(stringifiedSentObject);
                 var wrapper = document.getElementById('scrollio');
+                //console.log(sentObject);
                 sentObject.content.forEach(function(data) {
-                    console.log(data.text);
-                    console.log(data.options);
+                    // console.log('item text:'+data.text);
+                    // console.log('item options:'+data.options);
                     jQuery('#scrollio').append(
                         '<div class="item">'+
                             '<p class="scrolltrack">'+data.text+'</p>'+
@@ -52,76 +53,7 @@
                 });
                 window.scrollioAPI.dynamicBackground.jQ_items = jQuery('#scrollio>.item');
                 // wrapper.innerHTML = sentObject.content;
-                jQuery.fn.scrollio({
-                    // styleOverrides: false,
-                    // overlay: false,
-                    // letterDefaultCSS:       {
-                    //     'margin-left': '-0.1em',
-                    //     'opacity': '0.5',
-                    //     'transition': 'all 300ms',
-                    //     'text-shadow': '0px 0px 0px rgba(0,0,0,.5)',
-                    //     'transform': 'translateZ(500px) scaleX(0)'
-                    // },
-                    // letterActiveCSS:        {
-                    //     'color': 'white',
-                    //     'opacity': '1',
-                    //     'text-shadow': '5px 1px 8px rgba(0,0,0,.5)',
-                    //     'transform': 'translateZ(0px) scaleX(1)'
-                    // },
-                    // sentenceCSS:            {
-                    //
-                    //
-                    // },
-                    // itemDefaultCSS:         {
-                    //     'padding': '0em 10vw'
-                    // },
-                    // itemActiveCSS:          {
-                    // },
-                    itemFadeDuration: 600,
-                    fullScreenPlugin: {
-                        position: 'bottom',
-                        alignment: 'right'
-                    },
-                    dynamicBackground: {
-                        scaleTo: 1.5
-                    },
-                    onInit: function(){
-                    },
-                    onItemChange: function(targetIndex){
-
-
-                        console.log('current index is '+targetIndex);
-                    },
-                    onLetterChange: function(targetIndex){
-                        console.log('letter has changed');
-                    },
-                    onScroll: function(data){
-                        var translateImage = data.itemProgressCoef * 40 - 20;
-                        jQuery('#scrollio>.item').eq(data.index).find('img').css({
-                            transform: 'translateY('+translateImage+'px)'
-                        });
-                        jQuery('#scrollio>.item').eq(data.index).find('.scrolltrack').css({
-                            transform: 'translateY(-'+data.itemProgressCoef * 20+'px)'
-                        });
-                    },
-                    onItemEnd: function(index){
-                        console.log('end of '+index);
-                    },
-                    onFirstItem: function(){
-                        console.log('first item');
-                    },
-                    onLastItem: function(){
-                        console.log('last item');
-                    },
-                    onScrollEnd: function(){
-                        console.log('end of scroll');
-                        jQuery('.outro').addClass('active');
-                        jQuery('.outro a').on('click',function(e){
-                            e.preventDefault();
-                            scrollioAPI.goToFirstItem();
-                        });
-                    }
-                });
+                jQuery.fn.scrollio(sentObject.options);
             });
         </script>
 
