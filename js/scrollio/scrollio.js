@@ -69,6 +69,12 @@
             scrollRange:            2000,
             //Once scrolled, letters keep active CSS class
             keepActive:             true,
+            // Position of the item (top, middle, bottom)
+            itemPosition:           'middle',
+            // Alignment of the item (left, center, right)
+            itemAlignment:          'center',
+            // Alignment of the text into its item
+            textAlignment:          'center',
             //String displayed at the end of each text to scroll
             textEllipsis:           '...',
             //Google Font name
@@ -178,16 +184,16 @@
             //CSS overrides of a letter not scrolled yet
             letterDefaultCSS:       {
                 'margin-left': '-0.1em',
-                'opacity': '0.35',
+                'opacity': '0.3',
                 'transition': 'all 300ms',
                 'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
-                'transform': 'translateX(-0.1em)'
+                'transform': 'scale(0.8) translateX(-0.1em) translateY(0px)'
             },
             //CSS overrides of a scrolled or currently scrolled letter
             letterActiveCSS:        {
                 'color': 'white',
                 'opacity': '1',
-                'transform': 'translateX(0em)'
+                'transform': 'scale(1) translateX(0px)  translateY(0px)'
             },
             //CSS overrides of the currently scrolled letter
             letterCurrentCSS:       {
@@ -605,10 +611,6 @@
                     jQ_scrollio.find(selector).each(function(){
                         //First child of the .item is the scroller
                         var jQ_text = jQuery(this).find('.scrolltrack').eq(0);
-                        // Font overlap option
-                        if(g_parameters.fontOverlapUnder){
-                            jQ_text.addClass('overlap');
-                        };
                         //Text content of the element to scroll
                         var text = jQ_text.text();
                         var result = '';
@@ -781,6 +783,39 @@
                     });
                 }
             };
+
+            //Item vertical alignment
+            if(g_parameters.itemPosition == 'top'){
+                jQ_scrollio.addClass('valign-top');
+            }
+            if(g_parameters.itemPosition == 'middle'){
+                jQ_scrollio.addClass('valign-middle');
+            }
+            if(g_parameters.itemPosition == 'bottom'){
+                jQ_scrollio.addClass('valign-bottom');
+            }
+
+            //Item horizontal alignment
+            if(g_parameters.itemAlignment == 'left'){
+                jQ_scrollio.addClass('halign-top');
+            }
+            if(g_parameters.itemAlignment == 'center'){
+                jQ_scrollio.addClass('halign-center');
+            }
+            if(g_parameters.itemAlignment == 'right'){
+                jQ_scrollio.addClass('halign-right');
+            }
+
+            //Text alignment into its item
+            if(g_parameters.textAlignment == 'left'){
+                jQ_scrollio.addClass('talign-top');
+            }
+            if(g_parameters.textAlignment == 'center'){
+                jQ_scrollio.addClass('talign-center');
+            }
+            if(g_parameters.textAlignment == 'right'){
+                jQ_scrollio.addClass('talign-right');
+            }
 
             //If keepActive, add a class to Scrollio container
             if(g_parameters.keepActive){

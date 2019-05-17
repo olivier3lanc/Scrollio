@@ -8,24 +8,59 @@ scripts: ['matryoshka/tabs.js']
 <div id="global-options">
 </div>
 <div id="generator"></div>
-
 <script>
+// letterDefaultCSS:       {
+//     'margin-left': '-0.1em',
+//     'opacity': '0',
+//     'transition': 'all 300ms',
+//     'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
+//     'transform': 'scale(0.2) translateX(2em) translateY(2em)'
+// },
+// //CSS overrides of a scrolled or currently scrolled letter
+// letterActiveCSS:        {
+//     'color': 'white',
+//     'opacity': '1',
+//     'transform': 'translateX(0em)'
+// },
     jQuery('#mainflex > main').css('max-width', '500px');
     var allOptions = {
-        scrollRange:            [2000, 'Amount of pixels scrolled per item'],
+        scrollRange:            [2000, 'Amount of pixels scrolled per item', {
+            inputAttributes: 'min="400" max="40000" step="200"'
+        }],
         keepActive:             [true, 'Once scrolled, letters keep active CSS class'],
+        itemPosition:           [{middle: ['top', 'middle', 'bottom']}, 'Position of the item (top, middle, bottom)'],
+        itemAlignment:          [{center: ['left', 'center', 'right']}, 'Alignment of the item (left, center, right)'],
+        textAlignment:          [{center: ['left', 'center', 'right']}, 'Alignment of the text into its item'],
         textEllipsis:           ['...', 'String displayed at the end of each text to scroll'],
-        itemFadeDuration:       [500, 'Cross fade duration between items in ms'],
+        itemFadeDuration:       [500, 'Cross fade duration between items in ms', {
+            inputAttributes: 'min="0" max="2000" step="50"'
+        }],
         fontFamily:             ['Ubuntu', 'Google Font name or web safe font name: Arial, Helvetica, Courier New, Georgia, Times New Roman, Verdana, serif, sans-serif, monospace, cursive, fantasy'],
-        fontWeight:             ['Bold', 'Font weight (applicable only for Google Fonts)'],
-        fontOverlapUnder:       [true, 'Each letter is under the previous'],
+        fontWeight:             ['Bold', 'Font weight - applicable only for Google Fonts in relation with the font'],
         progressBar:            [true, 'Display the progress bar'],
-        overlay:                [true, 'Display overlay between items and body background']
+        overlay:                [true, 'Display overlay between items and body background'],
+        textOverlap:            [-0.1, 'Amount of overlap between characters (-1 - 1)', {
+            inputAttributes: 'min="-1" max="1" step="0.05"'
+        }],
+        // fontOverlapUnder:       [true, 'Each letter is under the previous - Visible when textOverlap is negative'],
+        textOpacityOff:         [0.3, 'Opacity of characters not scrolled yet (0 - 1)', {
+            inputAttributes: 'min="0" max="1" step="0.02"'
+        }],
+        textOpacityOn:          [1, 'Opacity of characters scrolled (0 - 1)', {
+            inputAttributes: 'min="0" max="1" step="0.02"'
+        }]
     };
     for (var option in allOptions) {
         if (allOptions.hasOwnProperty(option)) {
-            var inputType = 'text';
-            var inputChecked = '';
+            var inputType = 'text',
+                inputChecked = '',
+                inputAttributes = '';
+            // Options
+            if (typeof allOptions[option][2] == 'object') {
+                if (typeof allOptions[option][2]['inputAttributes'] == 'string') {
+                    inputAttributes = allOptions[option][2]['inputAttributes'];
+                }
+            }
             if (typeof allOptions[option][0] == 'boolean') {
                 inputType = 'checkbox';
                 if (allOptions[option][0]) {
@@ -35,11 +70,27 @@ scripts: ['matryoshka/tabs.js']
                 inputType = 'number';
             }
             jQuery('#global-options').append(
-                '<div class="form-group" data-option-name="'+option+'">'+
-                    '<label for="global-option-'+option+'">'+allOptions[option][1]+'</label>'+
-                    '<input type="'+inputType+'" id="global-option-'+option+'" value="'+allOptions[option][0]+'" '+inputChecked+'>'+
-                '</div>'
+                '<div class="form-group" data-option-name="'+option+'">'
             );
+            if (typeof allOptions[option][0] == 'object') {
+                var defaultValue = Object.getOwnPropertyNames(allOptions[option][0])[0];
+                var possiblesValues = allOptions[option][0][defaultValue];
+                console.log(defaultValue,possiblesValues);
+                // for (var value in allOptions[option][0]) {
+                //     if (allOptions[option][0].hasOwnProperty(value)) {
+                //         jQuery('#global-options').append(
+                //             '<label for="global-option-'+option+'-'+value+'">'+allOptions[option][1]+'</label>'+
+                //             '<input type="radio" name="global-option-'+option+'-'+value+'" id="global-option-'+option+'-'+value+'" value="'+value+'">'
+                //         );
+                //     }
+                // }
+            } else {
+                jQuery('#global-options').append(
+                    '<label for="global-option-'+option+'">'+allOptions[option][1]+'</label>'+
+                    '<input type="'+inputType+'" id="global-option-'+option+'" value="'+allOptions[option][0]+'" '+inputAttributes+' '+inputChecked+'>'
+                );
+            }
+            jQuery('#global-options').append('</div>');
         }
     }
     var itemPattern = function(id) {

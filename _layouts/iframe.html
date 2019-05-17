@@ -33,6 +33,199 @@
         <!-- <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.fullscreen.js"></script>
         <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/js/scrollio/plugins/scrollio.plugin.links.js"></script> -->
         <script type="text/javascript">
+            //Defaults parameters
+            var defaultParameters = {
+                //ID if the main Scrollio wrapper
+                id:                     'scrollio',
+                //Amount of pixels scrolled per item
+                scrollRange:            2000,
+                //Once scrolled, letters keep active CSS class
+                keepActive:             true,
+                // Position of the item (top, middle, bottom)
+                itemPosition:           'middle',
+                // Alignment of the item (left, center, right)
+                itemAlignment:          'center',
+                // Alignment of the text into its item
+                textAlignment:          'center',
+                //String displayed at the end of each text to scroll
+                textEllipsis:           '...',
+                //Google Font name
+                //Or Web safe font name:
+                //'Arial','Helvetica','Courier New','Georgia',
+                //'Times New Roman','Verdana','serif','sans-serif',
+                //'monospace','cursive','fantasy'
+                fontFamily:             'Ubuntu',
+                //Font weight (applicable only for Google Fonts)
+                fontWeight:             'Bold',
+                //Each letter is under the previous
+                fontOverlapUnder:       true,
+                //Display the progress bar
+                progressBar:            true,
+                //Display overlay between items and body background
+                overlay:                true,
+                //Responsive font size in pixels for Extra-Large devices
+                fontSizeXL:             84,
+                //Responsive font size in pixels for Large devices
+                fontSizeLG:             64,
+                //Responsive font size in pixels for Medium devices
+                fontSizeMD:             50,
+                //Responsive font size in pixels for Small devices
+                fontSizeSM:             40,
+                //Responsive font size in pixels for Extra-Small devices
+                fontSizeXS:             32,
+                //Responsive break point in pixels between large and extra-large
+                breakPointLG_XL:        1200,
+                //Responsive break point in pixels between medium and large
+                breakPointMD_LG:        992,
+                //Responsive break point in pixels between small and medium
+                breakPointSM_MD:        768,
+                //Responsive break point in pixels between extra-small and small
+                breakPointXS_SM:        575,
+                //Cross fade duration between items in ms.
+                //itemFadeDuration = 0 optimizes global performances
+                itemFadeDuration:       500,
+                //Enable/disable style overrides. Quickly remove all styles overrides
+                //For testing and debug purpose.
+                styleOverrides:         true,
+                //Define basic responsive layout to item children for extra large devices
+                //'horizontal': Horizontal stacking
+                //'horizontal-reverse': Reverse order horizontal stacking
+                //'vertical':  Vertical stacking
+                //'vertical-reverse': Reverse order vertical stacking
+                itemContentLayoutXL:  'horizontal',
+                //Define basic responsive layout to item children for large devices
+                //'horizontal': Horizontal stacking
+                //'horizontal-reverse': Reverse order horizontal stacking
+                //'vertical':  Vertical stacking
+                //'vertical-reverse': Reverse order vertical stacking
+                itemContentLayoutLG:  'horizontal',
+                //Define basic responsive layout to item children for medium devices
+                //'horizontal': Horizontal stacking
+                //'horizontal-reverse': Reverse order horizontal stacking
+                //'vertical':  Vertical stacking
+                //'vertical-reverse': Reverse order vertical stacking
+                itemContentLayoutMD:  'vertical',
+                //Define basic responsive layout to item children for small devices
+                //'horizontal': Horizontal stacking
+                //'horizontal-reverse': Reverse order horizontal stacking
+                //'vertical':  Vertical stacking
+                //'vertical-reverse': Reverse order vertical stacking
+                itemContentLayoutSM:  'vertical',
+                //Define basic responsive layout to item children for extra small devices
+                //'horizontal': Horizontal stacking
+                //'horizontal-reverse': Reverse order horizontal stacking
+                //'vertical':  Vertical stacking
+                //'vertical-reverse': Reverse order vertical stacking
+                itemContentLayoutXS:  'vertical',
+                //@keyframes animations declarations that have to be used into the custom CSS
+                animationsCSS:          {
+                    'cursor': {
+                        '0%': 'opacity: 0',
+                        '100%': 'opacity: 1'
+                    }
+                },
+                //CSS overrides of scrolled text BEFORE Scrollio initialization
+                sentenceBeforeInitCSS:  {
+                },
+                //CSS overrides of scrolled text AFTER Scrollio initialization
+                sentenceAfterInitCSS:   {
+                },
+                //CSS overrides of page body
+                bodyCSS:                {
+                    'background-color': '#1b4b7d',
+                    'color': '#fff'
+                },
+                //CSS overrides of Scrollio container
+                scrollioContainerCSS:   {
+
+                },
+                //CSS overrides of an inactive item
+                itemDefaultCSS:         {
+                    'padding': '0em 10vw'
+                },
+                //CSS overrides of an active item
+                itemActiveCSS:          {
+                },
+                //CSS overrides of the whole scrolled text sentence
+                sentenceCSS:            {
+                    'line-height': '1.3em'
+                },
+                //CSS overrides of a word
+                wordCSS:                {
+                },
+                //CSS overrides of a letter not scrolled yet
+                letterDefaultCSS:       {
+                    'color': 'white',
+                    'margin-left': '-0.1em',
+                    'opacity': '0.3',
+                    'transition': 'all 300ms',
+                    'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
+                    'transform': 'scale(0.8) translateX(-0.1em) translateY(0px)'
+                },
+                //CSS overrides of a scrolled or currently scrolled letter
+                letterActiveCSS:        {
+                    'color': 'white',
+                    'opacity': '1',
+                    'transform': 'scale(1) translateX(0px)  translateY(0px)'
+                },
+                //CSS overrides of the currently scrolled letter
+                letterCurrentCSS:       {
+                },
+                //CSS overrides of the cursor included only into currently scrolled letter
+                cursorCSS:              {
+                    'top': '0px',
+                    'right': '0px',
+                    'width': '2px',
+                    'height': '100%',
+                    'background-color': 'white',
+                    'animation-name': 'cursor', //Declared into g_parameters.animationsCSS
+                    'animation-duration': '600ms',
+                    'animation-iteration-count': 'infinite',
+                    'animation-direction': 'alternate'
+                },
+                //CSS overrides of the entire ellipsis word
+                ellipsisWordCSS:     {
+
+                },
+                //CSS overrides of an ellipsis character not scrolled yet
+                ellipsisDefaultCSS:     {
+
+                },
+                //CSS overrides of an ellipsis scrolled or currently scrolled
+                ellipsisActiveCSS:      {
+
+                },
+                //CSS overrides of the ellipsis currently scrolled character
+                ellipsisCurrentCSS:     {
+
+                },
+                //CSS overrides of the progress bar
+                progressBarCSS:         {
+                    'background-color': 'white'
+                },
+                //CSS overrides of the overlay layer
+                overlayCSS:             {
+                    'opacity': '1',
+                    'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
+                },
+                //Callback on Scrollio initialization
+                onInit:                 function(e){},
+                //Callback on item change
+                onItemChange:           function(e){},
+                //Callback on letter change
+                onLetterChange:         function(e){},
+                //Callback on scroll
+                onScroll:               function(e){},
+                //Callback on item end
+                onItemEnd:              function(e){},
+                //Callback on first item
+                onFirstItem:            function(e){},
+                //Callback on last item
+                onLastItem:             function(e){},
+                //Callback on scroll end
+                onScrollEnd:            function(e){}
+            };
+            var finalParameters = defaultParameters;
             document.addEventListener("DOMContentLoaded", function(event) {
                 //console.log("DOM fully loaded and parsed");
 
@@ -52,8 +245,30 @@
                     );
                 });
                 window.scrollioAPI.dynamicBackground.jQ_items = jQuery('#scrollio>.item');
+                // Manage parameters
+                for (var param in sentObject.options) {
+                    // If standard Scrollio param
+                    if (sentObject.options.hasOwnProperty(param)) {
+                        // console.log(param,sentObject.options[param]);
+                        if (sentObject.options.hasOwnProperty(param)) {
+                            finalParameters[param] = sentObject.options[param];
+                        }
+                        var textShadowProperty = '';
+                        // Maybe it is a special param
+                        if (param == 'textOverlap') {
+                            finalParameters['letterDefaultCSS']['margin-left'] = sentObject.options[param]+'em';
+                        }
+                        if (param == 'textOpacityOff') {
+                            finalParameters['letterDefaultCSS']['opacity'] = sentObject.options[param].toString();
+                        }
+                        if (param == 'textOpacityOn') {
+                            finalParameters['letterActiveCSS']['opacity'] = sentObject.options[param].toString();
+                        }
+                    }
+                }
+
                 // wrapper.innerHTML = sentObject.content;
-                jQuery.fn.scrollio(sentObject.options);
+                jQuery.fn.scrollio(finalParameters);
             });
         </script>
 

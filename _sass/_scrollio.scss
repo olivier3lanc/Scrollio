@@ -87,11 +87,12 @@ body {
         //The item itself
         &>.item {
             display: flex;
-            align-items: center;
-            align-content: center;
+            align-items: center; // Horizontal
+            justify-content: center; // Vertical
             flex-wrap: wrap;
             position: fixed;
             top: 0%;
+            left: 0%;
             width: 100%;
             height: 100%;
             opacity: 0;
@@ -113,7 +114,7 @@ body {
             &>* {
                 //Before fonts are loaded
                 visibility: hidden;
-                width: 100%; //Important for flex
+                // width: 100%;
                 position: relative;
             }
         }
@@ -164,6 +165,57 @@ body {
                         }
                     }
                 }
+            }
+        }
+
+        //Horizontal alignment
+        &.halign-left {
+            &>.item {
+                justify-content: flex-start;
+            }
+        }
+        &.halign-center {
+            &>.item {
+                justify-content: center;
+            }
+        }
+        &.halign-right {
+            &>.item {
+                justify-content: flex-end;
+            }
+        }
+
+        //Vertical alignment
+        &.valign-top {
+            &>.item {
+                align-items: flex-start;
+            }
+        }
+        &.valign-middle {
+            &>.item {
+                align-items: center;
+            }
+        }
+        &.valign-bottom {
+            &>.item {
+                align-items: flex-end;
+            }
+        }
+
+        //Text alignment
+        &.talign-left {
+            &>.item {
+                text-align: left;
+            }
+        }
+        &.talign-center {
+            &>.item {
+                text-align: right;
+            }
+        }
+        &.talign-right {
+            &>.item {
+                text-align: right;
             }
         }
     }
