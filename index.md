@@ -28,9 +28,9 @@ scripts: ['matryoshka/tabs.js']
             inputAttributes: 'min="400" max="40000" step="200"'
         }],
         keepActive:             [true, 'Once scrolled, letters keep active CSS class'],
-        itemPosition:           [{middle: ['top', 'middle', 'bottom']}, 'Position of the item (top, middle, bottom)'],
-        itemAlignment:          [{center: ['left', 'center', 'right']}, 'Alignment of the item (left, center, right)'],
-        textAlignment:          [{center: ['left', 'center', 'right']}, 'Alignment of the text into its item'],
+        itemPosition:           [{values:['top', 'middle', 'bottom'], default: 'middle'}, 'Position of the item (top, middle, bottom)'],
+        itemAlignment:          [{values:['left', 'center', 'right'], default: 'center'}, 'Alignment of the item (left, center, right)'],
+        textAlignment:          [{values:['left', 'center', 'right'], default: 'center'}, 'Alignment of the text into its item'],
         textEllipsis:           ['...', 'String displayed at the end of each text to scroll'],
         itemFadeDuration:       [500, 'Cross fade duration between items in ms', {
             inputAttributes: 'min="0" max="2000" step="50"'
@@ -54,7 +54,8 @@ scripts: ['matryoshka/tabs.js']
         if (allOptions.hasOwnProperty(option)) {
             var inputType = 'text',
                 inputChecked = '',
-                inputAttributes = '';
+                inputAttributes = '',
+                markup = '';
             // Options
             if (typeof allOptions[option][2] == 'object') {
                 if (typeof allOptions[option][2]['inputAttributes'] == 'string') {
@@ -69,28 +70,27 @@ scripts: ['matryoshka/tabs.js']
             } else if (typeof allOptions[option][0] == 'number') {
                 inputType = 'number';
             }
-            jQuery('#global-options').append(
-                '<div class="form-group" data-option-name="'+option+'">'
-            );
+            markup += '<div class="form-group" data-option-name="'+option+'">';
             if (typeof allOptions[option][0] == 'object') {
-                var defaultValue = Object.getOwnPropertyNames(allOptions[option][0])[0];
-                var possiblesValues = allOptions[option][0][defaultValue];
-                console.log(defaultValue,possiblesValues);
-                // for (var value in allOptions[option][0]) {
-                //     if (allOptions[option][0].hasOwnProperty(value)) {
-                //         jQuery('#global-options').append(
-                //             '<label for="global-option-'+option+'-'+value+'">'+allOptions[option][1]+'</label>'+
-                //             '<input type="radio" name="global-option-'+option+'-'+value+'" id="global-option-'+option+'-'+value+'" value="'+value+'">'
-                //         );
-                //     }
-                // }
+                // var defaultValue = Object.getOwnPropertyNames(allOptions[option][0])[0];
+                // var possiblesValues = allOptions[option][0][defaultValue];
+                // console.log(defaultValue,possiblesValues);
+                markup += '<p>'+allOptions[option][1]+'</p>';
+                allOptions[option][0]['values'].forEach(function(value) {
+                    var radioChecked = '';
+                    if (allOptions[option][0]['default'] == value) {
+                        radioChecked = 'checked';
+                    }
+                    markup += ''+
+                    '<label for="global-option-'+option+'-'+value+'">'+value+'</label>'+
+                    '<input type="radio" name="global-option-'+option+'" id="global-option-'+option+'-'+value+'" value="'+value+'" '+radioChecked+'>';
+                });
             } else {
-                jQuery('#global-options').append(
-                    '<label for="global-option-'+option+'">'+allOptions[option][1]+'</label>'+
-                    '<input type="'+inputType+'" id="global-option-'+option+'" value="'+allOptions[option][0]+'" '+inputAttributes+' '+inputChecked+'>'
-                );
+                markup +=
+                '<label for="global-option-'+option+'">'+allOptions[option][1]+'</label>'+
+                '<input type="'+inputType+'" id="global-option-'+option+'" value="'+allOptions[option][0]+'" '+inputAttributes+' '+inputChecked+'>';
             }
-            jQuery('#global-options').append('</div>');
+            jQuery('#global-options').append(markup);
         }
     }
     var itemPattern = function(id) {
@@ -163,8 +163,20 @@ scripts: ['matryoshka/tabs.js']
                     }
                 }
             }
+            // Radio case
+            else if (jQ_input.attr('type') == 'radio') {
+                // For radio we have several inputs to check
+                var radioValue = jQuery(this).find('input:checked').val();
+                // If different from default value
+                if (allOptions[optionName][0]['default'] != radioValue) {
+                    // console.log(optionName+' différent',radioValue);
+                    sentObject.options[optionName] = radioValue;
+                }
+
+            }
             // Other types
             else if(jQ_input.attr('type') == 'number' || jQ_input.attr('type') == 'text') {
+                // If different from default value
                 if (optionValue != allOptions[optionName][0].toString()) {
                     if (jQ_input.attr('type') == 'number') {
                         sentObject.options[optionName] = JSON.parse(optionValue);
