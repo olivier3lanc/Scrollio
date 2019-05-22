@@ -797,7 +797,7 @@
 
             //Item horizontal alignment
             if(g_parameters.itemAlignment == 'left'){
-                jQ_scrollio.addClass('halign-top');
+                jQ_scrollio.addClass('halign-left');
             }
             if(g_parameters.itemAlignment == 'center'){
                 jQ_scrollio.addClass('halign-center');
@@ -808,7 +808,7 @@
 
             //Text alignment into its item
             if(g_parameters.textAlignment == 'left'){
-                jQ_scrollio.addClass('talign-top');
+                jQ_scrollio.addClass('talign-left');
             }
             if(g_parameters.textAlignment == 'center'){
                 jQ_scrollio.addClass('talign-center');
