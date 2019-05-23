@@ -186,8 +186,9 @@ scripts: ['matryoshka/tabs.js']
                 }
             }
         });
-        var optionsToAdd = [];
+
         jQuery('#generator .item').each(function() {
+            var optionsToAdd = [];
             var text = jQuery(this).find('.content textarea').val();
             var options = {};
             jQuery(this).find('.options .form-group').each(function() {
