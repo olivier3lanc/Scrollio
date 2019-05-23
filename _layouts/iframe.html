@@ -234,12 +234,31 @@
                 var stringifiedSentObject = atob(hash[1]);
                 var sentObject = JSON.parse(stringifiedSentObject);
                 var wrapper = document.getElementById('scrollio');
-                //console.log(sentObject);
+                console.log('reçu:',sentObject);
                 sentObject.content.forEach(function(data) {
                     // console.log('item text:'+data.text);
                     // console.log('item options:'+data.options);
+                    // Check plugins
+                    var dynamicBackgroundMarkup = '';
+                    if (data.options.length > 0) {
+                        // Loop item options
+                        for (var index in data.options) {
+                            if (data.options.hasOwnProperty(index)) {
+                                // Item options must be an array of objects
+                                if (typeof data.options[index] == 'object') {
+                                    // Must have a key called 'name'
+                                    if (typeof data.options[index]['name'] == 'string') {
+                                        // Dynamic background ?
+                                        if (data.options[index]['name'] == 'dynamicBackground') {
+                                            dynamicBackgroundMarkup += 'data-dynamic-background="'+data.options[index]['value']+'"';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     jQuery('#scrollio').append(
-                        '<div class="item">'+
+                        '<div class="item" '+dynamicBackgroundMarkup+'>'+
                             '<p class="scrolltrack">'+data.text+'</p>'+
                         '</div>'
                     );
