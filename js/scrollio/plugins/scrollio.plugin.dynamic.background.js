@@ -65,8 +65,8 @@
                             'width: 110%;'+
                             'height: 110%;'+
                             'opacity: 0;'+
-                            'transition: '+
-                                'transform 200ms, '+
+                            '-webkit-transition: '+
+                                'transform 600ms, '+
                                 'opacity '+pluginAPI.fadeDuration.toString()+'ms;'+
                             'transform: '+
                                 'scale('+pluginAPI.scaleFrom.toString()+') '+
@@ -138,16 +138,16 @@
                         //For other cases, listen to the item scroll amount
                         jQuery(this).on('scrollForScrollio',function(data){
                             var scaleValue = pluginAPI.scaleFrom + (pluginAPI.scaleTo -  pluginAPI.scaleFrom) * data.itemProgressCoef;
-                            var translateXValue = pluginAPI.translateXFrom + (pluginAPI.translateXTo -  pluginAPI.translateXFrom) * data.itemProgressCoef;
-                            var translateYValue = pluginAPI.translateYFrom + (pluginAPI.translateYTo -  pluginAPI.translateYFrom) * data.itemProgressCoef;
-                            var rotateXValue = pluginAPI.rotateXFrom + (pluginAPI.rotateXTo -  pluginAPI.rotateXFrom) * data.itemProgressCoef;
-                            var rotateYValue = pluginAPI.rotateYFrom + (pluginAPI.rotateYTo -  pluginAPI.rotateYFrom) * data.itemProgressCoef;
+                            var translateXValue = Math.floor(pluginAPI.translateXFrom + (pluginAPI.translateXTo -  pluginAPI.translateXFrom) * data.itemProgressCoef);
+                            var translateYValue = Math.floor(pluginAPI.translateYFrom + (pluginAPI.translateYTo -  pluginAPI.translateYFrom) * data.itemProgressCoef);
+                            var rotateXValue = Math.floor(pluginAPI.rotateXFrom + (pluginAPI.rotateXTo -  pluginAPI.rotateXFrom) * data.itemProgressCoef);
+                            var rotateYValue = Math.floor(pluginAPI.rotateYFrom + (pluginAPI.rotateYTo -  pluginAPI.rotateYFrom) * data.itemProgressCoef);
                             var scale = scaleValue.toString();
                             var translateX = translateXValue.toString() + pluginAPI.translateUnit;
                             var translateY = translateYValue.toString() + pluginAPI.translateUnit;
                             var rotateX = rotateXValue.toString();
                             var rotateY = rotateYValue.toString();
-                            console.log('transform scale('+scale+') translateX('+translateX+') translateY('+translateY+') rotateX('+rotateX+'deg) rotateY('+rotateY+'deg)');
+                            // console.log('transform scale('+scale+') translateX('+translateX+') translateY('+translateY+') rotateX('+rotateX+'deg) rotateY('+rotateY+'deg)');
                             pluginAPI
                                 .jQ_items
                                 .eq(data.index)
