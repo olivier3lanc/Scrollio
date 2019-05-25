@@ -41,6 +41,9 @@ body {
                 &>.item {
                     &>* {
                         visibility: visible;
+                        .scrolltrack {
+                            color: rgba(0,0,0,0);
+                        }
                     }
                 }
             }
@@ -116,6 +119,9 @@ body {
                 visibility: hidden;
                 // width: 100%;
                 position: relative;
+                .scrolltrack {
+                    color: rgba(0,0,0,0);
+                }
             }
         }
         //An optional layer between content and body

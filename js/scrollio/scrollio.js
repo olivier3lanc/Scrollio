@@ -77,6 +77,8 @@
             textAlignment:          'center',
             //String displayed at the end of each text to scroll
             textEllipsis:           '...',
+            //Transition duration between letter states in ms
+            textTransitionDuration: 300,
             //Google Font name
             //Or Web safe font name:
             //'Arial','Helvetica','Courier New','Georgia',
@@ -185,7 +187,7 @@
             letterDefaultCSS:       {
                 'margin-left': '-0.1em',
                 'opacity': '0.3',
-                'transition': 'all 300ms',
+                // DO NOT INCLUDE 'transition' property because it fails at start
                 'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
                 'transform': 'scale(0.8) translateX(-0.1em) translateY(0px)'
             },
@@ -828,13 +830,13 @@
             }
 
             //Callback Scrollio initialization
-            jQ_scrollio.on('init',function(e){
+            jQ_scrollio.one('init',function(e) {
                 //Now Scrollio is initialized, this avoids recalls
                 jQ_body.addClass('scrollio-initialized');
-                //Enable user defined callback
-                g_parameters.onInit(e);
                 //Make the first item visible
                 jQ_scrollio.children('.item:first-child').addClass('active');
+                //Enable user defined callback
+                g_parameters.onInit(e);
                 //Scrollio plugin init event
                 jQuery.Event('initForScrollio');
                 jQuery(document).trigger({
@@ -846,7 +848,16 @@
             jQ_scrollio.trigger({
                 type: 'init'
             });
-
+            //Do it one time: Apply transition duration on first scroll
+            //Otherwise it gives wrong start letter opacity in some cases
+            jQuery(document).one('scroll',function(e){
+                jQuery('#scrollio-style').append(
+                    //Letter not scrolled yet (default)
+                    'body #scrollio .word .letter {'+
+                        'transition: all '+g_parameters.textTransitionDuration+'ms;'+
+                    '} '
+                );
+            });
             //On page scroll
             jQuery(document).on('scroll',function(e){
                 //Get the current scrollTop, not the global g_scrollTopRaw to measure speed

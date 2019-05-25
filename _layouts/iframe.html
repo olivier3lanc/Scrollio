@@ -10,17 +10,6 @@
         <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/css/normalize.css">
         <!-- Scrollio required stylesheet -->
         <link href="{{ site.url }}{{ site.baseurl }}{{ site.assets_dir }}/css/full.css" rel="stylesheet">
-        <!-- demo purpose only -->
-        <style>
-            #scrollio>.item .outro {
-                transition: all 500ms;
-                max-height: 0px;
-                overflow: hidden;
-            }
-            #scrollio>.item .outro.active {
-                max-height: 200px;
-            }
-        </style>
     </head>
     <body>
         <div id="scrollio">
@@ -49,6 +38,8 @@
                 textAlignment:          'center',
                 //String displayed at the end of each text to scroll
                 textEllipsis:           '...',
+                //Transition Duration between letter states in ms
+                textTransitionDuration: 300,
                 //Google Font name
                 //Or Web safe font name:
                 //'Arial','Helvetica','Courier New','Georgia',
@@ -158,7 +149,7 @@
                     'color': 'white',
                     'margin-left': '-0.1em',
                     'opacity': '0.3',
-                    'transition': 'all 300ms',
+                    // DO NOT INCLUDE 'transition' property because it fails at start
                     'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
                     'transform': 'scale(0.8) translateX(-0.1em) translateY(0px)'
                 },
@@ -207,6 +198,9 @@
                 overlayCSS:             {
                     'opacity': '1',
                     'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
+                },
+                dynamicBackground:      {
+                    scaleTo: 1.2
                 },
                 //Callback on Scrollio initialization
                 onInit:                 function(e){},

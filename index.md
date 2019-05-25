@@ -32,6 +32,7 @@ scripts: ['matryoshka/tabs.js']
         itemAlignment:          [{values:['left', 'center', 'right'], default: 'center'}, 'Alignment of the item (left, center, right)'],
         textAlignment:          [{values:['left', 'center', 'right'], default: 'center'}, 'Alignment of the text into its item'],
         textEllipsis:           ['...', 'String displayed at the end of each text to scroll'],
+        textTransitionDuration: [300, 'Transition duration between letter states in ms'],
         itemFadeDuration:       [500, 'Cross fade duration between items in ms', {
             inputAttributes: 'min="0" max="2000" step="50"'
         }],
