@@ -69,6 +69,8 @@
             scrollRange:            2000,
             //Once scrolled, letters keep active CSS class
             keepActive:             true,
+            //Item padding in % of width
+            itemPadding:            10,
             // Position of the item (top, middle, bottom)
             itemPosition:           'middle',
             // Alignment of the item (left, center, right)
@@ -77,6 +79,8 @@
             textAlignment:          'center',
             //String displayed at the end of each text to scroll
             textEllipsis:           '...',
+            //Line height in em
+            textLineHeight:         1.8,
             //Transition duration between letter states in ms
             textTransitionDuration: 300,
             //Google Font name
@@ -87,6 +91,8 @@
             fontFamily:             'Ubuntu',
             //Font weight (applicable only for Google Fonts)
             fontWeight:             'Bold',
+            //Font overlap amount in em
+            fontOverlapAmount:      -0.1,
             //Each letter is under the previous
             fontOverlapUnder:       true,
             //Display the progress bar
@@ -175,21 +181,20 @@
             },
             //CSS overrides of an inactive item
             itemDefaultCSS:         {
-                'padding': '10vw'
+                // NO PADDING HERE
             },
             //CSS overrides of an active item
             itemActiveCSS:          {
             },
             //CSS overrides of the whole scrolled text sentence
             sentenceCSS:            {
-                'line-height': '1.3em'
             },
             //CSS overrides of a word
             wordCSS:                {
             },
             //CSS overrides of a letter not scrolled yet
             letterDefaultCSS:       {
-                'margin-left': '-0.1em',
+                // DO NOT INCLUDE 'margin-left' property because it is supported by fontOverlapAmount
                 'opacity': '0.3',
                 // DO NOT INCLUDE 'transition' property because it fails at start
                 'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
@@ -479,6 +484,9 @@
                                     '} '+
                                     //Letter not scrolled yet (default)
                                     'body #scrollio .word .letter {'+
+                                        // margin-left is very important for font overlap
+                                        //Must not change during experience
+                                        'margin-left: '+g_parameters.fontOverlapAmount+'em;'+
                                         this.insertCSSof(g_parameters.letterDefaultCSS)+
                                     '} '+
                                     //Letter scrolled or currently scrolled
@@ -519,6 +527,7 @@
                                     '} '+
                                     //Item hidden/default state
                                     'body #scrollio>.item {'+
+                                        'padding: '+g_parameters.itemPadding+'%;'+
                                         this.insertCSSof(g_parameters.itemDefaultCSS)+
                                         this.flexWrap(g_parameters.itemContentLayoutXL)+
                                         'transition: opacity '+g_parameters.itemFadeDuration+'ms;'+
@@ -537,6 +546,7 @@
                                     '} '+
                                     //Complete scrolled sentence containing words and letters
                                     'body #scrollio>.item>.scrolltrack {'+
+                                        'line-height: '+g_parameters.textLineHeight+'em;'+
                                         this.insertCSSof(g_parameters.sentenceCSS)+
                                     '} '+
                                     //Responsive media query for Large devices
@@ -792,31 +802,32 @@
             //Auto font size
             var autoFontSize = {
                 update: function() {
-                    var itemPaddingLeft = parseInt(jQuery('.item').eq(0).css('padding-left'));
-                    var itemPaddingRight = parseInt(jQuery('.item').eq(0).css('padding-right'));
-                    var itemPaddingTop = parseInt(jQuery('.item').eq(0).css('padding-top'));
-                    var itemPaddingBottom = parseInt(jQuery('.item').eq(0).css('padding-bottom'));
-                    var screenW = jQ_windowWidth - itemPaddingLeft - itemPaddingRight;
-                    var screenH = jQ_windowHeight - itemPaddingTop - itemPaddingBottom;
+                    //Amount of overlap, means more or less letter width
+                    var letterOverlap = 1 - g_parameters.fontOverlapAmount;
+                    //Amount of line height means more or less letter height
+                    var lineHeight = g_parameters.textLineHeight;
+                    //To compute full scrolltrack area, we need to know padding
+                    var padding = 2 * jQ_windowWidth * g_parameters.itemPadding / 100;
+                    //Then compute screen width and height
+                    var screenW = jQ_windowWidth - padding;
+                    var screenH = jQ_windowHeight - padding;
+                    //Apply on each scrolltrack
                     jQuery('.scrolltrack').each(function() {
+                        //Amount of characters
                         var amountOfCharacters = jQuery(this).text().length;
-                        var screenMin = screenH;
-                        if (screenW < screenH) {
-                            screenMin = screenW;
-                        }
-                        var myCoef = 1 - Math.log10(screenMin / amountOfCharacters);
-                        if (myCoef < 0.2) {
-                            myCoef = 0.2
-                        };
-                        if (myCoef > 1) {
-                            myCoef = 1.3
-                        };
-                        var fontSize = Math.sqrt((myCoef * screenW * screenH) / amountOfCharacters);
+                        //Font size formula based on area
+                        //Matching letters area with available scrolltrack available on screen
+                        //Log is there to increase font size when huge amount of characters,
+                        //otherwise font size is too small
+                        var fontSize = Math.sqrt((screenW * screenH) / (amountOfCharacters * letterOverlap * lineHeight)) + 0.5 * Math.log(amountOfCharacters);
+                        // console.log(amountOfCharacters,Math.log(amountOfCharacters));
+                        // Round font size
                         fontSize = Math.floor(fontSize);
+                        //Apply on this scrolltrack
                         jQuery(this).css('font-size', fontSize + 'px');
-                        //jQuery(this).parent().after(myCoef);
                     });
-                    jQuery(window).off().on('resize', function() {
+                    //Auto refresh on window resize
+                    jQuery(window).one('resize', function() {
                         autoFontSize.update();
                     });
                 }

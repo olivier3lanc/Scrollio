@@ -30,6 +30,8 @@
                 scrollRange:            2000,
                 //Once scrolled, letters keep active CSS class
                 keepActive:             true,
+                //Item padding in % of width
+                itemPadding:            10,
                 // Position of the item (top, middle, bottom)
                 itemPosition:           'middle',
                 // Alignment of the item (left, center, right)
@@ -38,7 +40,9 @@
                 textAlignment:          'center',
                 //String displayed at the end of each text to scroll
                 textEllipsis:           '...',
-                //Transition Duration between letter states in ms
+                //Line height in em
+                textLineHeight:         1.8,
+                //Transition duration between letter states in ms
                 textTransitionDuration: 300,
                 //Google Font name
                 //Or Web safe font name:
@@ -48,6 +52,8 @@
                 fontFamily:             'Ubuntu',
                 //Font weight (applicable only for Google Fonts)
                 fontWeight:             'Bold',
+                //Font overlap amount in em
+                fontOverlapAmount:      -0.1,
                 //Each letter is under the previous
                 fontOverlapUnder:       true,
                 //Display the progress bar
@@ -143,7 +149,6 @@
                 },
                 //CSS overrides of the whole scrolled text sentence
                 sentenceCSS:            {
-                    'line-height': '1.3em'
                 },
                 //CSS overrides of a word
                 wordCSS:                {
@@ -151,7 +156,6 @@
                 //CSS overrides of a letter not scrolled yet
                 letterDefaultCSS:       {
                     'color': 'white',
-                    'margin-left': '-0.1em',
                     'opacity': '0.3',
                     // DO NOT INCLUDE 'transition' property because it fails at start
                     'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
