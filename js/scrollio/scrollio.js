@@ -93,6 +93,10 @@
             progressBar:            true,
             //Display overlay between items and body background
             overlay:                true,
+            //Automatic font size
+            //Adjust each item font size according to the amount of characters
+            //and the screen size. Overrides responsive font sizes
+            fontSizeAuto:           false,
             //Responsive font size in pixels for Extra-Large devices
             fontSizeXL:             84,
             //Responsive font size in pixels for Large devices
@@ -785,36 +789,77 @@
                     });
                 }
             };
-
-            //Item vertical alignment
+            //Auto font size
+            var autoFontSize = {
+                update: function() {
+                    var itemPaddingLeft = parseInt(jQuery('.item').eq(0).css('padding-left'));
+                    var itemPaddingRight = parseInt(jQuery('.item').eq(0).css('padding-right'));
+                    var itemPaddingTop = parseInt(jQuery('.item').eq(0).css('padding-top'));
+                    var itemPaddingBottom = parseInt(jQuery('.item').eq(0).css('padding-bottom'));
+                    var screenW = jQ_windowWidth - itemPaddingLeft - itemPaddingRight;
+                    var screenH = jQ_windowHeight - itemPaddingTop - itemPaddingBottom;
+                    jQuery('.scrolltrack').each(function() {
+                        var amountOfCharacters = jQuery(this).text().length;
+                        var screenMin = screenH;
+                        if (screenW < screenH) {
+                            screenMin = screenW;
+                        }
+                        var myCoef = 1 - Math.log10(screenMin / amountOfCharacters);
+                        if (myCoef < 0.2) {
+                            myCoef = 0.2
+                        };
+                        if (myCoef > 1) {
+                            myCoef = 1.3
+                        };
+                        var fontSize = Math.sqrt((myCoef * screenW * screenH) / amountOfCharacters);
+                        fontSize = Math.floor(fontSize);
+                        jQuery(this).css('font-size', fontSize + 'px');
+                        //jQuery(this).parent().after(myCoef);
+                    });
+                    jQuery(window).off().on('resize', function() {
+                        autoFontSize.update();
+                    });
+                }
+            };
+            //Auto font size parameter
+            if(g_parameters.fontSizeAuto){
+                autoFontSize.update();
+            }
+            //Item vertical alignment top
             if(g_parameters.itemPosition == 'top'){
                 jQ_scrollio.addClass('valign-top');
             }
+            //Item vertical alignment middle
             if(g_parameters.itemPosition == 'middle'){
                 jQ_scrollio.addClass('valign-middle');
             }
+            //Item vertical alignment bottom
             if(g_parameters.itemPosition == 'bottom'){
                 jQ_scrollio.addClass('valign-bottom');
             }
 
-            //Item horizontal alignment
+            //Item horizontal alignment left
             if(g_parameters.itemAlignment == 'left'){
                 jQ_scrollio.addClass('halign-left');
             }
+            //Item horizontal alignment center
             if(g_parameters.itemAlignment == 'center'){
                 jQ_scrollio.addClass('halign-center');
             }
+            //Item horizontal alignment right
             if(g_parameters.itemAlignment == 'right'){
                 jQ_scrollio.addClass('halign-right');
             }
 
-            //Text alignment into its item
+            //Text alignment left into its item
             if(g_parameters.textAlignment == 'left'){
                 jQ_scrollio.addClass('talign-left');
             }
+            //Text alignment center into its item
             if(g_parameters.textAlignment == 'center'){
                 jQ_scrollio.addClass('talign-center');
             }
+            //Text alignment right into its item
             if(g_parameters.textAlignment == 'right'){
                 jQ_scrollio.addClass('talign-right');
             }

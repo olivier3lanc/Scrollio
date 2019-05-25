@@ -36,6 +36,7 @@ scripts: ['matryoshka/tabs.js']
         itemFadeDuration:       [500, 'Cross fade duration between items in ms', {
             inputAttributes: 'min="0" max="2000" step="50"'
         }],
+        fontSizeAuto:           [false, 'Automatic font size. Adjust each item font size according to the amount of characters and the screen size. Overrides responsive font sizes'],
         fontFamily:             ['Ubuntu', 'Google Font name or web safe font name: Arial, Helvetica, Courier New, Georgia, Times New Roman, Verdana, serif, sans-serif, monospace, cursive, fantasy'],
         fontWeight:             ['Bold', 'Font weight - applicable only for Google Fonts in relation with the font'],
         progressBar:            [true, 'Display the progress bar'],
