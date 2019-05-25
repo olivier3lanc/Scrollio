@@ -171,7 +171,7 @@
             },
             //CSS overrides of an inactive item
             itemDefaultCSS:         {
-                'padding': '0em 10vw'
+                'padding': '10vw'
             },
             //CSS overrides of an active item
             itemActiveCSS:          {
