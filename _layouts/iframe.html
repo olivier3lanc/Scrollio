@@ -43,7 +43,9 @@
                 //Line height in em
                 textLineHeight:         1.8,
                 //Transition duration between letter states in ms
-                textTransitionDuration: 300,
+                textTransitionDuration: 1300,
+                textOpacityOff:         0.5,
+                textOpacityOn:          0.1,
                 //Google Font name
                 //Or Web safe font name:
                 //'Arial','Helvetica','Courier New','Georgia',
@@ -88,36 +90,6 @@
                 //Enable/disable style overrides. Quickly remove all styles overrides
                 //For testing and debug purpose.
                 styleOverrides:         true,
-                //Define basic responsive layout to item children for extra large devices
-                //'horizontal': Horizontal stacking
-                //'horizontal-reverse': Reverse order horizontal stacking
-                //'vertical':  Vertical stacking
-                //'vertical-reverse': Reverse order vertical stacking
-                itemContentLayoutXL:  'horizontal',
-                //Define basic responsive layout to item children for large devices
-                //'horizontal': Horizontal stacking
-                //'horizontal-reverse': Reverse order horizontal stacking
-                //'vertical':  Vertical stacking
-                //'vertical-reverse': Reverse order vertical stacking
-                itemContentLayoutLG:  'horizontal',
-                //Define basic responsive layout to item children for medium devices
-                //'horizontal': Horizontal stacking
-                //'horizontal-reverse': Reverse order horizontal stacking
-                //'vertical':  Vertical stacking
-                //'vertical-reverse': Reverse order vertical stacking
-                itemContentLayoutMD:  'vertical',
-                //Define basic responsive layout to item children for small devices
-                //'horizontal': Horizontal stacking
-                //'horizontal-reverse': Reverse order horizontal stacking
-                //'vertical':  Vertical stacking
-                //'vertical-reverse': Reverse order vertical stacking
-                itemContentLayoutSM:  'vertical',
-                //Define basic responsive layout to item children for extra small devices
-                //'horizontal': Horizontal stacking
-                //'horizontal-reverse': Reverse order horizontal stacking
-                //'vertical':  Vertical stacking
-                //'vertical-reverse': Reverse order vertical stacking
-                itemContentLayoutXS:  'vertical',
                 //@keyframes animations declarations that have to be used into the custom CSS
                 animationsCSS:          {
                     'cursor': {
@@ -133,16 +105,14 @@
                 },
                 //CSS overrides of page body
                 bodyCSS:                {
-                    'background-color': '#1b4b7d',
-                    'color': '#fff'
+                    'background-color': '#1b4b7d'
                 },
                 //CSS overrides of Scrollio container
                 scrollioContainerCSS:   {
-
                 },
                 //CSS overrides of an inactive item
                 itemDefaultCSS:         {
-                    'padding': '10vw'
+                    'padding': '10vw',
                 },
                 //CSS overrides of an active item
                 itemActiveCSS:          {
@@ -156,19 +126,21 @@
                 //CSS overrides of a letter not scrolled yet
                 letterDefaultCSS:       {
                     'color': 'white',
-                    'opacity': '0.3',
-                    // DO NOT INCLUDE 'transition' property because it fails at start
+                    // DO NOT INCLUDE 'transition' property managed by 'textTransitionDuration'
+                    // DO NOT INCLUDE 'opacity' property managed by 'textOpacityOff'
                     'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
                     'transform': 'scale(0.8) translateX(-0.1em) translateY(0px)'
                 },
                 //CSS overrides of a scrolled or currently scrolled letter
                 letterActiveCSS:        {
+                    // DO NOT INCLUDE 'transition' property managed by 'textTransitionDuration'
+                    // DO NOT INCLUDE 'opacity' property managed by 'textOpacityOn'
                     'color': 'white',
-                    'opacity': '1',
                     'transform': 'scale(1) translateX(0px)  translateY(0px)'
                 },
                 //CSS overrides of the currently scrolled letter
                 letterCurrentCSS:       {
+                    // DO NOT INCLUDE 'transition' property managed by 'textTransitionDuration'
                 },
                 //CSS overrides of the cursor included only into currently scrolled letter
                 cursorCSS:              {
@@ -206,9 +178,6 @@
                 overlayCSS:             {
                     'opacity': '1',
                     'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
-                },
-                dynamicBackground:      {
-                    scaleTo: 1.2
                 },
                 //Callback on Scrollio initialization
                 onInit:                 function(e){},
@@ -265,7 +234,7 @@
                         '</div>'
                     );
                 });
-                window.scrollioAPI.dynamicBackground.jQ_items = jQuery('#scrollio>.item');
+                // window.scrollioAPI.dynamicBackground.jQ_items = jQuery('#scrollio>.item');
                 // Manage parameters
                 for (var param in sentObject.options) {
                     // If standard Scrollio param
@@ -273,17 +242,6 @@
                         // console.log(param,sentObject.options[param]);
                         if (sentObject.options.hasOwnProperty(param)) {
                             finalParameters[param] = sentObject.options[param];
-                        }
-                        var textShadowProperty = '';
-                        // Maybe it is a special param
-                        if (param == 'textOverlap') {
-                            finalParameters['letterDefaultCSS']['margin-left'] = sentObject.options[param]+'em';
-                        }
-                        if (param == 'textOpacityOff') {
-                            finalParameters['letterDefaultCSS']['opacity'] = sentObject.options[param].toString();
-                        }
-                        if (param == 'textOpacityOn') {
-                            finalParameters['letterActiveCSS']['opacity'] = sentObject.options[param].toString();
                         }
                     }
                 }

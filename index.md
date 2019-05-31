@@ -32,7 +32,7 @@ scripts: ['matryoshka/tabs.js']
         itemAlignment:          [{values:['left', 'center', 'right'], default: 'center'}, 'Alignment of the item (left, center, right)'],
         textAlignment:          [{values:['left', 'center', 'right'], default: 'center'}, 'Alignment of the text into its item'],
         textEllipsis:           ['...', 'String displayed at the end of each text to scroll'],
-        textTransitionDuration: [300, 'Transition duration between letter states in ms'],
+        textTransitionDuration: [1300, 'Transition duration between letter states in ms'],
         itemFadeDuration:       [500, 'Cross fade duration between items in ms', {
             inputAttributes: 'min="0" max="2000" step="50"'
         }],
@@ -41,14 +41,14 @@ scripts: ['matryoshka/tabs.js']
         fontWeight:             ['Bold', 'Font weight - applicable only for Google Fonts in relation with the font'],
         progressBar:            [true, 'Display the progress bar'],
         overlay:                [true, 'Display overlay between items and body background'],
-        textOverlap:            [-0.1, 'Amount of overlap between characters (-1 - 1)', {
+        fontOverlapAmount:      [-0.1, 'Amount of overlap between characters (-1 - 1)', {
             inputAttributes: 'min="-1" max="1" step="0.05"'
         }],
         // fontOverlapUnder:       [true, 'Each letter is under the previous - Visible when textOverlap is negative'],
-        textOpacityOff:         [0.3, 'Opacity of characters not scrolled yet (0 - 1)', {
+        textOpacityOff:         [0.5, 'Opacity of characters not scrolled yet (0 - 1)', {
             inputAttributes: 'min="0" max="1" step="0.02"'
         }],
-        textOpacityOn:          [1, 'Opacity of characters scrolled (0 - 1)', {
+        textOpacityOn:          [0.1, 'Opacity of characters scrolled (0 - 1)', {
             inputAttributes: 'min="0" max="1" step="0.02"'
         }]
     };

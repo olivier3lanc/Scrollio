@@ -83,6 +83,8 @@
             textLineHeight:         1.8,
             //Transition duration between letter states in ms
             textTransitionDuration: 300,
+            textOpacityOff:         0,
+            textOpacityOn:          1,
             //Google Font name
             //Or Web safe font name:
             //'Arial','Helvetica','Courier New','Georgia',
@@ -127,42 +129,8 @@
             //Enable/disable style overrides. Quickly remove all styles overrides
             //For testing and debug purpose.
             styleOverrides:         true,
-            //Define basic responsive layout to item children for extra large devices
-            //'horizontal': Horizontal stacking
-            //'horizontal-reverse': Reverse order horizontal stacking
-            //'vertical':  Vertical stacking
-            //'vertical-reverse': Reverse order vertical stacking
-            itemContentLayoutXL:  'horizontal',
-            //Define basic responsive layout to item children for large devices
-            //'horizontal': Horizontal stacking
-            //'horizontal-reverse': Reverse order horizontal stacking
-            //'vertical':  Vertical stacking
-            //'vertical-reverse': Reverse order vertical stacking
-            itemContentLayoutLG:  'horizontal',
-            //Define basic responsive layout to item children for medium devices
-            //'horizontal': Horizontal stacking
-            //'horizontal-reverse': Reverse order horizontal stacking
-            //'vertical':  Vertical stacking
-            //'vertical-reverse': Reverse order vertical stacking
-            itemContentLayoutMD:  'vertical',
-            //Define basic responsive layout to item children for small devices
-            //'horizontal': Horizontal stacking
-            //'horizontal-reverse': Reverse order horizontal stacking
-            //'vertical':  Vertical stacking
-            //'vertical-reverse': Reverse order vertical stacking
-            itemContentLayoutSM:  'vertical',
-            //Define basic responsive layout to item children for extra small devices
-            //'horizontal': Horizontal stacking
-            //'horizontal-reverse': Reverse order horizontal stacking
-            //'vertical':  Vertical stacking
-            //'vertical-reverse': Reverse order vertical stacking
-            itemContentLayoutXS:  'vertical',
             //@keyframes animations declarations that have to be used into the custom CSS
             animationsCSS:          {
-                'cursor': {
-                    '0%': 'opacity: 0',
-                    '100%': 'opacity: 1'
-                }
             },
             //CSS overrides of scrolled text BEFORE Scrollio initialization
             sentenceBeforeInitCSS:  {
@@ -172,8 +140,6 @@
             },
             //CSS overrides of page body
             bodyCSS:                {
-                'background-color': '#1b4b7d',
-                'color': '#fff'
             },
             //CSS overrides of Scrollio container
             scrollioContainerCSS:   {
@@ -194,32 +160,15 @@
             },
             //CSS overrides of a letter not scrolled yet
             letterDefaultCSS:       {
-                // DO NOT INCLUDE 'margin-left' property because it is supported by fontOverlapAmount
-                'opacity': '0.3',
-                // DO NOT INCLUDE 'transition' property because it fails at start
-                'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
-                'transform': 'scale(0.8) translateX(-0.1em) translateY(0px)'
             },
             //CSS overrides of a scrolled or currently scrolled letter
             letterActiveCSS:        {
-                'color': 'white',
-                'opacity': '1',
-                'transform': 'scale(1) translateX(0px)  translateY(0px)'
             },
             //CSS overrides of the currently scrolled letter
             letterCurrentCSS:       {
             },
             //CSS overrides of the cursor included only into currently scrolled letter
             cursorCSS:              {
-                'top': '0px',
-                'right': '0px',
-                'width': '2px',
-                'height': '100%',
-                'background-color': 'white',
-                'animation-name': 'cursor', //Declared into g_parameters.animationsCSS
-                'animation-duration': '600ms',
-                'animation-iteration-count': 'infinite',
-                'animation-direction': 'alternate'
             },
             //CSS overrides of the entire ellipsis word
             ellipsisWordCSS:     {
@@ -239,12 +188,9 @@
             },
             //CSS overrides of the progress bar
             progressBarCSS:         {
-                'background-color': 'white'
             },
             //CSS overrides of the overlay layer
             overlayCSS:             {
-                'opacity': '1',
-                'background': 'radial-gradient(ellipse at top, transparent, #07131f)'
             },
             //Callback on Scrollio initialization
             onInit:                 function(e){},
@@ -283,6 +229,8 @@
                         g_parameters[property] = options[property];
                     //Otherwise
                     }else{
+                        //Log what it is
+                        console.log(property,window.scrollioAPI[property]);
                         //It may be a plugin id
                         if(window.scrollioAPI[property] !== undefined){
                             //Now property is plugin id
@@ -297,7 +245,7 @@
                                 }
                             });
                         }else{
-                            console.log('invalid Scrollio plugin or not loaded yet');
+                            console.log('invalid Scrollio plugin or not loaded yet, or invalid parameter:'+property);
                         }
                     }
                 });
@@ -436,20 +384,6 @@
                         return false;
                     }
                 },
-                //Flex helper returns the proper flew-warp value
-                //@helperValue - string - The Scrollio itemContentChildren value
-                //@return - string - The proper flex-wrap value
-                flexWrap: function(helperValue){
-                    if(typeof helperValue == 'string'){
-                        var matches = {
-                            horizontal: 'flex-wrap: inherit;',
-                            'horizontal-reverse': 'flex-direction: row-reverse; flex-wrap: inherit;',
-                            vertical: 'flex-wrap: wrap;',
-                            'vertical-reverse': 'flex-wrap: wrap-reverse;'
-                        };
-                        return matches[helperValue];
-                    }
-                },
                 //Method that build the whole custom CSS for Scrollio
                 buildCSS: function(wGoogleFonts){
                     //Init an empty import string in case of external font resource
@@ -487,10 +421,13 @@
                                         // margin-left is very important for font overlap
                                         //Must not change during experience
                                         'margin-left: '+g_parameters.fontOverlapAmount+'em;'+
+                                        'transition: all 0ms;'+
+                                        'opacity: '+g_parameters.textOpacityOff+';'+
                                         this.insertCSSof(g_parameters.letterDefaultCSS)+
                                     '} '+
                                     //Letter scrolled or currently scrolled
                                     'body #scrollio .word .letter.active {'+
+                                        'opacity: '+g_parameters.textOpacityOn+';'+
                                         this.insertCSSof(g_parameters.letterActiveCSS)+
                                     '} '+
                                     //Letter currently scrolled
@@ -529,7 +466,6 @@
                                     'body #scrollio>.item {'+
                                         'padding: '+g_parameters.itemPadding+'%;'+
                                         this.insertCSSof(g_parameters.itemDefaultCSS)+
-                                        this.flexWrap(g_parameters.itemContentLayoutXL)+
                                         'transition: opacity '+g_parameters.itemFadeDuration+'ms;'+
                                     '} '+
                                     //Item visible state
@@ -554,17 +490,11 @@
                                         'body #scrollio {'+
                                             'font-size: '+g_parameters.fontSizeLG+'px;'+
                                         '} '+
-                                        'body #scrollio>.item {'+
-                                            this.flexWrap(g_parameters.itemContentLayoutLG)+
-                                        '} '+
                                     '} '+
                                     //Responsive media query for Medium devices
                                     '@media (max-width: '+g_parameters.breakPointMD_LG+'px) {'+
                                         'body #scrollio {'+
                                             'font-size: '+g_parameters.fontSizeMD+'px;'+
-                                        '} '+
-                                        'body #scrollio>.item {'+
-                                            this.flexWrap(g_parameters.itemContentLayoutMD)+
                                         '} '+
                                     '} '+
                                     //Responsive media query for Small devices
@@ -572,17 +502,11 @@
                                         'body #scrollio {'+
                                             'font-size: '+g_parameters.fontSizeSM+'px;'+
                                         '} '+
-                                        'body #scrollio>.item {'+
-                                            this.flexWrap(g_parameters.itemContentLayoutSM)+
-                                        '} '+
                                     '} '+
                                     //Responsive media query for Extra-Small devices
                                     '@media (max-width: '+g_parameters.breakPointXS_SM+'px) {'+
                                         'body #scrollio {'+
                                             'font-size: '+g_parameters.fontSizeXS+'px;'+
-                                        '} '+
-                                        'body #scrollio>.item {'+
-                                            this.flexWrap(g_parameters.itemContentLayoutXS)+
                                         '} '+
                                     '} '+
                                 '</style>';
@@ -677,6 +601,11 @@
             };
 
             wrapLetters('.item');
+            jQuery('head').append(
+                '<style>'+
+                    'body #scrollio .word .letter{transition:all 800ms}'+
+                '</style>'
+            );
 
             //Update management
             var update = function(){
@@ -903,16 +832,6 @@
             jQuery.Event('init');
             jQ_scrollio.trigger({
                 type: 'init'
-            });
-            //Do it one time: Apply transition duration on first scroll
-            //Otherwise it gives wrong start letter opacity in some cases
-            jQuery(document).one('scroll',function(e){
-                jQuery('#scrollio-style').append(
-                    //Letter not scrolled yet (default)
-                    'body #scrollio .word .letter {'+
-                        'transition: all '+g_parameters.textTransitionDuration+'ms;'+
-                    '} '
-                );
             });
             //On page scroll
             jQuery(document).on('scroll',function(e){
