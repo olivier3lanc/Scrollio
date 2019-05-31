@@ -13,34 +13,12 @@
             name: 'Dynamic Background',
             //Description of the plugin
             description: 'Add animated background images synchronized to scroll amount of Scrollio items',
-            //Fade in duration in ms
-            fadeDuration: 1300,
             //Opacity of the background image
             opacity: 0.7,
-            //CSS translate unit (px, %, etc)
-            translateUnit: 'px',
-            //CSS perspective in px
-            perspective: 1500,
-            //Start item with horizontal translation
-            translateXFrom: -10,
-            //End item with horizontal translation
-            translateXTo: 10,
-            //Start item with vertical translation
-            translateYFrom: -15,
-            //End with vertical translation
-            translateYTo: 15,
-            //Start item from scale amount
             scaleFrom: 1,
-            //End item with scale amount
             scaleTo: 1,
-            //Start item from rotateX amount in degrees
-            rotateXFrom: 0,
-            //End item with rotateX amount in degrees
-            rotateXTo: 0,
-            //Start item from rotateY amount in degrees
-            rotateYFrom: 0,
-            //End item with rotateY amount in degrees
-            rotateYTo: 0
+            fadeDuration: 1300,
+            speed: 100
         };
         //Optionally add parameters and methods
         //to the Scrollio API:
@@ -48,36 +26,41 @@
         //into an object inside the scrollioAPI
         //Plugin API
         window.scrollioAPI[scrollioPlugin.id] = scrollioPlugin;
-        var pluginAPI = window.scrollioAPI[scrollioPlugin.id];
-        pluginAPI.jQ_items = jQuery('#scrollio>.item');
+
 
         //Wait Scrollio detects this plugin
         jQuery(document).one(scrollioPlugin.id,function(data){
             //When Scrollio is initialized
             jQuery(this).one('initForScrollio',function(){
+                var pluginAPI = window.scrollioAPI[scrollioPlugin.id];
+                pluginAPI.jQ_items = jQuery('#scrollio>.item');
+                var itemHeight = window.scrollioAPI.defaults.scrollRange;
                 //Include CSS
                 jQuery('head').append(
                     '<style id="scrollio-dynamic-background-plugin">'+
+                        '@keyframes dynamicBackgroundCoreAnim {'+
+                            '0% {'+
+                                'transform: scale('+pluginAPI.scaleFrom.toString()+');'+
+                            '}'+
+                        '100% {'+
+                                'transform: scale('+pluginAPI.scaleTo.toString()+');'+
+                            '}'+
+                        '}'+
                         'body #scrollio>.item>.dynamic-background {'+
                             'position: fixed;'+
-                            'top: -5%;'+
-                            'left: -5%;'+
-                            'width: 110%;'+
-                            'height: 110%;'+
+                            'top: 0%;'+
+                            'left: 0%;'+
+                            'width: 100%;'+
+                            'height: 100%;'+
                             'opacity: 0;'+
-                            '-webkit-transition: '+
-                                'transform 600ms, '+
-                                'opacity '+pluginAPI.fadeDuration.toString()+'ms;'+
-                            'transform: '+
-                                'scale('+pluginAPI.scaleFrom.toString()+') '+
-                                'rotateX('+pluginAPI.rotateXFrom.toString()+'deg) '+
-                                'rotateY('+pluginAPI.rotateYFrom.toString()+'deg) '+
-                                'translateX('+pluginAPI.translateXFrom.toString()+pluginAPI.translateUnit+') '+
-                                'translateY('+pluginAPI.translateYFrom.toString()+pluginAPI.translateUnit+');'+
+                            'transition: '+pluginAPI.fadeDuration.toString()+'ms;'+
                             'background-position: center;'+
                             'background-repeat: no-repeat;'+
                             'background-size: cover;'+
-                            'prespective: '+pluginAPI.perspective.toString()+';'+
+                            'animation-name: dynamicBackgroundCoreAnim;'+
+                            'animation-duration: '+pluginAPI.speed.toString()+'s;'+
+                            'animation-iteration-count: 1;'+
+                            'animation-fill-mode: forwards;'+
                         '}'+
                         'body #scrollio>.item>.dynamic-background.active {'+
                             'opacity: '+pluginAPI.opacity.toString()+';'+
@@ -88,7 +71,7 @@
                 var jQ_itemsWithDynamicBackground = jQuery('#scrollio>.item[data-dynamic-background]');
                 //Optimization: Work only if there are things to do
                 if(jQ_itemsWithDynamicBackground.length > 0){
-                    console.log('lkmlk');
+                    // console.log('lkmlk');
                     //Detect bg image on each item, then apply background image
                     jQuery('#scrollio>.item[data-dynamic-background]').each(function(){
                         var jQ_theItem = jQuery(this);
@@ -96,8 +79,13 @@
                         var imageURL = jQ_theItem.attr('data-dynamic-background');
                         //Now check if the URL is valid
                         jQuery.get(imageURL,function(){
-                            //If OK, include the media div
-                            jQ_theItem.prepend('<div class="dynamic-background active" style="background-image:url('+imageURL+')"></div>');
+                            var jQ_theImage = jQuery('<img src="'+imageURL+'">');
+                            jQ_theImage.one('load', function() {
+                                jQ_theItem.prepend('<div class="dynamic-background" style="background-image:url('+imageURL+')"></div>');
+                                setTimeout(function() {
+                                    jQ_theItem.children('.dynamic-background').addClass('active');
+                                },80);
+                            });
                         }).fail(function(){
                             //In case of invalid URL
                             console.log(imageURL+' is not a valid image URL');
@@ -121,43 +109,29 @@
                                 .addClass('active');
                         },300);
                     });
-
-                    //If these values are neutral, then don't do unnecessary work
-                    if( pluginAPI.scaleFrom == 1 &&
-                        pluginAPI.scaleTo == 1 &&
-                        pluginAPI.translateXFrom == 0 &&
-                        pluginAPI.translateYFrom == 0 &&
-                        pluginAPI.translateXTo == 0 &&
-                        pluginAPI.translateYTo == 0 &&
-                        pluginAPI.rotateXFrom == 0 &&
-                        pluginAPI.rotateYFrom == 0 &&
-                        pluginAPI.rotateXTo == 0 &&
-                        pluginAPI.rotateYTo == 0){
-                        //This if OK, don't include listener
-                    }else{
+                    if (pluginAPI.scaleTo != pluginAPI.scaleFrom) {
                         //For other cases, listen to the item scroll amount
                         jQuery(this).on('scrollForScrollio',function(data){
-                            var scaleValue = pluginAPI.scaleFrom + (pluginAPI.scaleTo -  pluginAPI.scaleFrom) * data.itemProgressCoef;
-                            var translateXValue = Math.floor(pluginAPI.translateXFrom + (pluginAPI.translateXTo -  pluginAPI.translateXFrom) * data.itemProgressCoef);
-                            var translateYValue = Math.floor(pluginAPI.translateYFrom + (pluginAPI.translateYTo -  pluginAPI.translateYFrom) * data.itemProgressCoef);
-                            var rotateXValue = Math.floor(pluginAPI.rotateXFrom + (pluginAPI.rotateXTo -  pluginAPI.rotateXFrom) * data.itemProgressCoef);
-                            var rotateYValue = Math.floor(pluginAPI.rotateYFrom + (pluginAPI.rotateYTo -  pluginAPI.rotateYFrom) * data.itemProgressCoef);
-                            var scale = scaleValue.toString();
-                            var translateX = translateXValue.toString() + pluginAPI.translateUnit;
-                            var translateY = translateYValue.toString() + pluginAPI.translateUnit;
-                            var rotateX = rotateXValue.toString();
-                            var rotateY = rotateYValue.toString();
+                            // var scaleValue = pluginAPI.scaleFrom + (pluginAPI.scaleTo -  pluginAPI.scaleFrom) * data.itemProgressCoef;
+                            // var translateXValue = Math.floor(pluginAPI.translateXFrom + (pluginAPI.translateXTo -  pluginAPI.translateXFrom) * data.itemProgressCoef);
+                            // var translateYValue = Math.floor(pluginAPI.translateYFrom + (pluginAPI.translateYTo -  pluginAPI.translateYFrom) * data.itemProgressCoef);
+                            // var rotateXValue = Math.floor(pluginAPI.rotateXFrom + (pluginAPI.rotateXTo -  pluginAPI.rotateXFrom) * data.itemProgressCoef);
+                            // var rotateYValue = Math.floor(pluginAPI.rotateYFrom + (pluginAPI.rotateYTo -  pluginAPI.rotateYFrom) * data.itemProgressCoef);
+                            // var scale = scaleValue.toString();
+                            // var translateX = translateXValue.toString() + pluginAPI.translateUnit;
+                            // var translateY = translateYValue.toString() + pluginAPI.translateUnit;
+                            // var rotateX = rotateXValue.toString();
+                            // var rotateY = rotateYValue.toString();
                             // console.log('transform scale('+scale+') translateX('+translateX+') translateY('+translateY+') rotateX('+rotateX+'deg) rotateY('+rotateY+'deg)');
+                            var amount = Math.round(pluginAPI.speed - parseInt(0.8 * pluginAPI.speed * scrollioAPI.relativeScroll / itemHeight));
+                            console.log(amount);
+                            // jQuery('body>div').eq(0).css('animation-duration', amount.+'s');
                             pluginAPI
                                 .jQ_items
                                 .eq(data.index)
                                 .children('.dynamic-background')
                                 .css({
-                                    'transform':    'scale('+scale+') '+
-                                                    'translateX('+translateX+') '+
-                                                    'translateY('+translateY+') '+
-                                                    'rotateX('+rotateX+'deg) '+
-                                                    'rotateY('+rotateY+'deg)'
+                                    'animation-duration': amount.toString()+'s'
                                 });
                         });
                     }
