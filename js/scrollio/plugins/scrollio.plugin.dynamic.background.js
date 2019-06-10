@@ -14,8 +14,8 @@
             //Description of the plugin
             description: 'Add animated background images synchronized to scroll amount of Scrollio items',
             //Opacity of the background image
-            opacity: 0.7,
-            scaleFrom: 1,
+            opacity: 0.5,
+            scaleFrom: 1.2,
             scaleTo: 1,
             fadeDuration: 1300,
             speed: 100

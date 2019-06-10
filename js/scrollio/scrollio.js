@@ -69,6 +69,8 @@
             scrollRange:            2000,
             //Once scrolled, letters keep active CSS class
             keepActive:             true,
+            //Sentence prefix, add a permanent HTML that is not scrolled
+            sentencePrefix:         '> ',
             //Item padding in % of width
             itemPadding:            10,
             // Position of the item (top, middle, bottom)
@@ -591,9 +593,15 @@
                                 zIndex++;
                             }
                         }
+                        //Sentence prefix
+                        var prefix = '';
+                        if(g_parameters.sentencePrefix != '') {
+                            prefix = '<span class="word"><span class="letter active">'+g_parameters.sentencePrefix+'</span></span>';
+                        }
                         //Insert the whole ellipsis into a .word span
                         var finalEllipsis = '<span class="word ellipsis">'+ellipsisLetters+'</span>';
-                        var finalResult = result+finalEllipsis;
+                        var finalResult = prefix+result+finalEllipsis;
+                        
                         //Replace html
                         jQ_text.html(finalResult);
                     });
@@ -601,9 +609,10 @@
             };
 
             wrapLetters('.item');
+            // Avoid showing letters with opacity:0 before init
             jQuery('head').append(
                 '<style>'+
-                    'body #scrollio .word .letter{transition:all 800ms}'+
+                    'body #scrollio .word .letter{transition:all '+g_parameters.textTransitionDuration+'ms}'+
                 '</style>'
             );
 
