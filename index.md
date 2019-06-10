@@ -9,46 +9,31 @@ scripts: ['matryoshka/tabs.js']
 </div>
 <div id="generator"></div>
 <script>
-// letterDefaultCSS:       {
-//     'margin-left': '-0.1em',
-//     'opacity': '0',
-//     'transition': 'all 300ms',
-//     'text-shadow': '0.07em 0.01em 0.1em rgba(0,0,0,.5)',
-//     'transform': 'scale(0.2) translateX(2em) translateY(2em)'
-// },
-// //CSS overrides of a scrolled or currently scrolled letter
-// letterActiveCSS:        {
-//     'color': 'white',
-//     'opacity': '1',
-//     'transform': 'translateX(0em)'
-// },
     jQuery('#mainflex > main').css('max-width', '500px');
     var allOptions = {
         scrollRange:            [2000, 'Amount of pixels scrolled per item', {
             inputAttributes: 'min="400" max="40000" step="200"'
         }],
-        keepActive:             [true, 'Once scrolled, letters keep active CSS class'],
         itemPosition:           [{values:['top', 'middle', 'bottom'], default: 'middle'}, 'Position of the item (top, middle, bottom)'],
         itemAlignment:          [{values:['left', 'center', 'right'], default: 'center'}, 'Alignment of the item (left, center, right)'],
         textAlignment:          [{values:['left', 'center', 'right'], default: 'center'}, 'Alignment of the text into its item'],
+        sentencePrefix:         ['> ', 'String displayed at the beginning of each text to scroll - not scrolled'],
         textEllipsis:           ['...', 'String displayed at the end of each text to scroll'],
-        textTransitionDuration: [1300, 'Transition duration between letter states in ms'],
+        textTransitionDuration: [300, 'Transition duration between letter states in ms'],
         itemFadeDuration:       [500, 'Cross fade duration between items in ms', {
             inputAttributes: 'min="0" max="2000" step="50"'
         }],
         fontSizeAuto:           [false, 'Automatic font size. Adjust each item font size according to the amount of characters and the screen size. Overrides responsive font sizes'],
-        fontFamily:             ['Ubuntu', 'Google Font name or web safe font name: Arial, Helvetica, Courier New, Georgia, Times New Roman, Verdana, serif, sans-serif, monospace, cursive, fantasy'],
-        fontWeight:             ['Bold', 'Font weight - applicable only for Google Fonts in relation with the font'],
         progressBar:            [true, 'Display the progress bar'],
         overlay:                [true, 'Display overlay between items and body background'],
         fontOverlapAmount:      [-0.1, 'Amount of overlap between characters (-1 - 1)', {
             inputAttributes: 'min="-1" max="1" step="0.05"'
         }],
         // fontOverlapUnder:       [true, 'Each letter is under the previous - Visible when textOverlap is negative'],
-        textOpacityOff:         [0.5, 'Opacity of characters not scrolled yet (0 - 1)', {
+        textOpacityOff:         [0.1, 'Opacity of characters not scrolled yet (0 - 1)', {
             inputAttributes: 'min="0" max="1" step="0.02"'
         }],
-        textOpacityOn:          [0.1, 'Opacity of characters scrolled (0 - 1)', {
+        textOpacityOn:          [1, 'Opacity of characters scrolled (0 - 1)', {
             inputAttributes: 'min="0" max="1" step="0.02"'
         }]
     };
