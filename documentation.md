@@ -1,11 +1,11 @@
 ---
 title: Documentation
-layout: page
+description: A full page scroll experience tool for story telling
+layout: libdoc/page-split
+permalink: index.html
+unlisted: true
 ---
-*A full page scroll experience tool for story telling*. Scrollio is a jQuery plugin that uses the scroll to reveal the text content.
-
-* [Demo](https://codepen.io/olivier3lanc/pen/zLBGEL)
-* [Demo with callbacks](https://codepen.io/olivier3lanc/full/bjBbVP/)
+Scrollio is a jQuery plugin that uses the scroll to reveal the text content.
 
 ## Usage
 
@@ -13,20 +13,26 @@ Here is the minimal code to make Scrollio work properly.
 
 1. Include `<link href="scrollio.min.css" rel="stylesheet">` into the `<head>` of your document.
 1. Include the Scrollio markup into your `<body>`. Just put your content into `.item` and add class `.scrolltrack` to the HTML tag you wish to scroll. Here is an example of the minimal markup required:
-    ``` html
-    <div id="scrollio">
-        <div class="item">
-            <!-- Your content with one HTML tag with "scrolltrack" class -->
-        </div>
-        <div class="item">
-            <!-- Your content with one HTML tag with "scrolltrack" class -->
-        </div>
-        <div class="item">
-            <!-- Your content with one HTML tag with "scrolltrack" class -->
-        </div>
-        <!-- ... -->
+
+```html
+<div id="scrollio">
+    <div class="item" data-dynamic-background="http://192.168.1.54/photographies/paysages/ete/foret_de_gresy_sur_isere_size_2560x1706.webp">
+        <!-- Your content with one HTML tag with "scrolltrack" class -->
+        <p class="scrolltrack">Diam takimata amet gubergren elitr ipsum, at dolores gubergren ipsum.</p>
     </div>
-    ```
+    <div class="item">
+        <!-- Your content with one HTML tag with "scrolltrack" class -->
+        <p class="scrolltrack">Ut kasd justo lorem at.</p>
+    </div>
+    <div class="item">
+        <!-- Your content with one HTML tag with "scrolltrack" class -->
+        <p class="scrolltrack">Invidunt eos lorem sea dolor stet dolor, et.</p>
+    </div>
+    <!-- ... -->
+</div>
+```
+{:.playground}
+
 1. Include jQuery `<script type="text/javascript" src="jquery.min.js"></script>`
 1. Include Scrollio after jQuery `<script type="text/javascript" src="scrollio.min.js"></script>`
 1. Initialize Scrollio:

@@ -1,8 +1,0 @@
-/*
-    TYPOGRAPHY UTILITIES
-*/
-@each $typography, $data in $ds-typography {
-    .u-typo-#{$typography} {
-        @include my-typography($typography, true);
-    }
-}

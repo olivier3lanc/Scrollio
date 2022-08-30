@@ -1,8 +1,0 @@
-
-body {
-    @include my-typography(default);
-    font-size: my-font-size(md);
-    color: my-color(neutral, dark);
-    background: my-color(neutral, light);
-    background-color: my-color(neutral, light);
-}

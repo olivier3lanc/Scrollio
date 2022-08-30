@@ -1,0 +1,124 @@
+body {
+    overflow-y: scroll
+}
+
+body #scrollio {
+    overflow: auto;
+    height: 100vh
+}
+
+body #scrollio .word {
+    display: inline-block;
+    perspective: 1000px
+}
+
+body #scrollio .word .letter {
+    opacity: 0;
+    position: relative;
+    display: inline-block;
+    color: lightgrey
+}
+
+body #scrollio .word .letter.active {
+    color: black
+}
+
+body #scrollio .word .letter.current:after {
+    content: '';
+    display: block;
+    position: absolute;
+    pointer-events: none
+}
+
+body #scrollio>.item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    box-sizing: border-box;
+    text-align: center;
+    will-change: transform, opacity, letter-spacing, text-shadow;
+    transition-timing-function: linear;
+    perspective: 500px;
+    z-index: 10;
+    pointer-events: none
+}
+
+body #scrollio>.item.active {
+    z-index: 100;
+    opacity: 1;
+    pointer-events: auto
+}
+
+body #scrollio>.item>* {
+    position: relative;
+    margin: 0
+}
+
+body #scrollio>.overlay {
+    position: fixed;
+    top: -10vh;
+    left: 0;
+    height: 120vh;
+    width: 100%;
+    z-index: 1
+}
+
+body #scrollio>.progress-bar {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 3px;
+    background-color: black;
+    z-index: 100
+}
+
+body #scrollio.performance-mode>.item {
+    display: none
+}
+
+body #scrollio.performance-mode>.item.active {
+    display: flex
+}
+
+body #scrollio.halign-left>.item {
+    justify-content: flex-start
+}
+
+body #scrollio.halign-center>.item {
+    justify-content: center
+}
+
+body #scrollio.halign-right>.item {
+    justify-content: flex-end
+}
+
+body #scrollio.valign-top>.item {
+    align-items: flex-start
+}
+
+body #scrollio.valign-middle>.item {
+    align-items: center
+}
+
+body #scrollio.valign-bottom>.item {
+    align-items: flex-end
+}
+
+body #scrollio.talign-left>.item {
+    text-align: left
+}
+
+body #scrollio.talign-center>.item {
+    text-align: center
+}
+
+body #scrollio.talign-right>.item {
+    text-align: right
+}
