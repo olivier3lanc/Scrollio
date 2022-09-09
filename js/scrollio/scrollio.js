@@ -70,9 +70,9 @@
             //Once scrolled, letters keep active CSS class
             keepActive:             true,
             //Sentence prefix, add a permanent HTML that is not scrolled
-            sentencePrefix:         '> ',
-            //Item padding in % of width
-            itemPadding:            10,
+            sentencePrefix:         '',
+            //Item padding
+            itemPadding:            '10vmin',
             // Position of the item (top, middle, bottom)
             itemPosition:           'middle',
             // Alignment of the item (left, center, right)
@@ -82,10 +82,10 @@
             //String displayed at the end of each text to scroll
             textEllipsis:           '...',
             //Line height in em
-            textLineHeight:         1.8,
+            textLineHeight:         1.3,
             //Transition duration between letter states in ms
             textTransitionDuration: 300,
-            textOpacityOff:         0,
+            textOpacityOff:         0.1,
             textOpacityOn:          1,
             //Google Font name
             //Or Web safe font name:
@@ -96,17 +96,13 @@
             //Font weight (applicable only for Google Fonts)
             fontWeight:             'Bold',
             //Font overlap amount in em
-            fontOverlapAmount:      -0.1,
+            fontOverlapAmount:      0,
             //Each letter is under the previous
-            fontOverlapUnder:       true,
+            fontOverlapUnder:       false,
             //Display the progress bar
             progressBar:            true,
             //Display overlay between items and body background
             overlay:                true,
-            //Automatic font size
-            //Adjust each item font size according to the amount of characters
-            //and the screen size. Overrides responsive font sizes
-            fontSizeAuto:           false,
             //Responsive font size in pixels for Extra-Large devices
             fontSizeXL:             84,
             //Responsive font size in pixels for Large devices
@@ -327,6 +323,7 @@
                     //Quote the Google font family to be valid when called
                     g_style.fontFamily = '"'+g_parameters.fontFamily+'"';
                     //Return the URL
+                    // console.log('https://fonts.googleapis.com/css?family='+googleFontFamily);
                     return 'https://fonts.googleapis.com/css?family='+googleFontFamily;
                 },
                 //Method that build the import URL for the CSS
@@ -466,7 +463,7 @@
                                     '} '+
                                     //Item hidden/default state
                                     'body #scrollio>.item {'+
-                                        'padding: '+g_parameters.itemPadding+'%;'+
+                                        'padding: '+g_parameters.itemPadding+';'+
                                         this.insertCSSof(g_parameters.itemDefaultCSS)+
                                         'transition: opacity '+g_parameters.itemFadeDuration+'ms;'+
                                     '} '+
@@ -737,43 +734,6 @@
                     });
                 }
             };
-            //Auto font size
-            var autoFontSize = {
-                update: function() {
-                    //Amount of overlap, means more or less letter width
-                    var letterOverlap = 1 - g_parameters.fontOverlapAmount;
-                    //Amount of line height means more or less letter height
-                    var lineHeight = g_parameters.textLineHeight;
-                    //To compute full scrolltrack area, we need to know padding
-                    var padding = 2 * jQ_windowWidth * g_parameters.itemPadding / 100;
-                    //Then compute screen width and height
-                    var screenW = jQ_windowWidth - padding;
-                    var screenH = jQ_windowHeight - padding;
-                    //Apply on each scrolltrack
-                    jQuery('.scrolltrack').each(function() {
-                        //Amount of characters
-                        var amountOfCharacters = jQuery(this).text().length;
-                        //Font size formula based on area
-                        //Matching letters area with available scrolltrack available on screen
-                        //Log is there to increase font size when huge amount of characters,
-                        //otherwise font size is too small
-                        var fontSize = Math.sqrt((screenW * screenH) / (amountOfCharacters * letterOverlap * lineHeight)) + 0.5 * Math.log(amountOfCharacters);
-                        // console.log(amountOfCharacters,Math.log(amountOfCharacters));
-                        // Round font size
-                        fontSize = Math.floor(fontSize);
-                        //Apply on this scrolltrack
-                        jQuery(this).css('font-size', fontSize + 'px');
-                    });
-                    //Auto refresh on window resize
-                    jQuery(window).one('resize', function() {
-                        autoFontSize.update();
-                    });
-                }
-            };
-            //Auto font size parameter
-            if(g_parameters.fontSizeAuto){
-                autoFontSize.update();
-            }
             //Item vertical alignment top
             if(g_parameters.itemPosition == 'top'){
                 jQ_scrollio.addClass('valign-top');
@@ -828,7 +788,11 @@
                 //Now Scrollio is initialized, this avoids recalls
                 jQ_body.addClass('scrollio-initialized');
                 //Make the first item visible
-                jQ_scrollio.children('.item:first-child').addClass('active');
+                jQ_scrollio.children('.item:first-child')
+                    .addClass('active')
+                    // Show first letter at init
+                    .find('.scrolltrack>.word:first-child>.letter:first-child')
+                    .addClass('active current');
                 //Enable user defined callback
                 g_parameters.onInit(e);
                 //Scrollio plugin init event
@@ -836,6 +800,7 @@
                 jQuery(document).trigger({
                     type: 'initForScrollio'
                 });
+
             });
             //Trigger event initialized
             jQuery.Event('init');

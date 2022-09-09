@@ -13,34 +13,32 @@ Here is the minimal code to make Scrollio work properly.
 
 1. Include `<link href="scrollio.min.css" rel="stylesheet">` into the `<head>` of your document.
 1. Include the Scrollio markup into your `<body>`. Just put your content into `.item` and add class `.scrolltrack` to the HTML tag you wish to scroll. Here is an example of the minimal markup required:
-
-```html
-<div id="scrollio">
-    <div class="item" data-dynamic-background="http://192.168.1.54/photographies/paysages/ete/foret_de_gresy_sur_isere_size_2560x1706.webp">
-        <!-- Your content with one HTML tag with "scrolltrack" class -->
-        <p class="scrolltrack">Diam takimata amet gubergren elitr ipsum, at dolores gubergren ipsum.</p>
+    ```html
+    <div id="scrollio">
+        <div class="item" data-dynamic-background="https://raw.githubusercontent.com/olivier3lanc/photographies/master/animaux/sauvages/img_4417.jpg">
+            <!-- Your content with one HTML tag with "scrolltrack" class -->
+            <p class="scrolltrack">Diam takimata amet gubergren elitr ipsum, at dolores gubergren ipsum.</p>
+        </div>
+        <div class="item" data-dynamic-background="https://raw.githubusercontent.com/olivier3lanc/photographies/master/paysages/automne/lac_thuile_automne_mg_6008__mg_6012-5-images_size_3200x1600.webp">
+            <!-- Your content with one HTML tag with "scrolltrack" class -->
+            <p class="scrolltrack">Ut kasd justo lorem at.</p>
+        </div>
+        <div class="item" data-dynamic-background="https://raw.githubusercontent.com/olivier3lanc/photographies/master/photoshop/photo-montages/img_8651-wallpaper.jpg">
+            <!-- Your content with one HTML tag with "scrolltrack" class -->
+            <p class="scrolltrack">Invidunt eos lorem sea dolor stet dolor, et.</p>
+        </div>
+        <!-- ... -->
     </div>
-    <div class="item">
-        <!-- Your content with one HTML tag with "scrolltrack" class -->
-        <p class="scrolltrack">Ut kasd justo lorem at.</p>
-    </div>
-    <div class="item">
-        <!-- Your content with one HTML tag with "scrolltrack" class -->
-        <p class="scrolltrack">Invidunt eos lorem sea dolor stet dolor, et.</p>
-    </div>
-    <!-- ... -->
-</div>
-```
-{:.playground}
-
+    ```
+    {:.playground}
 1. Include jQuery `<script type="text/javascript" src="jquery.min.js"></script>`
 1. Include Scrollio after jQuery `<script type="text/javascript" src="scrollio.min.js"></script>`
 1. Initialize Scrollio:
-``` html
-<script type="text/javascript">
-    jQuery.fn.scrollio();
-</script>
-```
+    ``` html
+    <script type="text/javascript">
+        jQuery.fn.scrollio();
+    </script>
+    ```
 
 A full page example with Scrollio:
 
